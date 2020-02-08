@@ -17,7 +17,12 @@ class show_data () :
     def __init__(self) :
         self.con=db.DataBase()
       
-
+    def get_Items_by_categories(self , Id_category : int ) -> dict : 
+        pass
+    
+    
+    
+    
 
 class insert_data () : 
     
