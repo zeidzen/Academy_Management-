@@ -96,6 +96,8 @@ class DataBase () :
         mycursor.execute(sql)  
         self.connection.commit()
                         
+        
+        
     def Update_Data_one_Coulmn (self,table,Id,name,value) : 
         sql="UPDATE {} SET {} ='{}' WHERE Id={} ;".format(table,name,value,Id)
         mycursor = self.connection.cursor()

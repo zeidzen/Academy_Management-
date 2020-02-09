@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Feb 08, 2020 at 10:17 PM
+-- Generation Time: Feb 09, 2020 at 02:58 AM
 -- Server version: 5.7.26
 -- PHP Version: 7.2.18
 
@@ -88,7 +88,7 @@ CREATE TABLE IF NOT EXISTS `classes` (
   `Date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`Id`),
   KEY `FK_classes_course` (`Id_course`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `classes`
@@ -110,14 +110,14 @@ CREATE TABLE IF NOT EXISTS `courses` (
   `Id_category` int(11) NOT NULL,
   `Name` varchar(255) NOT NULL,
   `Description` text,
-  `Image` text NOT NULL,
+  `Image` text,
   `Price` float NOT NULL,
   `Number_of_hours` int(4) NOT NULL,
   `Views` int(11) NOT NULL DEFAULT '25',
   `Date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`Id`),
   KEY `FK_courses_category` (`Id_category`)
-) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `courses`
@@ -125,11 +125,12 @@ CREATE TABLE IF NOT EXISTS `courses` (
 
 INSERT INTO `courses` (`Id`, `Id_category`, `Name`, `Description`, `Image`, `Price`, `Number_of_hours`, `Views`, `Date`) VALUES
 (1, 6, 'Wireless Communication & Sensors Network ', 'Pic Microcontroller.\r\nWireless solutions and their applications.\r\nGSM (Global System for Mobile Communications.\r\nPrograming GSM using AT Command.\r\nSending and Receiving (SMS) via Microcontroller and Laptop.\r\nMake a call via Microcontroller and laptop.\r\nSMS Control applications.\r\nBluetooth interfacing with Microcontroller.\r\nControl your home devices using your smart phone.\r\nBuild your Smart Home system using (Zigbee, Bluetooth, GSM).\r\nWireless Sensor Network: technology, protocols, and applications.\r\nZigBee communication system.\r\nSend and Receive data via ZigBee communication.\r\nInterfacing between PC and Microcontroller via ZigBee with point-to-point tropology.\r\nMicrocontroller point-to-point network via ZigBee.\r\nPoint-to-Multipoint network.\r\nGSM based home security system to get intrusion alerts like door, windows open alerts onto your cell phone.\r\nReal-time Bluetooth communication system for control of a mobile Robot.\r\nAntitheft System using motion Sensor and Zigbee.\r\nMulti-sensor (Smoke, Fire, Temperature, Motion, LDR,) Based Smart Home – Zigbee.\r\nAn On-line Monitoring System of Temperature and Motion sensors on GSM, SMS, Zigbee and Bluetooth. \r\nRemote-controlled Smart Home with Zigbee Sensor Network.\r\nZigbee for Building Control Wireless Sensor Networks.\r\nZigbee based Wireless Sensor Networks and Its Applications in Industry.\r\nZigbee based Gas Leak Detection and Data Monitoring System\r\nGPS and Tracking System.\r\nWi-Fi communication system for control of home appliances using android', 'http://mikroelectron.com/UploadedFile/wireless-communication.jpg', 200, 40, 25, '2020-02-08 21:37:54'),
-(2, 6, 'Advanced Arduino Course', ' التعرف على الاردوينو وأنواعها وقدراتها الصناعية\r\n التعرف على لغات برمجة الاردوينو \r\n التعامل مع المداخل والمخارج الرقمية والتماثلية\r\n التعامل مع جمل التحكم كاملة \r\n كيفية قراءة المجسات المختلفة والتعامل معها من خلال الاردوينو\r\n عمل دوائر تحكم بناءعلى قراءة درجات الحرارة وشدة الاضاءة والفولتية وغيرها \r\n بناء ساعة قياس للفولتية والمقاومة وعرض القراءة على LCD\r\n استخدام انظمة السيريال USART & SPI\r\n ربط اكثر من اردوينو معا وعمل شبكة اتصال \r\nربط الاردوينو بالكمبيوتر و بناء نظام تحكم ومراقبة من خلاله\r\nربط الاردوينو مع SD-card وطرق تخزين البيانات عليها \r\nربط الاردوينو مع اكسل شيت لتسجيل وتخزين قراءات مجسات مختلفة\r\nكيف التعامل مع EEPROM وتخزين البيانات\r\n بناء نظام حماية عن طريق key-pad و LCD\r\nبناء دوئر للتحكم باجهزة 220 V عن طريق الاردوينو\r\n بناء عدادات تصاعدية وتنازلية باستخدام الاردوينو و7-Segments\r\n التعرف على نظام الــ Interrupt وتطبيقاته الاحترافية والعملية\r\n التحكم بسرعة الــ DC Motor من خلال PWM\r\n استخدام Servo motor والتحكم بالاتجاهات\r\n كيفية استخدام الاردوينو في التطبيقات الصناعية\r\n بناء مشاريع تحكم بالاعتماد على قراءات مجسات مختلفة\r\nمدة الدورة : 30 ساعة عملية', 'http://mikroelectron.com/UploadedFile/12715434_822252037896889_325499139670144592_n.jpg', 150, 30, 25, '2020-02-08 21:37:54'),
+(2, 6, 'Advanced Arduino Course', ' التعرف على الاردوينو وأنواعها وقدراتها الصناعية\r\n التعرف على لغات برمجة الاردوينو \r\n التعامل مع المداخل والمخارج الرقمية والتماثلية\r\n التعامل مع جمل التحكم كاملة \r\n كيفية قراءة المجسات المختلفة والتعامل معها من خلال الاردوينو\r\n عمل دوائر تحكم بناءعلى قراءة درجات الحرارة وشدة الاضاءة والفولتية وغيرها \r\n بناء ساعة قياس للفولتية والمقاومة وعرض القراءة على LCD\r\n استخدام انظمة السيريال USART & SPI\r\n ربط اكثر من اردوينو معا وعمل شبكة اتصال \r\nربط الاردوينو بالكمبيوتر و بناء نظام تحكم ومراقبة من خلاله\r\nربط الاردوينو مع SD-card وطرق تخزين البيانات عليها \r\nربط الاردوينو مع اكسل شيت لتسجيل وتخزين قراءات مجسات مختلفة\r\nكيف التعامل مع EEPROM وتخزين البيانات\r\n بناء نظام حماية عن طريق key-pad و LCD\r\nبناء دوئر للتحكم باجهزة 220 V عن طريق الاردوينو\r\n بناء عدادات تصاعدية وتنازلية باستخدام الاردوينو و7-Segments\r\n التعرف على نظام الــ Interrupt وتطبيقاته الاحترافية والعملية\r\n التحكم بسرعة الــ DC Motor من خلال PWM\r\n استخدام Servo motor والتحكم بالاتجاهات\r\n كيفية استخدام الاردوينو في التطبيقات الصناعية\r\n بناء مشاريع تحكم بالاعتماد على قراءات مجسات مختلفة\r\nمدة الدورة : 30 ساعة عملية', 'http://mikroelectron.com/UploadedFile/12715434_822252037896889_325499139670144592_n.jpg', 150, 30, 28, '2020-02-08 21:37:54'),
 (3, 6, 'Little Engineer', 'المحاور العلمية التي يستند اليها البرنامج :\r\n\r\nيتعرف الطالب على القطع الالكترونية و استخداماتها.\r\nيتعلم الطالب أساسيات الدارات الكهربائية و الالكترونية.\r\nيطبق الطالب ما تعلمه في تصميم أنظمة الكترونية و بنائها.\r\nيتعلم الطالب فحص الدارات الالكترونية بأجهزة القياس.\r\nيتعلم الطالب حل المشكلات التقنية التي تواجهه في التطبيق العملي للالكترونيات.\r\nينتهي البرنامج بمشروع تخرج عملي لكل طالب على أحد الأنظمة الالكترونية.\r\n\r\n\r\nبرنامج هندسي متكامل :\r\n\r\nيعزز استراتيجية التفكير الهندسي و حل المشكلات.\r\nجميع محاور الدورة ضمن تطبيقات عملية و اشراف كادر مهندسين محترفين.\r\nعمل مشروع الكتروني متكامل لكل طالب يتضمن أحد الأنظمة الاكترونية العملية', 'http://mikroelectron.com/UploadedFile/12741868_822252067896886_2093391076941503606_n.jpg', 100, 40, 25, '2020-02-08 21:40:08'),
 (4, 6, 'Raspberry Pi course', 'Introduction to Raspberry\r\nInstallation, configuration, accessories and other aspects (3 hours)\r\nIntroduction to Python\r\nIntroduction to programming in Python on the Raspberry Pi (3 hours)\r\nA complete example in Python\r\nRaspberry Pi GPIO module for external connections \r\nHardware basics and using the GPIO (3 hours)\r\nOpencV install and compile (3 hours)\r\nOpenCV Image Processing Basics\r\nObject Detection (Build object follower robot)\r\nFace Detection using OpenCV (6 hours)\r\nHome Automation (Control and monitor sensors from web) (3 hours)\r\nHome Automation (Control and monitor sensors Using bluetooth) (3 hours)\r\nIntroduction, installation Windows 10 Iot Core\r\nIntroduction to C# \r\nIntroduction to programming in C# on the Raspberry Pi (3 hours)\r\nRecord video and capture image \r\nSmart Security System (send an email when motion detect) (3 hours) ', 'http://mikroelectron.com/UploadedFile/10437466_822254871229939_9097033907592208534_n.jpg', 300, 80, 25, '2020-02-08 21:40:08'),
 (5, 6, 'Android course', 'Android Studio and build User Interface (Set up and walkthrough)\r\nFundamentals of Java Programming used to build Android apps\r\nInputs, Buttons and Reactive (Tap) Interfaces\r\nAndroid Building blocks\r\nVariables, Arrays, Loops, ArrayLists, Listview\r\nNavigate between screens\r\nPassing information between screens\r\nLearn how professional android apps developers think and work\r\nLearn how to design android apps\r\nBuild several amazing apps - Hands on\r\nPublish your apps on Google Play\r\nEarn Money from your Android apps - How to integrate ads in your apps\r\nsync to a server (send and receive data from server)\r\nsend push notification using (GCM)', 'http://mikroelectron.com/UploadedFile/12729090_822251997896893_4890317293145588367_n.jpg', 240, 40, 25, '2020-02-08 21:41:31'),
-(6, 6, 'Arduino Course - دورة اردوينو', 'هل واجهت مشكلة في استخدام الاردوينو !!!\r\nهل تريد تطوير مهاراتك في استخدام الاردوينو !!!\r\nحاب تحترف اردوينو وتبدأ في بناء مشاريع ودوائر تحكم خاصة بك !!!\r\nشركة مايكروالكترون بتقدم لك دورة عملية خاصة بالمحترفين حيث تأهلك هذه الدورة لان تصبح محترف اردوينو من البداية حتى النهائية ...\r\n\r\nمحتوى الدورة : \r\n1. التعرف على الاردوينو وأنواعها وقدراتها الصناعية\r\n2. التعرف على لغات برمجة الاردوينو \r\n3. التعامل مع المداخل والمخارج الرقمية والتماثلية\r\n4. التعامل مع جمل التحكم كاملة \r\n5. كيفية قراءة المجسات المختلفة والتعامل معها من خلال الاردوينو\r\n6. عمل دوائر تحكم بناءعلى قراءة درجات الحرارة وشدة الاضاءة والفولتية وغيرها \r\n7. بناء ساعة قياس للفولتية والمقاومة وعرض القراءة على LCD\r\n8. استخدام انظمة السيريال USART & SPI\r\n9. ربط اكثر من اردوينو معا وعمل شبكة اتصال \r\n10. ربط الاردوينو بالكمبيوتر و بناء نظام تحكم ومراقبة من خلاله\r\n11. ربط الاردوينو مع SD-card وطرق تخزين البيانات عليها \r\n12. ربط الاردوينو مع اكسل شيت لتسجيل وتخزين قراءات مجسات مختلفة\r\n13. كيف التعامل مع EEPROM وتخزين البيانات\r\n14. بناء نظام حماية عن طريق key-pad و LCD\r\n15. بناء دوئر للتحكم باجهزة 220 V عن طريق الاردوينو\r\n16. بناء عدادات تصاعدية وتنازلية باستخدام الاردوينو و7-Segments\r\n17. التعرف على نظام الــ Interrupt وتطبيقاته الاحترافية والعملية\r\n18. التحكم بسرعة الــ DC Motor من خلال PWM\r\n19. استخدام Servo motor والتحكم بالاتجاهات\r\n20. كيفية استخدام الاردوينو في التطبيقات الصناعية\r\n21 بناء مشاريع تحكم بالاعتماد على قراءات مجسات مختلفة', 'http://mikroelectron.com/UploadedFile/66518799_2122211281234285_5172539684210868224_n.png', 40, 25, 25, '2020-02-08 21:41:31');
+(6, 6, 'Arduino Course - دورة اردوينو', 'هل واجهت مشكلة في استخدام الاردوينو !!!\r\nهل تريد تطوير مهاراتك في استخدام الاردوينو !!!\r\nحاب تحترف اردوينو وتبدأ في بناء مشاريع ودوائر تحكم خاصة بك !!!\r\nشركة مايكروالكترون بتقدم لك دورة عملية خاصة بالمحترفين حيث تأهلك هذه الدورة لان تصبح محترف اردوينو من البداية حتى النهائية ...\r\n\r\nمحتوى الدورة : \r\n1. التعرف على الاردوينو وأنواعها وقدراتها الصناعية\r\n2. التعرف على لغات برمجة الاردوينو \r\n3. التعامل مع المداخل والمخارج الرقمية والتماثلية\r\n4. التعامل مع جمل التحكم كاملة \r\n5. كيفية قراءة المجسات المختلفة والتعامل معها من خلال الاردوينو\r\n6. عمل دوائر تحكم بناءعلى قراءة درجات الحرارة وشدة الاضاءة والفولتية وغيرها \r\n7. بناء ساعة قياس للفولتية والمقاومة وعرض القراءة على LCD\r\n8. استخدام انظمة السيريال USART & SPI\r\n9. ربط اكثر من اردوينو معا وعمل شبكة اتصال \r\n10. ربط الاردوينو بالكمبيوتر و بناء نظام تحكم ومراقبة من خلاله\r\n11. ربط الاردوينو مع SD-card وطرق تخزين البيانات عليها \r\n12. ربط الاردوينو مع اكسل شيت لتسجيل وتخزين قراءات مجسات مختلفة\r\n13. كيف التعامل مع EEPROM وتخزين البيانات\r\n14. بناء نظام حماية عن طريق key-pad و LCD\r\n15. بناء دوئر للتحكم باجهزة 220 V عن طريق الاردوينو\r\n16. بناء عدادات تصاعدية وتنازلية باستخدام الاردوينو و7-Segments\r\n17. التعرف على نظام الــ Interrupt وتطبيقاته الاحترافية والعملية\r\n18. التحكم بسرعة الــ DC Motor من خلال PWM\r\n19. استخدام Servo motor والتحكم بالاتجاهات\r\n20. كيفية استخدام الاردوينو في التطبيقات الصناعية\r\n21 بناء مشاريع تحكم بالاعتماد على قراءات مجسات مختلفة', 'http://mikroelectron.com/UploadedFile/66518799_2122211281234285_5172539684210868224_n.png', 40, 25, 25, '2020-02-08 21:41:31'),
+(7, 3, 'test', 'test test test ', '', 300, 60, 25, '2020-02-09 02:22:27');
 
 -- --------------------------------------------------------
 
@@ -199,7 +200,7 @@ CREATE TABLE IF NOT EXISTS `offers` (
   `End_Date` date NOT NULL,
   `Date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`Id`),
-  KEY `FK_Offers_Items_` (`Id_Items`)
+  KEY `FK_Offers_Items` (`Id_Items`)
 ) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 --
@@ -298,25 +299,28 @@ CREATE TABLE IF NOT EXISTS `students` (
   `LastName` varchar(255) NOT NULL,
   `Gender` int(1) NOT NULL,
   `Phone` varchar(10) NOT NULL,
-  `Email` text NOT NULL,
+  `Email` varchar(255) NOT NULL,
   `Birthday` date NOT NULL,
   `Id_Address` int(11) NOT NULL,
   `Id_University` int(3) NOT NULL,
   `Id_Specialization` int(3) NOT NULL,
   `Date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`Id`),
+  UNIQUE KEY `UNIQUE_Phone` (`Phone`),
+  UNIQUE KEY `UNIQUE_Email` (`Email`),
   KEY `FK_Address` (`Id_Address`),
   KEY `FK_University` (`Id_University`),
   KEY `FK_specialization` (`Id_Specialization`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `students`
 --
 
 INSERT INTO `students` (`Id`, `FirstName`, `LastName`, `Gender`, `Phone`, `Email`, `Birthday`, `Id_Address`, `Id_University`, `Id_Specialization`, `Date`) VALUES
-(1, 'zeid', 'zein alabdeen', 1, '791749367', 'zeid.zen@gmail.com', '1996-01-10', 3, 5, 3, '2020-02-08 22:01:18'),
-(2, 'Osama', 'Yousef', 1, '790083761', 'fotboy1788@hotmail.com', '1993-04-04', 2, 5, 4, '2020-02-08 22:01:18');
+(1, 'zeid', 'zein alabdeen', 1, '0791749367', 'zeid.zen@gmail.com', '1996-01-10', 3, 5, 3, '2020-02-08 22:01:18'),
+(2, 'Osama', 'yousef', 1, '0790083761', 'fotboy1788@hotmail.com', '1993-04-04', 2, 5, 4, '2020-02-08 22:01:18'),
+(3, 'ali', 'ali', 1, '0771472596', 'ali.ali@gmail.com', '1996-01-10', 3, 2, 1, '2020-02-09 02:07:18');
 
 -- --------------------------------------------------------
 
@@ -333,7 +337,7 @@ CREATE TABLE IF NOT EXISTS `stu_class` (
   PRIMARY KEY (`Id`),
   KEY `FK_stu_class_student` (`Id_Student`),
   KEY `FK_stu_class_class` (`Id_Class`)
-) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `stu_class`
@@ -343,7 +347,8 @@ INSERT INTO `stu_class` (`Id`, `Id_Student`, `Id_Class`, `Date`) VALUES
 (1, 1, 1, '2020-02-08 22:01:51'),
 (2, 2, 1, '2020-02-08 22:01:51'),
 (3, 1, 2, '2020-02-08 22:02:04'),
-(4, 2, 2, '2020-02-08 22:02:04');
+(4, 2, 2, '2020-02-08 22:02:04'),
+(6, 3, 3, '2020-02-09 02:53:12');
 
 -- --------------------------------------------------------
 
@@ -380,7 +385,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
   `FirstName` varchar(255) CHARACTER SET utf8 NOT NULL,
   `LastName` varchar(255) CHARACTER SET utf8 NOT NULL,
-  `Email` text CHARACTER SET utf8 NOT NULL,
+  `Email` varchar(255) CHARACTER SET utf8 NOT NULL,
   `Phone` varchar(10) NOT NULL,
   `Password` text CHARACTER SET utf8 NOT NULL,
   `Gender` int(1) NOT NULL,
@@ -389,6 +394,8 @@ CREATE TABLE IF NOT EXISTS `users` (
   `Birthday` date NOT NULL,
   `Date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`Id`),
+  UNIQUE KEY `UNIQUE_Phone` (`Phone`),
+  UNIQUE KEY `UNIQUE_Email` (`Email`),
   KEY `FK_User_Address` (`Id_Address`)
 ) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
