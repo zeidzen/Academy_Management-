@@ -15,17 +15,19 @@ def index():
 
 @app.route('/home') 
 def Home_Page():
-    Home_class = pages.Home()
-    return render_template ('home.html' , data = Home_class.data ) 
+    Home_Class = pages.Home()
+    return render_template ('home.html' , data = Home_Class.data ) 
     
 @app.route('/login') 
 def Login_Page(): 
-    pass
+    Login_Class = pages.Home()
+    return render_template ('login.html' , data = Login_Class.data ) 
      
 
 @app.route('/sinup') 
 def Sinup_Page(): 
-    pass
+    Sinup_Class = pages.Sinup()
+    return render_template ('register.html' , data = Sinup_Class.data ) 
 
 @app.route('/courses') 
 def Courses_Page(): 
@@ -37,7 +39,13 @@ def Achievements_Page():
 
 @app.route('/about') 
 def About_Page(): 
+    About_Class = pages.About()
+    return render_template ('about.html' , data = About_Class.data ) 
+
+@app.route('/ForgottenPassword') 
+def ForgottenPassword_Page(): 
     pass
+
 
 @app.route('/TTADP') 
 def Dashboard_Page(): 

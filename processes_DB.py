@@ -7,7 +7,7 @@ import os
 
 # All it Work
 
-class Show_All_Data():
+class Show_Data():
     def __init__(self):
         self.con = db.DataBase()
 
@@ -541,15 +541,9 @@ class Register_And_login():
                 return True
             else:
                 return False
-
-
-# show = Show_All_Data()
-show = insert_data()
-
-info = {'Id': 3, 'FirstName': 'Haitham', 'LastName': 'Husam', 'Gender': 1, 'Phone': '0789605882',
-        'Email': 'hhh1998@hotmail.com', 'Birthday': '1998-5-13', 'Id_Address': 3,
-        'Id_University': 5, 'Id_Specialization': 3}
-data = show.add_student(**info)
-# for d in data:
-#     print(d)
-print(data)
+            
+            
+            
+#=============================================================================
+#=============================================================================
+#=============================================================================
