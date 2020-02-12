@@ -56,6 +56,7 @@ class Sinup (Header) :
     def __init__(self) : 
         super().__init__()
         self.data ['title'] = 'Sinup'
+        self.data ['Cities'] = self.show_data.get_all_cities()
         
         
 class About (Header) : 

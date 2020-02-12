@@ -297,7 +297,14 @@ class Show_Data():
             payment.append(selected)
         return payment
 
-
+    def get_all_cities (self) : 
+        sql = """select Id , Name from City ; """
+        data = self.con.Select_Data_More_Row(sql)
+        return data
+    
+    
+    
+    
 class insert_data():
     def __init__(self):
         self.con = db.DataBase()
@@ -424,6 +431,9 @@ class insert_data():
             return True
         except:
             return False, 'A system error occurred, please try again later'
+        
+        
+
 
 
 class delete_data():
@@ -542,8 +552,9 @@ class Register_And_login():
             else:
                 return False
             
-            
-            
 #=============================================================================
 #=============================================================================
 #=============================================================================
+                
+# show = Show_Data()
+# data = show.get_all_Cities()
