@@ -302,6 +302,15 @@ class Show_Data():
         data = self.con.Select_Data_More_Row(sql)
         return data
     
+    def get_all_universities(self) : 
+        sql = """select Id , Name from university ;"""
+        data = self.con.Select_Data_More_Row(sql)
+        return data
+    
+    def get_all_specialization (self) : 
+        sql = """select Id , Name from university ;"""
+        data = self.con.Select_Data_More_Row(sql)
+        return data
     
     
     
@@ -491,66 +500,104 @@ class delete_data():
             return False, 'Something went wrong please try again later'
 
 
-class Register_And_login():
-
-    def __init__(self):
-        self.con = db.DataBase()
-
+   
+class Register_And_login () : 
+    
+    def __init__(self) :
+         self.con=db.DataBase()
+         
+         
     def hash_password(self,password):
         """Hash a password for storing."""
         salt = hashlib.sha256(os.urandom(60)).hexdigest().encode('ascii')
-        pwdhash = hashlib.pbkdf2_hmac('sha512', password.encode('utf-8'),
+        pwdhash = hashlib.pbkdf2_hmac('sha512', password.encode('utf-8'), 
                                     salt, 100000)
         pwdhash = binascii.hexlify(pwdhash)
         return (salt + pwdhash).decode('ascii')
-
+    
+    
     def verify_password(self,stored_password, provided_password):
         """Verify a stored password against one provided by user"""
         salt = stored_password[:64]
         stored_password = stored_password[64:]
-        pwdhash = hashlib.pbkdf2_hmac('sha512',
-                                      provided_password.encode('utf-8'),
-                                      salt.encode('ascii'),
+        pwdhash = hashlib.pbkdf2_hmac('sha512', 
+                                      provided_password.encode('utf-8'), 
+                                      salt.encode('ascii'), 
                                       100000)
         pwdhash = binascii.hexlify(pwdhash).decode('ascii')
         return pwdhash == stored_password
-
+    
+    
+    
     def check_user_exists(self, column , value ):
         sql="""SELECT count(*) FROM users WHERE {} ='{}' ;""".format(column,value)
-        data = self.con.Select_Data_One_Row(sql)
+        data = self.con.Select_Data_One_Row(sql) 
         print (data)
         if data[0] == 0 : return False
         else : return True
 
-    def register_user(self, fname, lname, email, phone, password, gender, id_address, image, birthday, date):
+    
+    def Register_func (self ,**info) :   
+        """
+        This function adds information to the database
+        that the user entered in the fields in the (Sinup) interface :
+        ( First Name , Last Name , Username , Email , Phone , Password ,Birthday,
+          Gender  Country  )
+        
+        Initially it checks whether the entry is correct or incorrect and
+        returns an error message in this case
+        
+        After , data is sent to the database to make sure the entered data
+        is not duplicate
+        
+        If correct returns a message that the operation completed
+        successfully and if there is an error returns an error message with
+        the duplicate data specified
+        """
+                
+        Email_Pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
+        if re.search( Email_Pattern , info['Email'] )  == True : 
+            return False , 'please enter a working email address'    
+        
+                
+        if self.check_user_exists( 'Email', info['Email']) == True : 
+            return False , 'An email already exists Please enter a new email'
+        
+        
+        if self.check_user_exists( 'Phone', info['Phone']) == True : 
+            return False , 'Phone number already exists. Please enter a new number'
+        
+        info['Password']=self.hash_password(info['Password'])
+        
+        self.con.Insert_Data(table='users',**info)
+        sql="SELECT Id FROM users WHERE Email='{}' ; ".format(info['Email']) 
+        Id_User = self.con.Select_Data_One_Row(sql)
+        return True,Id_User
+#        try :
+#        except : 
+#            return False , 'System error occurred, please try again later'
+    
+    
+    
+    def Login_func ( self,Email ,password) -> int :   
+            """
+            This function makes sure that the logon information is correct
+            """            
+            sql="SELECT Id ,Email , Password  FROM users WHERE Email='{}'  ; ".format(Email.lower()) 
+            data=self.con.Select_Data_One_Row(sql)
+            if len (data) == 0 : 
+                return False ,'Email does not exist'
+            try : 
+                    if self.verify_password(data[2],password) :
+                        return True , data[0]
+                    else :
+                        return False ,'Please enter a valid password'
+            except :
+                    return False , 'Please enter a valid password'
+        
 
-        data = dict()
-        table_name = 'Users'
-        data['ID'] = 0
-        data['FName'] = fname
-        data['LName'] = lname
-        data['Email'] = email
-        data['Phone'] = phone
-        data['Password'] = self.hash_password( password)
-        data['Gender'] = gender
-        data['ID_Address'] = id_address
-        data['Image'] = image
-        data['Birthday'] = birthday
-        data['Date'] = date
 
-        self.con.Insert_Data(table_name, data)
-        return "Data Inserted"
 
-    def login_user(self, in_email, in_password):
-        sql = """select Email, Password from users where Email = {} ;""".format(in_email, in_password)
-
-        data = self.con.Select_Data_One_Row(sql)
-        passwords = self.verify_password(data[1], in_password)
-        for email in data[0]:
-            if email == in_email and passwords == True:
-                return True
-            else:
-                return False
             
 #=============================================================================
 #=============================================================================

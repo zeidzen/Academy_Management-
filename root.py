@@ -11,7 +11,7 @@ app.secret_key = 'YYYY@#$%'
 
 @app.route ('/') 
 def index():
-    return redirect(url_for('Home_page'))
+    return redirect(url_for('Home_Page'))
 
 @app.route('/home') 
 def Home_Page():
