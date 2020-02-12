@@ -1,9 +1,4 @@
 # -*- coding: utf-8 -*-
-"""
-Created on Mon Nov 25 13:06:01 2019
-
-@author: zeidz
-"""
 
 import config as con
 from flask import Flask , request ,url_for , redirect ,session , jsonify
@@ -18,15 +13,30 @@ app.secret_key = 'YYYY@#$%'
 def index():
     return redirect(url_for('Home_page'))
 
+@app.route('/Home') 
+def Home_Page(): 
+    pass    
     
-    
-@app.route('/home') 
-def Home_page(): 
-    Home_class = pages.Home ()
-    return render_template ('home-1-rtl.html',data = Home_class.data )
+@app.route('/login') 
+def Login_Page(): 
+    pass
      
 
+@app.route('/sinup') 
+def Sinup_Page(): 
+    pass
 
+@app.route('/courses') 
+def Courses_Page(): 
+    pass
+
+@app.route('/achievements') 
+def Achievements_Page(): 
+    pass
+
+@app.route('/TTADP') 
+def Dashboard_Page(): 
+    pass
 
 if __name__ == '__main__':
     app.run(debug = con.debug ,port=con.port , host = con.host) 
