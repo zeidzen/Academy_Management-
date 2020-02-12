@@ -16,9 +16,29 @@ from flask import session
 class Header () : 
     pass
     
-    
 class Footer():
     pass
+
+class Home ()  : 
+    pass 
+
+class Courses () : 
+    pass 
+
+class Login () : 
+    pass 
+
+class Achievements () : 
+    pass 
+
+class Dashboard () : 
+    pass
+
+class Sinup () : 
+    pass 
+
+
+
         
         
         
