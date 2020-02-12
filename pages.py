@@ -14,13 +14,19 @@ from flask import session
 
 
 class Header () : 
-    pass
+    def __init__(self) :
+        self.data=dict()
+        self.data['title'] ='Tabasheer Training Academy'
+        
     
 class Footer():
     pass
 
-class Home ()  : 
-    pass 
+class Home (Header)  : 
+    def __init(self) : 
+        super().__init__()
+
+
 
 class Courses () : 
     pass 
