@@ -17,15 +17,19 @@ class Header () :
         self.data ['products_categories'] =self.show_data.get_all_categories_item()
         self.data ['courses_categories'] = self.show_data.get_all_categories_course()
         self.data ['courses'] = self.show_data.get_all_courses()
-        
+        self.data['courses_name'] = self.show_data.get_courses_name()
+
         
     
 class Footer():
     pass
 
+
 class Home (Header)  : 
     def __init(self) : 
         super().__init__()
+        self.data ['offers_Of_products'] = self.show_data.get_offer_by_produts()
+        self.data ['offers_Of_courses'] = self.show_data.get_offer_by_courses()
 
 
 

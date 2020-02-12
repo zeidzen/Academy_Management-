@@ -6,9 +6,9 @@
 			<section class="so-spotlight1">
 				<div id="so-slideshow" >
 					<div class="owl-carousel" data-loop="yes" data-margin="0" data-nav="yes" data-dots="yes" data-items_xs="1" data-items_sm="1" data-items_md="1">
-						<div><a href="#"><img  src="../static/img/demo/slider/home-2/slider-1.jpg" alt=""></a></div>
-						<div><a href="#"><img  src="../static/img/demo/slider/home-2/slider-2.jpg" alt=""></a></div>
-						<div><a href="#"><img  src="../static/img/demo/slider/home-2/slider-3.jpg" alt=""></a></div>
+						<div><a href="#"><img  src="../static/img/slider/slider-1.jpg" alt=""></a></div>
+						<div><a href="#"><img  src="../static/img/slider/slider-2.jpg" alt=""></a></div>
+						<div><a href="#"><img  src="../static/img/slider/slider-3.jpg" alt=""></a></div>
 					</div>
 					
 				</div>  
@@ -65,14 +65,16 @@
 					<div class="row">
 						<aside class="col-md-3 col-sm-4 col-xs-12  content-aside left_column">
 							<div class="special">
-								<h3 class="modtitle">Special Offers</h3>
+								<h3 class="modtitle">Offers Of Courses</h3>
 								<hr><hr><hr>
 								<div class="owl-carousel owl-special" data-margin="0" data-loop="yes" data-nav="yes" data-dots="no" data-items_xs="1" data-items_sm="1" data-items_md="1">
+
+									{% for  item in data ['offers_Of_courses'] :%}
 									<div class="product-layout">
 										<div class="product-item-container">
 											<div class="left-block">
 												<div class="product-image-container  second_img ">
-													<a href="product.html" class="product-img"><img  src="../static/img/demo/shop/product/product-5.jpg" alt=""></a>
+													<a href="product.html" class="product-img"><img  src="{{ item ['Image'] }}" alt=""></a>
 
 													<!--Sale Label-->
 													<span class="sale">-25%</span>
@@ -87,11 +89,11 @@
 											</div>
 											<div class="right-block">
 												<div class="time-sale">
-													<p class="time-day">20 days</p>
+													<p class="time-day">30 days</p>
 													<p class="time-hour">11  :  25  :  53</p>
 												</div>
 												<div class="caption">
-													<h4><a href="product.html">Dummy product #01</a></h4>		
+													<h4><a href="product.html">{{ item ['Name'] }}</a></h4>		
 													<div class="ratings">
 														<div class="rating-box">
 															<span class=""><i class="fa fa-star "></i></span>
@@ -103,62 +105,22 @@
 													</div>
 
 													<div class="price">
-														<span class="price-new">$74.00</span>
-														<span class="price-old">$122.00</span>		   
+														<span class="price-new">JD {{ item ['old_price'] }}</span>
+														<span class="price-old">JD {{ item ['New_Price'] }}</span>		   
 													</div>
 												</div>
-
+												
 												<div class="button-group">
 													<button class="addToCart btn btn-default "   data-toggle="tooltip" title="" onclick="cart.add('42', '1');" data-original-title="Add to Cart"> <span class="">Add to Cart</span></button>
 												</div>
 											</div><!-- right block -->
+											
+											
 										</div>
 									</div>
-									<div class="product-layout">
-										<div class="product-item-container">
-											<div class="left-block">
-												<div class="product-image-container  second_img ">
-													<a href="product.html" class="product-img"><img  src="../static/img/demo/shop/product/product-2.jpg" alt=""></a>
-													<!--Sale Label-->
-													<span class="sale">-20%</span>
-												</div>
-												<div class="hover">
-													<ul>
-														<li class="icon-heart"><a class="wishlist"   data-toggle="tooltip" title="" onclick="wishlist.add('42');" data-original-title="Add to Wish List"><i class="fa fa-heart"></i></a><div class="tooltip fade top" role="tooltip" id="tooltip8161" style="top: -79px; left: 0px; display: block;"><div class="tooltip-arrow"></div><div class="tooltip-inner">Add to Wish List</div></div></li>
-														<li class="icon-exchange"><a class="compare"   data-toggle="tooltip" title="" onclick="compare.add('42');" data-original-title="Compare this Product"><i class="fa fa-exchange"></i></a></li>
-														<li class="icon-search"><a class="quickview iframe-link " data-fancybox-type="iframe" href="quickview.html">  <i class="fa fa-search" aria-hidden="true"></i></a></li>
-													</ul>
-												</div>
-											</div>
-											<div class="right-block">
-												<div class="time-sale">
-													<p class="time-day">20 days</p>
-													<p class="time-hour">11  :  25  :  53</p>
-												</div>
-												<div class="caption">
-													<h4><a href="product.html">Dummy product #02</a></h4>		
-													<div class="ratings">
-														<div class="rating-box">
-															<span class=""><i class="fa fa-star "></i></span>
-															<span class=""><i class="fa fa-star "></i></span>
-															<span class=""><i class="fa fa-star "></i></span>
-															<span class=""><i class="fa fa-star "></i></span>
-															<span class="gray"><i class="fa fa-star "></i></span>
-														</div>
-													</div>
+									{% endfor %}
 
-													<div class="price">
-														<span class="price-new">$74.00</span>
-														<span class="price-old">$122.00</span>		   
-													</div>
-												</div>
-
-												<div class="button-group">
-													<button class="addToCart btn btn-default "   data-toggle="tooltip" title="" onclick="cart.add('42', '1');" data-original-title="Add to Cart"> <span class="">Add to Cart</span></button>
-												</div>
-											</div><!-- right block -->
-										</div>
-									</div>
+	
 									<div class="product-layout">
 										<div class="product-item-container">
 											<div class="left-block">
@@ -371,11 +333,14 @@
 													<hr>
 													<div class="digital-owl">
 														<div class=" owl-carousel digital-owl " data-dots="no" data-nav="yes" data-loop="yes" data-items_xs="1" data-items_sm="2" data-items_md="4" data-margin="20">
+
+
+															{% for  item in data ['offers_Of_courses'] :%}
 															<div class="product-layout">
 																<div class="product-item-container">
 																	<div class="left-block">
 																		<div class="product-image-container  second_img ">
-																			<a href="product.html" class="product-img"><img  src="../static/img/demo/shop/product/product-1.jpg" alt=""></a>
+																			<a href="product.html" class="product-img"><img  src="JD {{item ['Image'] }}" alt=""></a>
 																			<!--Sale Label-->
 																			<span class="new">New</span>
 
@@ -390,7 +355,7 @@
 																	</div>
 																	<div class="right-block">
 																		<div class="caption">
-																			<h4><a href="product.html">Dummy product #02</a></h4>		
+																			<h4><a href="product.html">{{item ['Name'] }}</a></h4>		
 																			<div class="ratings">
 																				<div class="rating-box">
 																					<span class=""><i class="fa fa-star "></i></span>
@@ -402,7 +367,7 @@
 																			</div>
 
 																			<div class="price">
-																				<span class="price-new">$142.00</span>
+																				<span class="price-new">JD {{item ['New_Price'] }}</span>
 
 																			</div>
 																			<div class="description item-desc hidden">
@@ -416,8 +381,10 @@
 																	</div><!-- right block -->
 																</div>
 															</div>
+															{% endfor %}
 
 
+															
 															<div class="product-layout">
 																<div class="product-item-container">
 																	<div class="left-block">

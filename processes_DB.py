@@ -183,11 +183,11 @@ class Show_Data():
         return data
 
     def get_info_student_by_id(self, id_student: int) -> dict:
-        sql = """select st.Id , st.FirstName , st.LastName , st.Gender , st.Phone , st.Email , st.Birthday ,
-                     c.Name, u.Name , sp.Name
-                     From students st , city c, university u , specialization sp
-                     WHERE st.Id_Address = c.Id and st.Id_University = u.Id and st.Id_Specialization = sp.Id and
-                     st.Id = {}  ; """.format(id_student)
+        sql = """select st.Id , st.FirstName , st.LastName , st.Gender , st.Phone , st.Email ,
+        st.Birthday, c.Name, u.Name , sp.Name
+        From students st , city c, university u , specialization sp
+        WHERE st.Id_Address = c.Id and st.Id_University = u.Id and st.Id_Specialization = sp.Id and
+        st.Id = {}  ; """.format(id_student)
 
         students = self.con.Select_Data_More_Row(sql)
         data = list()
@@ -289,13 +289,12 @@ class Show_Data():
             selected = dict()
             selected['Payment'] = items[0]
             selected['FullName'] = items[1]
-            # selected['LastName'] = items[2]
             selected['FullName'] = items[2]
-            # selected['LastName'] = items[4]
             selected['Payoff'] = items[3]
             selected['Date'] = items[4]
             payment.append(selected)
         return payment
+
 
     def get_all_cities (self) : 
         sql = """select Id , Name from City ; """
@@ -312,6 +311,59 @@ class Show_Data():
         data = self.con.Select_Data_More_Row(sql)
         return data
     
+    
+    def get_courses_name (self) : 
+        courses = list()
+        sql = """select Name  from Courses;"""
+        data = self.con.Select_Data_More_Row(sql)
+        for items in data:
+            selected = dict()
+            selected['Name'] = items[0]
+            courses.append(selected)
+        return courses
+    
+    def get_offer_by_produts(self) : 
+        sql = '''SELECT o.Id_Items , i.Name ,i.Description , i.Image , i.price , o.New_Price , o.End_Date 
+                FROM offers as o , items as i 
+                WHERE o.Id_Items = i.Id and o.Type = 1   ; '''
+                
+        offers = self.con.Select_Data_More_Row(sql)
+        Products = list()
+        for offer in offers:
+            data = dict()
+            data ['Id'] = offer[0]
+            data ['Name'] = offer[1]
+            data ['Description'] = offer[2]
+            data ['Image'] = offer[3]
+            data ['old_price'] = offer[4]
+            data ['New_Price'] = offer[5]
+            data ['End_Date'] = offer[6]
+            Products.append(data)
+        return Products
+        
+    
+    
+    def get_offer_by_courses (self) : 
+        sql = '''SELECT o.Id_Items , c.Name ,c.Description , c.Image , c.Price , o.New_Price , o.End_Date
+                , c.Number_of_hours , c.Views 
+                FROM offers as o , courses as c 
+                WHERE o.Id_Items = c.Id and o.Type = 2   ;  '''
+                
+        offers = self.con.Select_Data_More_Row(sql)
+        Products = list()
+        for offer in offers:
+            data = dict()
+            data ['Id'] = offer[0]
+            data ['Name'] = offer[1]
+            data ['Description'] = offer[2]
+            data ['Image'] = offer[3]
+            data ['old_price'] = offer[4]
+            data ['New_Price'] = offer[5]
+            data ['End_Date'] = offer[6]
+            data ['Number_of_hours'] = offer[7]
+            data ['Views'] = offer[8]
+            Products.append(data)
+        return Products
     
     
 class insert_data():
@@ -604,4 +656,4 @@ class Register_And_login () :
 #=============================================================================
                 
 # show = Show_Data()
-# data = show.get_all_Cities()
+# data = show.get_offer_by_courses()
