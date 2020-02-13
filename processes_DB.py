@@ -26,6 +26,7 @@ class Show_Data():
             item.append(selected)
         return item
 
+
     def search_item(self, name: str) -> list:
         item = list()
         sql = """select Name, Description, Price, Date  from items where Name Like '%{}%';""".format(name)
@@ -314,8 +315,51 @@ class Show_Data():
         return data
 
 
-
-
+    def get_offer_by_produts(self) : 
+        sql = '''SELECT o.Id_Items , i.Name ,i.Description , i.Image , i.price , o.New_Price , o.End_Date 
+                FROM offers as o , items as i 
+                WHERE o.Id_Items = i.Id and o.Type = 1   ; '''
+                
+        offers = self.con.Select_Data_More_Row(sql)
+        Products = list()
+        for offer in offers:
+            data = dict()
+            data ['Id'] = offer[0]
+            data ['Name'] = offer[1]
+            data ['Description'] = offer[2]
+            data ['Image'] = offer[3]
+            data ['Old_Price'] = offer[4]
+            data ['New_Price'] = offer[5]
+            data ['End_Date'] = offer[6]
+            Products.append(data)
+        return Products
+        
+    
+    
+    def get_offer_by_courses (self) : 
+        sql = '''SELECT o.Id_Items , c.Name ,c.Description , c.Image , c.Price , o.New_Price , o.End_Date
+                , c.Number_of_hours , c.Views 
+                FROM offers as o , courses as c 
+                WHERE o.Id_Items = c.Id and o.Type = 2   ;  '''
+                
+        offers = self.con.Select_Data_More_Row(sql)
+        Products = list()
+        for offer in offers:
+            data = dict()
+            data ['Id'] = offer[0]
+            data ['Name'] = offer[1]
+            data ['Description'] = offer[2]
+            data ['Image'] = offer[3]
+            data ['Old_Price'] = offer[4]
+            data ['New_Price'] = offer[5]
+            data ['End_Date'] = offer[6]
+            data ['Number_of_hours'] = offer[7]
+            data ['Views'] = offer[8]
+            Products.append(data)
+        return Products
+    
+    
+    
 class insert_data():
     def __init__(self):
         self.con = db.DataBase()
@@ -554,12 +598,13 @@ class Register_And_login():
         if self.check_user_exists('Email', info['Email']) == True:
             return False, 'An email already exists Please enter a new email'
 
+
         if self.check_user_exists('Phone', info['Phone']) == True:
             return False, 'Phone number already exists. Please enter a new number'
 
         info['Password'] = self.hash_password(info['Password'])
 
-        self.con.Insert_Data(table='users', **info)
+        self.con.Insert_Data(**info , table='users' )
         sql = "SELECT Id FROM users WHERE Email='{}' ; ".format(info['Email'])
         Id_User = self.con.Select_Data_One_Row(sql)
         return True, Id_User
@@ -585,15 +630,5 @@ class Register_And_login():
             return False, 'Please enter a valid password'
 
 
-# show = Show_All_Data()
-# show = insert_data()
-#
-# info = {'Id': 0, 'FirstName': 'Haitham', 'LastName': 'Husam', 'Gender': 1, 'Phone': '0789605882',
-#         'Email': 'hhh1998@hotmail.com', 'Birthday': '1998-5-13', 'Id_Address': 3,
-#         'Id_University': 5, 'Id_Specialization': 3}
-# data = show.add_student(**info)
-
-
-# for d in data:
-#     print(d)
-# print(data)
+show = Show_Data()
+data = show.get_offer_by_produts()

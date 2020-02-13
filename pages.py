@@ -1,9 +1,6 @@
 # -*- coding: utf-8 -*-
 
 from datetime import datetime
-from flask import Flask, request, jsonify
-import processes_DB
-from flask import session
 import processes_DB
 
 
@@ -22,9 +19,13 @@ class Footer():
     pass
 
 
-class Home(Header):
-    def __init(self):
+class Home( Header ):
+    def __init__(self) :
         super().__init__()
+        
+        self.data ['offers_Of_courses'] = self.show_data.get_offer_by_courses()
+        self.data ['offers_Of_produts']= self.show_data.get_offer_by_produts()
+
 
 
 class Courses(Header):
