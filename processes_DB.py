@@ -1,12 +1,14 @@
-
+# -*- coding: utf-8 -*-
+from datetime import  datetime
+from nltk import sent_tokenize
 import database as db
 import hashlib, binascii
 import re
 import os
-# -*- coding: utf-8 -*-
+
+
 
 # All it Work
-
 
 class Show_Data():
     def __init__(self):
@@ -52,7 +54,7 @@ class Show_Data():
 
     def get_top_viewed_item(self) -> list:
         sql = """SELECT Name, Description,  Price, Image, Views , Date 
-                FROM items  ORDER BY  Views DESC ;"""
+                FROM items  ORDER BY  Views DESC LIMIT 15  ;"""
         courses = self.con.Select_Data_More_Row(sql)
         data = list()
         for items in courses:
@@ -68,7 +70,7 @@ class Show_Data():
 
     def get_top_viewed_item_by_category(self, id_category) -> list:
         sql = """SELECT Name, Description,  Price, Image, Views , Date 
-                FROM items where Id_Category = {} ORDER BY  Views DESC ;""".format(id_category)
+                FROM items where Id_Category = {} ORDER BY  Views DESC LIMIT 15 ;""".format(id_category)
         courses = self.con.Select_Data_More_Row(sql)
         data = list()
         for items in courses:
@@ -82,6 +84,46 @@ class Show_Data():
             data.append(selected)
         return data
 
+    
+    def get_last_ten_Products (self) : 
+        sql = '''SELECT Id , Name , Description ,Image , Price , Views , Date   
+               FROM items ORDER BY id DESC LIMIT 10 ; '''
+        items = self.con.Select_Data_More_Row(sql)
+        
+        Products = list ()
+        for Product in items:
+            data = dict()
+            data ['Id'] = Product[0]
+            data ['Name'] = Product[1]
+            data ['Description'] = Product[2]
+            data ['Image'] = Product[3]
+            data ['Price'] = Product[4]
+            data ['Views'] = Product[5]
+            data ['Date'] = Product[6]
+            Products.append(data)
+        return Products
+    
+    def get_all_products_by_categories (self , Category : int ) -> list  : 
+        sql = '''SELECT Id , Name , Description ,Image , Price , Views , Date   
+                FROM items 
+                WHERE Id_Category = {}                
+                ORDER BY id ;'''.format(Category)
+        items = self.con.Select_Data_More_Row(sql)
+        Products = list ()
+        for Product in items:
+            data = dict()
+            data ['Id'] = Product[0]
+            data ['Name'] = Product[1]
+            data ['Description'] = Product[2]
+            data ['Image'] = Product[3]
+            data ['Price'] = Product[4]
+            data ['Views'] = Product[5]
+            data ['Date'] = Product[6]
+            Products.append(data)
+        return Products
+
+    
+#------------------------------------------------------------------------------
     # Courses
     def get_all_courses(self) -> list:
         courses = list()
@@ -168,8 +210,8 @@ class Show_Data():
             courses.append(selected)
         return courses
 
+#------------------------------------------------------------------------------
     # Student
-
     def search_students(self, value: str) -> list:
         sql = """select st.Id , st.FirstName , st.LastName , st.Gender , st.Phone , st.Email , st.Birthday ,
              c.Name, u.Name , sp.Name
@@ -240,6 +282,8 @@ class Show_Data():
             data.append(student)
         return data
 
+#------------------------------------------------------------------------------
+        
     # Classes
     def get_all_classes(self) -> list:
         sql = """SELECT cl.Id , co.Name, cl.Name ,cl.Start_Date , cl.End_Date  ,cl.capacity , cl.Lecturer  
@@ -276,8 +320,14 @@ class Show_Data():
             class_['Lecturer'] = item[6]
             data.append(class_)
         return data
-
+#------------------------------------------------------------------------------
+        
     # Posts
+    def Convert_Date_From_Number_to_Text (self ,date :str ) : 
+        date = datetime.strptime(date, '%Y-%m-%d %H:%M:%S')
+        date = date.strftime("%A,%d %B, %Y")
+        return date
+    
     def get_all_posts(self) -> list:
         post = list()
         sql = """select Title, Content, Media, Date  from post;"""
@@ -287,10 +337,30 @@ class Show_Data():
             selected['Title'] = items[0]
             selected['Content'] = items[1]
             selected['Media'] = items[2]
-            selected['Date'] = items[3]
+            selected['Date'] = self.Convert_Date_From_Number_to_Text(str(items[3]))
+            selected['brief'] = ' '.join (sent_tokenize(items[1])[0:2] )
+
             post.append(selected)
         return post
+    
+    def get_last_number_posts (self ,number : int ) :
+        post = list()
+        sql = """select Title, Content, Media, Date  from post
+        ORDER BY  Id DESC LIMIT {}  ;""".format(number)
+        data = self.con.Select_Data_More_Row(sql)
+        for items in data:
+            selected = dict()
+            selected['Title'] = items[0]
+            selected['Content'] = items[1]
+            selected['Media'] = items[2]
+            selected['Date'] = self.Convert_Date_From_Number_to_Text(str(items[3]))
+            selected['brief'] = ' '.join (sent_tokenize(items[1])[0:2] )
 
+            post.append(selected)
+        return post
+#------------------------------------------------------------------------------
+        
+    #Payments
     def get_payment(self) -> list:
         payment = list()
         sql = """select p.Payment , CONCAT(u.FirstName,' ' ,u.LastName), CONCAT(s.FirstName,' ' ,s.LastName), p.Payoff , p.Date
@@ -308,13 +378,32 @@ class Show_Data():
             selected['Date'] = items[4]
             payment.append(selected)
         return payment
-
+#------------------------------------------------------------------------------
+        
+    #Specialization
+    def get_all_specialization(self):
+        sql = """select Id , Name from specialization ; """
+        data = self.con.Select_Data_More_Row(sql)
+        return data
+    
+#------------------------------------------------------------------------------    
+        
+    #University
+    def get_all_universities(self):
+        sql = """select Id , Name from university ; """
+        data = self.con.Select_Data_More_Row(sql)
+        return data
+    
+#------------------------------------------------------------------------------
+        
+    #City
     def get_all_cities(self):
         sql = """select Id , Name from City ; """
         data = self.con.Select_Data_More_Row(sql)
         return data
-
-
+#------------------------------------------------------------------------------
+        
+    #Offer
     def get_offer_by_produts(self) : 
         sql = '''SELECT o.Id_Items , i.Name ,i.Description , i.Image , i.price , o.New_Price , o.End_Date 
                 FROM offers as o , items as i 
@@ -331,6 +420,7 @@ class Show_Data():
             data ['Old_Price'] = offer[4]
             data ['New_Price'] = offer[5]
             data ['End_Date'] = offer[6]
+            data ['Sale'] =  int (offer[5]/offer[4]  * 100  - 100  )
             Products.append(data)
         return Products
         
@@ -355,10 +445,21 @@ class Show_Data():
             data ['End_Date'] = offer[6]
             data ['Number_of_hours'] = offer[7]
             data ['Views'] = offer[8]
+            data ['Sale'] =  int (offer[5]/offer[4]  * 100  - 100  )
             Products.append(data)
         return Products
     
-    
+
+       
+       
+       
+       
+       
+       
+       
+       
+       
+       
     
 class insert_data():
     def __init__(self):
@@ -631,4 +732,4 @@ class Register_And_login():
 
 
 show = Show_Data()
-data = show.get_offer_by_produts()
+data = show.get_top_viewed_item()

@@ -1,9 +1,4 @@
 # -*- coding: utf-8 -*-
-
-from datetime import datetime
-from flask import Flask, request, jsonify
-import processes_DB
-from flask import session
 import processes_DB
 
 
@@ -18,18 +13,30 @@ class Header():
         self.data['courses_name'] = self.show_data.get_courses_name()
         self.data['categories'] = self.show_data.get_all_categories_item()
 
+
     
 class Footer():
     pass
 
 
-class Home(Header):
-    def __init(self):
+class Home( Header):
+    def __init__ (self) :
         super().__init__()
-        self.data['offers_Of_courses'] = self.show_data.get_offer_by_courses()
-        self.data['offers_Of_produts'] = self.show_data.get_offer_by_produts()
+        self.data ['offers_Of_courses'] = self.show_data.get_offer_by_courses()
+        self.data ['offers_Of_produts'] = self.show_data.get_offer_by_produts()
+        self.data ['last_ten_Products'] = self.show_data.get_last_ten_Products ()
+        self.data ['all_courses'] = self.show_data.get_all_courses()
+        self.data ['products_by_categories'] = self.show_data.get_all_products_by_categories(2)
+        self.data ['products_by_Robotics_Kits'] = self.show_data.get_all_products_by_categories(11)
+        self.data ['products_by_Arduino'] = self.show_data.get_all_products_by_categories(8)
+        self.data ['Most_Watched'] = self.show_data.get_top_viewed_item()
+        self.data ['last_five_posts'] = self.show_data.get_last_number_posts(5)
+        
+        
 
-
+    
+    
+    
 class Courses(Header):
     def __init__(self):
         super().__init__()
