@@ -3,8 +3,7 @@ import config as con
 from flask import Flask , request ,url_for , redirect ,session , jsonify
 from flask import render_template
 import pages
-import processes_DB
-import time
+
 
 
 app = Flask(__name__ )
@@ -21,6 +20,16 @@ def index():
 def Home_Page():
     Home_Class = pages.Home()
     return render_template('home.html', data=Home_Class.data)
+
+@app.route('/products')
+def products_Page():
+    products_Class = pages.Products()
+    return render_template('home.html', data=products_Class.data)
+
+@app.route('/product/<Id>')
+def product_Page(Id):
+    Product_Class = pages.Product(Id)
+    return render_template('home.html', data=Product_Class.data)
 
 @app.route('/faqs')
 def Faqs_Page():
@@ -61,14 +70,24 @@ def register_data():
     return render_template('home.html', data=Home_Class.data)
 
 
-@app.route('/courses')
-def Courses_Page():
-    pass
+@app.route('/courses/page=<page>')
+def Courses_Page(page):
+    courses_Class = pages.Courses (page)
+    return render_template('posts.html', data=courses_Class.data)
 
 
-@app.route('/achievements')
-def Achievements_Page():
-    pass
+@app.route('/achievements/page=<page>')
+def Achievements_Page(page):
+    Achievements_Class = pages.Achievements(page)
+    return render_template('posts.html', data=Achievements_Class.data)
+
+
+@app.route('/post/<Id_post>')
+def Post_Page(Id_post):
+    Post_Class = pages.Post(int (Id_post) )
+    return render_template('post-detail.html', data=Post_Class.data)
+
+
 
 @app.route('/about')
 def About_Page():

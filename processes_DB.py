@@ -330,34 +330,50 @@ class Show_Data():
     
     def get_all_posts(self) -> list:
         post = list()
-        sql = """select Title, Content, Media, Date  from post;"""
+        sql = """select Id , Title, Content, Media, Date  from post;"""
         data = self.con.Select_Data_More_Row(sql)
         for items in data:
             selected = dict()
-            selected['Title'] = items[0]
-            selected['Content'] = items[1]
-            selected['Media'] = items[2]
-            selected['Date'] = self.Convert_Date_From_Number_to_Text(str(items[3]))
-            selected['brief'] = ' '.join (sent_tokenize(items[1])[0:2] )
+            selected['Id'] = items[0]
+            selected['Title'] = items[1]
+            selected['Content'] = items[2]
+            selected['Media'] = items[3]
+            selected['Date'] = self.Convert_Date_From_Number_to_Text(str(items[4]))
+            selected['brief'] = ' '.join (sent_tokenize(items[2])[0:2] )
 
             post.append(selected)
         return post
     
     def get_last_number_posts (self ,number : int ) :
         post = list()
-        sql = """select Title, Content, Media, Date  from post
+        sql = """select Id , Title, Content, Media, Date  from post
         ORDER BY  Id DESC LIMIT {}  ;""".format(number)
         data = self.con.Select_Data_More_Row(sql)
         for items in data:
             selected = dict()
-            selected['Title'] = items[0]
-            selected['Content'] = items[1]
-            selected['Media'] = items[2]
-            selected['Date'] = self.Convert_Date_From_Number_to_Text(str(items[3]))
-            selected['brief'] = ' '.join (sent_tokenize(items[1])[0:2] )
+            selected['Id'] = items[0]
+            selected['Title'] = items[1]
+            selected['Content'] = items[2]
+            selected['Media'] = items[3]
+            selected['Date'] = self.Convert_Date_From_Number_to_Text(str(items[4]))
+            selected['brief'] = ' '.join (sent_tokenize(items[2])[0:2] )
 
             post.append(selected)
         return post
+    
+    def get_post_by_id (self , Id_Post : int ) :
+        sql = """select Id , Title, Content, Media, Date  from post
+        Where Id = {}   ;""".format(Id_Post)
+        data = self.con.Select_Data_One_Row(sql)
+        post = dict()
+        post['Id'] = data[0]
+        post['Title'] = data[1]
+        post['Content'] = data[2]
+        post['Media'] = data[3]
+        post['Date'] = self.Convert_Date_From_Number_to_Text(str(data[4]))
+        post['brief'] = ' '.join (sent_tokenize(data[2])[0:2] )
+        return post
+    
 #------------------------------------------------------------------------------
         
     #Payments

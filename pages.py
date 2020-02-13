@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 import processes_DB
-
+import math
 
 class Header():
     def __init__(self):
@@ -38,9 +38,22 @@ class Home( Header):
     
     
 class Courses(Header):
-    def __init__(self):
+    def __init__(self , page =1 ):
         super().__init__()
         self.data['title'] = 'Courses'
+        self.data ['title'] = 'Achievements'
+        self.data ['posts'] =self.show_data.get_all_courses()
+        self.data ['page'] =int (page)
+        self.data ['Max_page'] = math.ceil ( len (self.data ['posts'])/5)
+        
+
+class Products(Header):
+    def __init__(self):
+        super().__init__()
+
+class Product(Header):
+    def __init__(self , Id):
+        super().__init__()
 
 
 class Login(Header):
@@ -50,9 +63,19 @@ class Login(Header):
 
 
 class Achievements(Header):
-    def __init__(self):
+    def __init__(self , page =1 ):
         super().__init__()
-        self.data['title'] = 'Achievements'
+        self.data ['title'] = 'Achievements'
+        self.data ['posts'] =self.show_data.get_all_posts()
+        self.data ['page'] =int (page)
+        self.data ['Max_page'] = math.ceil ( len (self.data ['posts'])/5)
+        
+        
+class Post (Header):
+    def __init__(self , Id_Post : int ):
+        super().__init__()
+        self.data ['title'] = self.data ['post']['Name']
+        self.data ['post'] = self.show_data.get_post_by_id(Id_Post) 
 
 
 class Dashboard(Header):
