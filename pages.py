@@ -32,10 +32,6 @@ class Home( Header):
         self.data ['Most_Watched'] = self.show_data.get_top_viewed_item()
         self.data ['last_five_posts'] = self.show_data.get_last_number_posts(5)
         
-        
-
-    
-    
     
 class Courses(Header):
     def __init__(self , page =1 ):
@@ -48,9 +44,15 @@ class Courses(Header):
         
 
 class Products(Header):
-    def __init__(self):
+    def __init__(self , page ):
         super().__init__()
-
+        self.data ['all_products'] = self.show_data.get_all_items()
+        self.data ['Most_Watched'] = self.show_data.get_top_viewed_item()
+        self.data ['page'] =int (page)
+        self.data ['Max_page'] = math.ceil ( len (self.data ['all_products'])/9)
+        self.data ['Link_Page'] = '/products/page='
+        
+        
 class Product(Header):
     def __init__(self , Id):
         super().__init__()
@@ -77,7 +79,15 @@ class Post (Header):
         self.data ['title'] = self.data ['post']['Name']
         self.data ['post'] = self.show_data.get_post_by_id(Id_Post) 
 
-
+class Category (Header) : 
+    def __init__(self , Id_Category : int , Page : int  ):
+        super().__init__()
+        self.data ['all_products'] = self.show_data.get_all_products_by_categories(Id_Category)
+        self.data ['Most_Watched'] = self.show_data.get_top_viewed_item()
+        self.data ['page'] = Page
+        self.data ['Max_page'] = math.ceil ( len (self.data ['all_products'])/9)
+        self.data ['Link_Page'] = '/category={}/page='.format(Id_Category)
+        
 class Dashboard(Header):
     def __init__(self):
         super().__init__()

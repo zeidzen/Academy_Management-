@@ -17,14 +17,16 @@ class Show_Data():
     # Items
     def get_all_items(self) -> list:
         item = list()
-        sql = """select Name, Description, Price, Date  from items;"""
+        sql = """select Id , Name,Image, Description, Price, Date  from items;"""
         data = self.con.Select_Data_More_Row(sql)
         for items in data:
             selected = dict()
-            selected['Name'] = items[0]
-            selected['Description'] = items[1]
-            selected['Price'] = items[2]
-            selected['Date'] = items[3]
+            selected['Id'] = items[0]
+            selected['Name'] = items[1]
+            selected['Image'] = items[2]
+            selected['Description'] = items[3]
+            selected['Price'] = items[4]
+            selected['Date'] = items[5]
             item.append(selected)
         return item
 
@@ -44,11 +46,12 @@ class Show_Data():
 
     def get_all_categories_item(self) -> list:
         category = list()
-        sql = """select Name  from Categories where Type = 1;"""
+        sql = """select Id , Name  from Categories where Type = 1;"""
         data = self.con.Select_Data_More_Row(sql)
         for cat in data:
             select = dict()
-            select['Name'] = cat[0]
+            select['Id'] = cat[0]
+            select['Name'] = cat[1]
             category.append(select)
         return category
 

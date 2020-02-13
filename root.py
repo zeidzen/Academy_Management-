@@ -21,15 +21,22 @@ def Home_Page():
     Home_Class = pages.Home()
     return render_template('home.html', data=Home_Class.data)
 
-@app.route('/products')
-def products_Page():
-    products_Class = pages.Products()
-    return render_template('home.html', data=products_Class.data)
+@app.route('/category=<id_category>/page=<page>')
+def Category_Page(id_category , page ):
+    Category_Class = pages.Category(int (id_category) , int(page ) )
+    return render_template('products.html', data=Category_Class.data)
+
+@app.route('/products/page=<page>')
+def products_Page(page):
+    Products_Class = pages.Products(int (page) )
+    return render_template('products.html', data=Products_Class.data)
+
+
 
 @app.route('/product/<Id>')
 def product_Page(Id):
     Product_Class = pages.Product(Id)
-    return render_template('home.html', data=Product_Class.data)
+    return render_template('product-detail.html', data=Product_Class.data)
 
 @app.route('/faqs')
 def Faqs_Page():
