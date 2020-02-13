@@ -55,9 +55,9 @@ class Sinup(Header):
         super().__init__()
         self.data['title'] = 'Sinup'
         self.data['Cities'] = self.show_data.get_all_cities()
-    def Regiter(self):
+    def Regiter(self , **info):
         self.insert_data = processes_DB.Register_And_login()
-        self.insert_data.Register_func(**inf)
+        self.insert_data.Register_func(**info)
 
 
 
