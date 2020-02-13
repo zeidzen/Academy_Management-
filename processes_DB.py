@@ -7,6 +7,7 @@ import os
 
 # All it Work
 
+
 class Show_Data():
     def __init__(self):
         self.con = db.DataBase()
@@ -156,6 +157,16 @@ class Show_Data():
             category.append(select)
         return category
 
+    def get_courses_name(self):
+        courses = list()
+        sql = """select Name  from Courses;"""
+        data = self.con.Select_Data_More_Row(sql)
+        for items in data:
+            selected = dict()
+            selected['Name'] = items[0]
+            courses.append(selected)
+        return courses
+
     # Student
 
     def search_students(self, value: str) -> list:
@@ -183,11 +194,11 @@ class Show_Data():
         return data
 
     def get_info_student_by_id(self, id_student: int) -> dict:
-        sql = """select st.Id , st.FirstName , st.LastName , st.Gender , st.Phone , st.Email ,
-        st.Birthday, c.Name, u.Name , sp.Name
-        From students st , city c, university u , specialization sp
-        WHERE st.Id_Address = c.Id and st.Id_University = u.Id and st.Id_Specialization = sp.Id and
-        st.Id = {}  ; """.format(id_student)
+        sql = """select st.Id , st.FirstName , st.LastName , st.Gender , st.Phone , st.Email , st.Birthday ,
+                     c.Name, u.Name , sp.Name
+                     From students st , city c, university u , specialization sp
+                     WHERE st.Id_Address = c.Id and st.Id_University = u.Id and st.Id_Specialization = sp.Id and
+                     st.Id = {}  ; """.format(id_student)
 
         students = self.con.Select_Data_More_Row(sql)
         data = list()
@@ -289,91 +300,29 @@ class Show_Data():
             selected = dict()
             selected['Payment'] = items[0]
             selected['FullName'] = items[1]
+            # selected['LastName'] = items[2]
             selected['FullName'] = items[2]
+            # selected['LastName'] = items[4]
             selected['Payoff'] = items[3]
             selected['Date'] = items[4]
             payment.append(selected)
         return payment
 
-
-    def get_all_cities (self) : 
+    def get_all_cities(self):
         sql = """select Id , Name from City ; """
         data = self.con.Select_Data_More_Row(sql)
         return data
-    
-    def get_all_universities(self) : 
-        sql = """select Id , Name from university ;"""
-        data = self.con.Select_Data_More_Row(sql)
-        return data
-    
-    def get_all_specialization (self) : 
-        sql = """select Id , Name from university ;"""
-        data = self.con.Select_Data_More_Row(sql)
-        return data
-    
-    
-    def get_courses_name (self) : 
-        courses = list()
-        sql = """select Name  from Courses;"""
-        data = self.con.Select_Data_More_Row(sql)
-        for items in data:
-            selected = dict()
-            selected['Name'] = items[0]
-            courses.append(selected)
-        return courses
-    
-    def get_offer_by_produts(self) : 
-        sql = '''SELECT o.Id_Items , i.Name ,i.Description , i.Image , i.price , o.New_Price , o.End_Date 
-                FROM offers as o , items as i 
-                WHERE o.Id_Items = i.Id and o.Type = 1   ; '''
-                
-        offers = self.con.Select_Data_More_Row(sql)
-        Products = list()
-        for offer in offers:
-            data = dict()
-            data ['Id'] = offer[0]
-            data ['Name'] = offer[1]
-            data ['Description'] = offer[2]
-            data ['Image'] = offer[3]
-            data ['old_price'] = offer[4]
-            data ['New_Price'] = offer[5]
-            data ['End_Date'] = offer[6]
-            Products.append(data)
-        return Products
-        
-    
-    
-    def get_offer_by_courses (self) : 
-        sql = '''SELECT o.Id_Items , c.Name ,c.Description , c.Image , c.Price , o.New_Price , o.End_Date
-                , c.Number_of_hours , c.Views 
-                FROM offers as o , courses as c 
-                WHERE o.Id_Items = c.Id and o.Type = 2   ;  '''
-                
-        offers = self.con.Select_Data_More_Row(sql)
-        Products = list()
-        for offer in offers:
-            data = dict()
-            data ['Id'] = offer[0]
-            data ['Name'] = offer[1]
-            data ['Description'] = offer[2]
-            data ['Image'] = offer[3]
-            data ['old_price'] = offer[4]
-            data ['New_Price'] = offer[5]
-            data ['End_Date'] = offer[6]
-            data ['Number_of_hours'] = offer[7]
-            data ['Views'] = offer[8]
-            Products.append(data)
-        return Products
-    
-    
+
+
+
+
 class insert_data():
     def __init__(self):
         self.con = db.DataBase()
 
-    def check_student_exists(self, column: str, value) -> bool:
+    def check_Student_exists(self, column: str, value) -> bool:
         sql = """SELECT count(*) FROM students WHERE {} ='{}' ;""".format(column, value)
         data = self.con.Select_Data_One_Row(sql)
-        print(data)
         if data[0] == 0:
             return False
         else:
@@ -492,9 +441,6 @@ class insert_data():
             return True
         except:
             return False, 'A system error occurred, please try again later'
-        
-        
-
 
 
 class delete_data():
@@ -552,108 +498,102 @@ class delete_data():
             return False, 'Something went wrong please try again later'
 
 
-   
-class Register_And_login () : 
-    
-    def __init__(self) :
-         self.con=db.DataBase()
-         
-         
+class Register_And_login():
+
+    def __init__(self):
+        self.con = db.DataBase()
+
     def hash_password(self,password):
         """Hash a password for storing."""
         salt = hashlib.sha256(os.urandom(60)).hexdigest().encode('ascii')
-        pwdhash = hashlib.pbkdf2_hmac('sha512', password.encode('utf-8'), 
+        pwdhash = hashlib.pbkdf2_hmac('sha512', password.encode('utf-8'),
                                     salt, 100000)
         pwdhash = binascii.hexlify(pwdhash)
         return (salt + pwdhash).decode('ascii')
-    
-    
+
     def verify_password(self,stored_password, provided_password):
         """Verify a stored password against one provided by user"""
         salt = stored_password[:64]
         stored_password = stored_password[64:]
-        pwdhash = hashlib.pbkdf2_hmac('sha512', 
-                                      provided_password.encode('utf-8'), 
-                                      salt.encode('ascii'), 
+        pwdhash = hashlib.pbkdf2_hmac('sha512',
+                                      provided_password.encode('utf-8'),
+                                      salt.encode('ascii'),
                                       100000)
         pwdhash = binascii.hexlify(pwdhash).decode('ascii')
         return pwdhash == stored_password
-    
-    
-    
+
     def check_user_exists(self, column , value ):
         sql="""SELECT count(*) FROM users WHERE {} ='{}' ;""".format(column,value)
-        data = self.con.Select_Data_One_Row(sql) 
+        data = self.con.Select_Data_One_Row(sql)
         print (data)
         if data[0] == 0 : return False
         else : return True
 
-    
-    def Register_func (self ,**info) :   
+    def Register_func(self, **info):
         """
         This function adds information to the database
         that the user entered in the fields in the (Sinup) interface :
         ( First Name , Last Name , Username , Email , Phone , Password ,Birthday,
           Gender  Country  )
-        
+
         Initially it checks whether the entry is correct or incorrect and
         returns an error message in this case
-        
+
         After , data is sent to the database to make sure the entered data
         is not duplicate
-        
+
         If correct returns a message that the operation completed
         successfully and if there is an error returns an error message with
         the duplicate data specified
         """
-                
-        Email_Pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
-        if re.search( Email_Pattern , info['Email'] )  == True : 
-            return False , 'please enter a working email address'    
-        
-                
-        if self.check_user_exists( 'Email', info['Email']) == True : 
-            return False , 'An email already exists Please enter a new email'
-        
-        
-        if self.check_user_exists( 'Phone', info['Phone']) == True : 
-            return False , 'Phone number already exists. Please enter a new number'
-        
-        info['Password']=self.hash_password(info['Password'])
-        
-        self.con.Insert_Data(table='users',**info)
-        sql="SELECT Id FROM users WHERE Email='{}' ; ".format(info['Email']) 
+
+        Email_Pattern = "[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
+        if re.search(Email_Pattern, info['Email']) == True:
+            return False, 'please enter a working email address'
+
+        if self.check_user_exists('Email', info['Email']) == True:
+            return False, 'An email already exists Please enter a new email'
+
+        if self.check_user_exists('Phone', info['Phone']) == True:
+            return False, 'Phone number already exists. Please enter a new number'
+
+        info['Password'] = self.hash_password(info['Password'])
+
+        self.con.Insert_Data(table='users', **info)
+        sql = "SELECT Id FROM users WHERE Email='{}' ; ".format(info['Email'])
         Id_User = self.con.Select_Data_One_Row(sql)
-        return True,Id_User
-#        try :
-#        except : 
-#            return False , 'System error occurred, please try again later'
-    
-    
-    
-    def Login_func ( self,Email ,password) -> int :   
-            """
-            This function makes sure that the logon information is correct
-            """            
-            sql="SELECT Id ,Email , Password  FROM users WHERE Email='{}'  ; ".format(Email.lower()) 
-            data=self.con.Select_Data_One_Row(sql)
-            if len (data) == 0 : 
-                return False ,'Email does not exist'
-            try : 
-                    if self.verify_password(data[2],password) :
-                        return True , data[0]
-                    else :
-                        return False ,'Please enter a valid password'
-            except :
-                    return False , 'Please enter a valid password'
-        
+        return True, Id_User
+
+    #        try :
+    #        except :
+    #            return False , 'System error occurred, please try again later'
+
+    def Login_func(self, Email, password) -> int:
+        """
+        This function makes sure that the logon information is correct
+        """
+        sql = "SELECT Id ,Email , Password  FROM users WHERE Email='{}'  ; ".format(Email.lower())
+        data = self.con.Select_Data_One_Row(sql)
+        if len(data) == 0:
+            return False, 'Email does not exist'
+        try:
+            if self.verify_password(data[2], password):
+                return True, data[0]
+            else:
+                return False, 'Please enter a valid password'
+        except:
+            return False, 'Please enter a valid password'
 
 
+# show = Show_All_Data()
+# show = insert_data()
+#
+# info = {'Id': 0, 'FirstName': 'Haitham', 'LastName': 'Husam', 'Gender': 1, 'Phone': '0789605882',
+#         'Email': 'hhh1998@hotmail.com', 'Birthday': '1998-5-13', 'Id_Address': 3,
+#         'Id_University': 5, 'Id_Specialization': 3}
+# data = show.add_student(**info)
 
-            
-#=============================================================================
-#=============================================================================
-#=============================================================================
-                
-# show = Show_Data()
-# data = show.get_offer_by_courses()
+
+# for d in data:
+#     print(d)
+# print(data)
