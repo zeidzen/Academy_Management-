@@ -250,7 +250,7 @@
 																{% for category  in data ['products_categories'][0:9] : %}
 																	<li class="item-vertical">
 																		<p class="close-menu"></p>
-																		<a href="#" class="clearfix">
+																		<a href="/category={{category ['Id']}}/page=1" class="clearfix">
 																			
 																			<span>{{ category ['Name'] }}</span>
 
@@ -261,7 +261,7 @@
 																{% for category  in data ['products_categories'][8:12] : %}
 																<li class="item-vertical item-vertical-hide" style="display: none;">
 																	<p class="close-menu"></p>
-																	<a href="#" class="clearfix">
+																	<a href="/category={{category ['Id']}}/page=1" class="clearfix">
 																		
 																		<span>{{ category ['Name'] }}</span>
 																	</a>
@@ -271,9 +271,9 @@
 																<li class="item-vertical item-vertical-hide" style="display: none;">
 																	<p class="close-menu"></p>
 
-																	<a href="#" class="clearfix">
+																	<a href="/products/page=1" class="clearfix">
 
-																		<span>Show All Categories </span>
+																		<span>Show All Products </span>
 																	</a>
 																</li>
 																<li class="loadmore">

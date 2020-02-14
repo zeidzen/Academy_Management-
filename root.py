@@ -33,10 +33,11 @@ def products_Page(page):
 
 
 
-@app.route('/product/<Id>')
-def product_Page(Id):
-    Product_Class = pages.Product(Id)
+@app.route('/product/<Id_product>')
+def product_Page(Id_product):
+    Product_Class = pages.Product(int (Id_product))
     return render_template('product-detail.html', data=Product_Class.data)
+
 
 @app.route('/faqs')
 def Faqs_Page():

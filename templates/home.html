@@ -6,9 +6,9 @@
 			<section class="so-spotlight1">
 				<div id="so-slideshow" >
 					<div class="owl-carousel" data-loop="yes" data-margin="0" data-nav="yes" data-dots="yes" data-items_xs="1" data-items_sm="1" data-items_md="1">
-						<div><a href="#"><img  src="../static/img/slider/slider-1.jpg" alt=""></a></div>
-						<div><a href="#"><img  src="../static/img/slider/slider-2.jpg" alt=""></a></div>
-						<div><a href="#"><img  src="../static/img/slider/slider-3.jpg" alt=""></a></div>
+						<div><a ><img  src="../static/img/slider/slider-1.jpg" alt=""></a></div>
+						<div><a ><img  src="../static/img/slider/slider-2.jpg" alt=""></a></div>
+						<div><a ><img  src="../static/img/slider/slider-3.jpg" alt=""></a></div>
 					</div>
 					
 				</div>  
@@ -73,7 +73,7 @@
 											<div class="product-item-container">
 												<div class="left-block">
 													<div class="product-image-container  second_img ">
-														<a href="product.html" class="product-img"><img  src="{{ product['Image'] }}" alt=""></a>
+														<a href="/product/{{product['Id']}}" class="product-img"><img  src="{{ product['Image'] }}" alt=""></a>
 
 														<!--Sale Label-->
 														<span class="sale">{{product ['Sale'] }}%</span>
@@ -85,7 +85,7 @@
 														<p class="time-hour">11  :  25  :  53</p>
 													</div>
 													<div class="caption">
-														<h4><a href="product.html"> {{product ['Name']}} </a></h4>		
+														<h4><a href="/product/{{product['Id']}}"> {{product ['Name']}} </a></h4>		
 														<div class="price">
 															<span class="price-new">JD  {{product ['Old_Price']}} </span>
 															<span class="price-old">JD  {{product ['New_Price']}} </span>		   
@@ -206,14 +206,14 @@
 																<div class="product-item-container">
 																	<div class="left-block">
 																		<div class="product-image-container  second_img ">
-																			<a href="product.html" class="product-img"><img  src="{{product ['Image'] }}" alt=""></a>
+																			<a href="/product/{{product['Id']}}" class="product-img"><img  src="{{product ['Image'] }}" alt=""></a>
 																			<!--Sale Label-->
 																			<span class="sale">{{ product ['Sale'] }}%</span>
 																		</div>
 																	</div>
 																	<div class="right-block">
 																		<div class="caption">
-																			<h4><a href="product.html">{{product ['Name'] }}</a></h4>		
+																			<h4><a href="/product/{{product['Id']}}">{{product ['Name'] }}</a></h4>		
 
 
 																			<div class="caption">
@@ -250,14 +250,14 @@
 																<div class="product-item-container">
 																	<div class="left-block">
 																		<div class="product-image-container  second_img ">
-																			<a href="product.html" class="product-img"><img  src="{{product ['Image']}}" alt=""></a>
+																			<a href="/product/{{product['Id']}}" class="product-img"><img  src="{{product ['Image']}}" alt=""></a>
 																			<!--Sale Label-->
 																			<span class="new">New</span>
 																		</div>
 																	</div>
 																	<div class="right-block">
 																		<div class="caption">
-																			<h4><a href="product.html">{{product ['Name']}}</a></h4>		
+																			<h4><a href="/product/{{product['Id']}}">{{product ['Name']}}</a></h4>		
 
 																			<div class="price">
 																				<span class="price-new">JD {{product ['Price']}}</span> 	
@@ -268,7 +268,6 @@
 																</div>
 															</div>
 															{% endfor %}
-
 														</div>
 													</div>
 												</div>
@@ -345,12 +344,12 @@
 																	{% for product in  data ['Most_Watched'][ page * 3 : (page + 1) * 3  ] : %}
 																	<div class="media">
 																		<div class="media-left">
-																			<a href="product.html"><img  src="{{product ['Image']}}" alt="Cisi Chicken" title="Cisi Chicken" class="img-responsive" style="width: 78px; height: 104px;"></a>
+																			<a href="/product/{{product['Id']}}"><img  src="{{product ['Image']}}" alt="Cisi Chicken" title="Cisi Chicken" class="img-responsive" style="width: 78px; height: 104px;"></a>
 																		</div>
 																		
 																		<div class="media-body">
 																			<div class="caption">
-																				<h4><a href="product.html">{{product ['Name'] }}</a></h4>
+																				<h4><a href="/product/{{product['Id']}}">{{product ['Name'] }}</a></h4>
 																				<div class="price">
 																					<span class="price-new">JD {{ product ['Price'] }} </span>
 																				</div>
@@ -380,12 +379,12 @@
 																		{% for product in  data ['products_by_Robotics_Kits'][ page * 3 : (page + 1) * 3  ] : %}
 																		<div class="media">
 																			<div class="media-left">
-																				<a href="product.html"><img  src="{{product ['Image']}}" alt="Cisi Chicken" title="Cisi Chicken" class="img-responsive" style="width: 78px; height: 104px;"></a>
+																				<a href="/product/{{product['Id']}}"><img  src="{{product ['Image']}}" alt="Cisi Chicken" title="Cisi Chicken" class="img-responsive" style="width: 78px; height: 104px;"></a>
 																			</div>
 																			
 																			<div class="media-body">
 																				<div class="caption">
-																					<h4><a href="product.html">{{product ['Name'] }}</a></h4>
+																					<h4><a href="/product/{{product['Id']}}">{{product ['Name'] }}</a></h4>
 																					<div class="price">
 																						<span class="price-new">JD {{ product ['Price'] }} </span>
 																					</div>
@@ -416,12 +415,12 @@
 																		{% for product in  data ['products_by_Arduino'][ page * 3 : (page + 1) * 3  ] : %}
 																		<div class="media">
 																			<div class="media-left">
-																				<a href="product.html"><img  src="{{product ['Image']}}" alt="Cisi Chicken" title="Cisi Chicken" class="img-responsive" style="width: 78px; height: 104px;"></a>
+																				<a href="/product/{{product['Id']}}"><img  src="{{product ['Image']}}" alt="Cisi Chicken" title="Cisi Chicken" class="img-responsive" style="width: 78px; height: 104px;"></a>
 																			</div>
 																			
 																			<div class="media-body">
 																				<div class="caption">
-																					<h4><a href="product.html">{{product ['Name'] }}</a></h4>
+																					<h4><a href="/product/{{product['Id']}}">{{product ['Name'] }}</a></h4>
 																					<div class="price">
 																						<span class="price-new">JD {{ product ['Price'] }} </span>
 																					</div>

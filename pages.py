@@ -51,13 +51,35 @@ class Products(Header):
         self.data ['page'] =int (page)
         self.data ['Max_page'] = math.ceil ( len (self.data ['all_products'])/9)
         self.data ['Link_Page'] = '/products/page='
-        
+        self.data ['Category_path'] = 'All Products'
+        self.data ['Category_Name'] = 'All Products'
+        self.data ['title'] = 'Products'
+
         
 class Product(Header):
-    def __init__(self , Id):
+    def __init__(self , Id_Product : int ):
         super().__init__()
-
-
+        self.data ['check_offer_existe'] =self.show_data.check_offer_existe (Id_Product)
+        
+        if  self.data ['check_offer_existe']  == True : 
+            
+            self.data ['Product'] = self.show_data.get_offer_by_id_produt(Id_Product)
+            
+        elif  self.data ['check_offer_existe']  == False  :
+            self.data ['Product'] = self.show_data.get_product_by_Id(Id_Product)
+        
+        self.data ['Title'] =self.data ['Product']['Name']
+        self.data ['Media']= self.show_data.get_media_by_id_product( Id_Product )
+        self.data ['Features']= self.show_data.get_features_by_id_product( Id_Product )
+        if len (self.data ['Media']) +1 > 4 : 
+            self.data ['Number_Medias'] = 4
+        else :
+            self.data ['Number_Medias'] = len (self.data ['Media']) +1 
+        self.data ['Most_Watched'] = self.show_data.get_top_viewed_item()
+        
+        self.data ['Related_Product'] = self.show_data.get_all_products_by_categories(self.show_data.get_category_by_product (Id_Product) [0])        
+    
+        
 class Login(Header):
     def __init__(self):
         super().__init__()
@@ -76,17 +98,22 @@ class Achievements(Header):
 class Post (Header):
     def __init__(self , Id_Post : int ):
         super().__init__()
-        self.data ['title'] = self.data ['post']['Name']
         self.data ['post'] = self.show_data.get_post_by_id(Id_Post) 
+
 
 class Category (Header) : 
     def __init__(self , Id_Category : int , Page : int  ):
         super().__init__()
         self.data ['all_products'] = self.show_data.get_all_products_by_categories(Id_Category)
         self.data ['Most_Watched'] = self.show_data.get_top_viewed_item()
+        self.data ['Category_Name'] =self.show_data.get_category_by_Id(Id_Category)[1]
+        self.data ['Id_Category'] = Id_Category
+        self.data ['Category_path'] ='Categories    >    {}'.format(self.data ['Category_Name'])
         self.data ['page'] = Page
         self.data ['Max_page'] = math.ceil ( len (self.data ['all_products'])/9)
         self.data ['Link_Page'] = '/category={}/page='.format(Id_Category)
+        self.data ['title'] = self.data ['Category_Name']
+        
         
 class Dashboard(Header):
     def __init__(self):
