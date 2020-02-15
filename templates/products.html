@@ -31,11 +31,11 @@
 							<div class="product-latest-item transition">
 								<div class="media">
 									<div class="media-left">
-										<a href="/product/{{product['Id']}}" class="product-img"><img src="{{product['Image']}}" alt="Cisi Chicken" title="Cisi Chicken" class="img-responsive" style="width: 100px; height:82px;"></a>
+										<a href="/product/{{product['Id']}}" class="product-img"><img src="{{product['Image']}}" alt="{{product['Image']}}" title="{{product['Image']}}" class="img-responsive" style="width: 100px; height:82px;"></a>
 									</div>
 									<div class="media-body">
 										<div class="caption">
-											<h4><a href="product.html" class="product-img">Kevin Labor</a></h4>
+											<h4><a href="/product/{{product['Id']}}" class="product-img">{{product['Name']}}</a></h4>
 											<div class="price">
 												<span class="price-new">JD {{product['Price']}}</span>
 											</div>
@@ -105,6 +105,7 @@
 						<!--changed listings-->
 						<div class="products-list grid">
 							{% set page  =  data ['page'] %}
+							
 							{% for product in data ['all_products'][9 * (page-1) : page * 9 ] :  %}
 							<div class="product-layout">
 								<div class="product-item-container">
@@ -119,10 +120,9 @@
 
 											<div class="price">
 												<span class="price-new">JD {{product ['Price']}} </span>
-
 											</div>
 											<div class="description item-desc hidden">
-												<p>{{product ['Description'] }} </p>
+												<p>{{product ['Brief'] }} </p>
 											</div>
 										</div>
 									</div><!-- right block -->
@@ -130,9 +130,12 @@
 							</div>
 							{%endfor%}
 
-						</div>				<!--// End Changed listings-->
+						</div>	
+							
+						
+						<!--// End Changed listings-->
 						<!-- Filters -->
-
+						
 						{% if  data ['all_products']|length > 9 :  %}
 						{% block pages  %}
 						<div class="product-filter filters-panel">

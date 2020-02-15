@@ -1,11 +1,11 @@
 {% include  "header2.html" %}
 		<!-- Main Container  -->
 		<div class="main-container container">
-			{% set product = data ['Product'] %}
+			{% set course = data ['Course'] %}
 			<ul class="header-main type-1">
 				<li class="home"><a href="/home">Home<i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
 				<li class="home"><a href="/products/page=1">Products<i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
-				<li><a href="#">{{product['Name']}}</a></li>
+				<li><a href="#">{{course['Name']}}</a></li>
 			</ul>
 			
 			<div class="row">
@@ -17,19 +17,19 @@
 							<div class="row">
 								<div class="content-product-left class-honizol col-md-6 col-sm-12 col-xs-12 ">
 									<div class="large-image  ">
-										<img itemprop="image" class="product-image-zoom" src="{{product['Image']}}" data-zoom-image="{{product['Image']}}" title="Bint Beef" alt="Bint Beef">
+										<img itemprop="image" class="product-image-zoom" src="{{course['Image']}}" data-zoom-image="{{course['Image']}}" title="Bint Beef" alt="Bint Beef">
 									</div>
 									
 
 
 									{% if data ['Media']|length > 1 :   %}
 									<div id="thumb-slider" class="owl-theme owl-loaded owl-drag full_slider owl-carousel " data-nav='yes' data-loop="yes" data-margin="10" data-items_xs="2" data-items_sm="3" data-items_md="{{data ['Number_Medias']}}">
-										<a  class="img thumbnail " data-image="{{product['Image']}}" title="{{product['Name']}}">
-											<img src="{{product['Image']}}" title="{{product['Name']}}" alt="{{product['Name']}}">
+										<a  class="img thumbnail " data-image="{{course['Image']}}" title="{{course['Name']}}">
+											<img src="{{course ['Image']}}" title="{{course['Name']}}" alt="{{course['Name']}}">
 										</a>
 										{% for Media  in   data ['Media'] : %}
-										<a  class="img thumbnail " data-image="{{product ['Image'] }}" title="{{product['Name']}}">
-											<img src="{{product ['Image'] }}" title="{{product['Name']}}" alt="{{product['Name']}}">
+										<a  class="img thumbnail " data-image="{{Media ['Path'] }}" title="{{course['Name']}}">
+											<img src="{{Media ['Path'] }}" title="{{course ['Name']}}" alt="{{course['Name']}}">
 										</a>
 										{%endfor%}
 									</div>
@@ -39,7 +39,7 @@
 
 								<div class="content-product-right col-md-6 col-sm-12 col-xs-12">
 									<div class="title-product">
-										<h1>{{product['Name']}}</h1>
+										<h1>{{course['Name']}}</h1>
 									</div>
 									<h2>Features : </h2>
 									<div class="product-box-desc">
@@ -49,12 +49,13 @@
 											{%endfor%}
 										</ul>
 									</div>
+									<h2> Hours : {{course['Number_of_hours']}} </h2>
 									<div class="product-label form-group">
 										<div class="stock">
-											{% if  product ['Availability'] ==  1: %}
+											{% if  course ['Availability'] ==  1: %}
 											<span>Availability:</span> <span class="instock"> Yes </span>
 											{%endif%}
-											{% if  product ['Availability'] ==  0 : %}
+											{% if  course ['Availability'] ==  0 : %}
 											<span>Availability:</span> <span class="instock" style="color:red ;"> No </span>
 											{%endif%}
 
@@ -63,13 +64,13 @@
 										<br>
 										{% if data ['check_offer_existe'] == True : %}
 										<div class="product_page_price price" itemprop="offerDetails" itemscope="" itemtype="http://data-vocabulary.org/Offer">
-											<span class="price-new" itemprop="price">JD {{product ['New_Price'] }}</span>
-											<span class="price-old">JD {{product ['Old_Price'] }}</span>
+											<span class="price-new" itemprop="price">JD {{course ['New_Price'] }}</span>
+											<span class="price-old">JD {{course ['Old_Price'] }}</span>
 										</div>
 
 										{% else :  %}
 										<div class="product_page_price price" itemprop="offerDetails" itemscope="" itemtype="http://data-vocabulary.org/Offer">
-											<span class="price-new" itemprop="price">JD {{product ['Price'] }}</span>
+											<span class="price-new" itemprop="price">JD {{course ['Price'] }}</span>
 										</div>
 										{%endif%}
 
@@ -130,8 +131,6 @@
 									</div>
 
 								</div>					</div>
-
-								
 								<div class="row">
 									<div class="col-sx-12">
 										<div class="producttab ">
@@ -144,7 +143,7 @@
 												</ul>
 												<div class="tab-content col-xs-12">
 													<div id="tab-1" class="tab-pane fade active in">
-														<p>{{product ['Description'] }}<br>
+														<p>{{course ['Description'] }}<br>
 														</p>
 													</div>
 													<div id="tab-review" class="tab-pane fade  in">
@@ -191,18 +190,18 @@
 												<hr>
 												<div class="modcontent ">
 
-													{% for product in  data ['Most_Watched'][ 0 : 4 ] : %}
+													{% for Item in  data ['Most_Watched'][ 0 : 4 ] : %}
 													<div class="product-latest-item">
 														<div class="media">
 															<div class="media-left">
-																<a href="/product/{{product ['Id']}}"><img  src="{{product ['Image']}}" alt="Cisi Chicken" title="Cisi Chicken" class="img-responsive" style="width: 78px; height: 104px;"></a>
+																<a href="/course/{{Item ['Id']}}"><img  src="{{Item ['Image']}}" alt="Cisi Chicken" title="Cisi Chicken" class="img-responsive" style="width: 78px; height: 104px;"></a>
 															</div>
 															
 															<div class="media-body">
 																<div class="caption">
-																	<h4><a href="/product/{{product ['Id']}}">{{product ['Name'] }}</a></h4>
+																	<h4><a href="/course/{{Item ['Id']}}">{{Item ['Name'] }}</a></h4>
 																	<div class="price">
-																		<span class="price-new">JD {{ product ['Price'] }} </span>
+																		<span class="price-new">JD {{ Item ['Price'] }} </span>
 																	</div>
 																</div>
 															</div>
@@ -229,27 +228,27 @@
 									</div>
 									<!-- Related Products -->
 									<div class="related-product ">
-										<h3 class="modtitle">Related Products  </h3>
+										<h3 class="modtitle">Related Courses  </h3>
 										<hr>
 										<hr>
 										<hr>
 										<div class="related-product-owl">
 											<div class=" owl-carousel related-owl " data-nav="yes" data-loop="yes" data-margin="30" data-items_xs="1" data-items_sm="4" data-items_md="5">
 
-												{% for product in  data ['Related_Product'] : %}
+												{% for Item in  data ['Related_Product'] : %}
 												<div class="product-layout">
 													<div class="product-item-container">
 														<div class="left-block">
 															<div class="product-image-container  second_img ">
-																<a href="/product/{{product ['Id']}}" class="product-img"><img  src="{{product ['Image']}}" alt=""></a>
+																<a href="/course/{{Item['Id']}}" class="product-img"><img  src="{{Item ['Image']}}" alt=""></a>
 																<!--Sale Label-->
 															</div>
 														</div>
 														<div class="right-block">
 															<div class="caption">
-																<h4><a href="/product/{{product ['Id']}}">{{product ['Name']}}</a></h4>		
+																<h4><a href="/course/{{Item['Id']}}">{{Item ['Name']}}</a></h4>		
 																<div class="price">
-																	<span class="price-new">JD {{product ['Price']}}</span> 	
+																	<span class="price-new">JD {{Item ['Price']}}</span> 	
 																</div>
 															</div>
 														</div><!-- right block -->

@@ -39,12 +39,6 @@ def product_Page(Id_product):
     return render_template('product-detail.html', data=Product_Class.data)
 
 
-@app.route('/faqs')
-def Faqs_Page():
-    FAQ_Class = pages.FAQ()
-    return render_template('faqs.html', data=FAQ_Class.data)
-
-
 @app.route('/login')
 def Login_Page():
     Login_Class = pages.Home()
@@ -70,18 +64,20 @@ def register_data():
     data['Birthday'] = data['Birthday'].replace('/', '-')
     data['Image'] = request.files['Image']
     data['password'] = request.form['password']
-
-
-
     Home_Class = pages.Home()
-
     return render_template('home.html', data=Home_Class.data)
 
 
 @app.route('/courses/page=<page>')
 def Courses_Page(page):
-    courses_Class = pages.Courses (page)
-    return render_template('posts.html', data=courses_Class.data)
+    Courses_Class = pages.Courses (page)
+    return render_template('courses.html', data=Courses_Class.data)
+
+
+@app.route('/course/<Id_Course>')
+def Course_Page(Id_Course):
+    Course_Class = pages.Course (int (Id_Course))
+    return render_template('courses-detail.html', data=Course_Class.data)
 
 
 @app.route('/achievements/page=<page>')
@@ -95,6 +91,10 @@ def Post_Page(Id_post):
     Post_Class = pages.Post(int (Id_post) )
     return render_template('post-detail.html', data=Post_Class.data)
 
+@app.route('/search = <search> /page = <page>')
+def Search_Page(search , page ):
+    Search_Class = pages.Search(search , int (page) )
+    return render_template('post-detail.html', data=Search_Class.data)
 
 
 @app.route('/about')
@@ -111,7 +111,19 @@ def ForgottenPassword_Page():
 @app.route('/TTADP')
 def Dashboard_Page():
     pass
-    pass
+    
+@app.route('/faqs')
+def Faqs_Page():
+    FAQ_Class = pages.FAQ()
+    return render_template('faqs.html', data=FAQ_Class.data)
+
+
+@app.errorhandler(404)
+def page_not_found(error):
+    Error404_class=pages.Error_page()
+    return render_template ('404.html',data = Error404_class.data)
+
+
 
 
 if __name__ == '__main__':

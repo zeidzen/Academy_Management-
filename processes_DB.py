@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from datetime import  datetime
-from nltk import sent_tokenize
+#from nltk import sent_tokenize
 import database as db
 import hashlib, binascii
 import re
@@ -17,7 +17,7 @@ class Show_Data():
     # Items
     def get_all_items(self) -> list:
         item = list()
-        sql = """select Id , Name,Image, Description, Price, Date  from items;"""
+        sql = """select Id , Name,Image, Description, Price, Date , Brief from items;"""
         data = self.con.Select_Data_More_Row(sql)
         for items in data:
             selected = dict()
@@ -27,33 +27,25 @@ class Show_Data():
             selected['Description'] = items[3]
             selected['Price'] = items[4]
             selected['Date'] = items[5]
+            selected['Brief'] = items[6]
             item.append(selected)
         return item
 
 
     def search_item(self, name: str) -> list:
         item = list()
-        sql = """select Name, Description, Price, Date  from items where Name Like '%{}%';""".format(name)
+        sql = """select Id , Name, Description, Price, Date  from items where Name Like '%{}%';""".format(name)
         data = self.con.Select_Data_More_Row(sql)
         for items in data:
             selected = dict()
-            selected['Name'] = items[0]
-            selected['Description'] = items[1]
-            selected['Price'] = items[2]
+            selected['Id'] = items[0]
+            selected['Name'] = items[1]
+            selected['Description'] = items[2]
+            selected['Price'] = items[3]
             selected['Date'] = items[3]
             item.append(selected)
         return item
 
-    def get_all_categories_item(self) -> list:
-        category = list()
-        sql = """select Id , Name  from Categories where Type = 1;"""
-        data = self.con.Select_Data_More_Row(sql)
-        for cat in data:
-            select = dict()
-            select['Id'] = cat[0]
-            select['Name'] = cat[1]
-            category.append(select)
-        return category
 
     def get_top_viewed_item(self) -> list:
         sql = """SELECT Id  , Name, Description,  Price, Image, Views , Date 
@@ -91,7 +83,7 @@ class Show_Data():
 
     
     def get_last_ten_Products (self) : 
-        sql = '''SELECT Id , Name , Description ,Image , Price , Views , Date   
+        sql = '''SELECT Id , Name , Description ,Image , Price , Views , Date ,Brief  
                FROM items ORDER BY id DESC LIMIT 10 ; '''
         items = self.con.Select_Data_More_Row(sql)
         
@@ -105,10 +97,11 @@ class Show_Data():
             data ['Price'] = Product[4]
             data ['Views'] = Product[5]
             data ['Date'] = Product[6]
+            data ['Brief'] = Product[7]
             Products.append(data)
         return Products
     
-    def get_all_products_by_categories (self , Category : int ) -> list  : 
+    def get_all_products_by_category (self , Category : int ) -> list  : 
         sql = '''SELECT Id , Name , Description ,Image , Price , Views , Date   
                 FROM items 
                 WHERE Id_Category = {}                
@@ -166,25 +159,86 @@ class Show_Data():
         for Feature in Features:
             data.append(Feature[0])
         return data
-    
+#------------------------------------------------------------------------------
+    #Media Products
+    def get_media_by_id_product (self , Id_Product : int  ) : 
+        sql = '''SELECT m.Type , m.Path  FROM media_products  as m, Items
+        WHERE Id_Item = Items.Id  and Id_Item = {}  ; '''.format(Id_Product)
+        medias = self.con.Select_Data_More_Row(sql)
+        data = list ()
+        for media in medias:
+            item = dict()
+            item ['Type'] = media[0]
+            item ['Path'] = media[1]
+            data.append(item)
+        return data
+#------------------------------------------------------------------------------    
+     #Features Products
+    def get_features_by_id_product (self , Id_Product : int  ) : 
+        sql = '''SELECT  f.Feature  FROM features_products as f  ,Items
+        WHERE Id_Item = Items.Id  and Id_Item = {}  ; '''.format(Id_Product)
+        Features = self.con.Select_Data_More_Row(sql)
+        data = list ()
+        for Feature in Features:
+            data.append(Feature[0])
+        return data
     
 #------------------------------------------------------------------------------
     # Courses
     def get_all_courses(self) -> list:
         courses = list()
-        sql = """select Name, Description, Image, Price, Number_of_hours, Date  from Courses;"""
+        sql = """select Id , Name, Description, Image, Price, Number_of_hours, Date , Brief from Courses;"""
         data = self.con.Select_Data_More_Row(sql)
         for items in data:
             selected = dict()
-            selected['Name'] = items[0]
-            selected['Description'] = items[1]
-            selected['Image'] = items[2]
-            selected['Price'] = items[3]
-            selected['Number_of_hours'] = items[4]
-            selected['Date'] = items[5]
+            selected['Id'] = items[0]
+            selected['Name'] = items[1]
+            selected['Description'] = items[2]
+            selected['Image'] = items[3]
+            selected['Price'] = items[4]
+            selected['Number_of_hours'] = items[5]
+            selected['Date'] = items[6]
+            selected['Brief'] = items[7]
             courses.append(selected)
         return courses
-
+    
+    
+    def get_all_courses_by_category (self , Id_category ) -> list:
+        courses = list()
+        sql = """select Id , Name, Description, Image, Price, Number_of_hours, Date , Brief 
+                 from Courses Where Id_category = {} ;""".format(Id_category)
+        data = self.con.Select_Data_More_Row(sql)
+        for items in data:
+            selected = dict()
+            selected['Id'] = items[0]
+            selected['Name'] = items[1]
+            selected['Description'] = items[2]
+            selected['Image'] = items[3]
+            selected['Price'] = items[4]
+            selected['Number_of_hours'] = items[5]
+            selected['Date'] = items[6]
+            selected['Brief'] = items[7]
+            courses.append(selected)
+        return courses
+    
+    
+    
+    def get_course_by_Id (self , Id_Course : int ) -> list:
+        sql = """select Id , Name, Description, Image, Price, Number_of_hours, Date , Brief
+        from Courses Where Id = {} ;""".format(Id_Course)
+        data = self.con.Select_Data_One_Row(sql)
+        course = dict()
+        course['Id'] = data[0]
+        course['Name'] = data[1]
+        course['Description'] = data[2]
+        course['Image'] = data[3]
+        course['Price'] = data[4]
+        course['Number_of_hours'] = data[5]
+        course['Date'] = data[6]
+        course['Brief'] = data[7]
+        return course
+    
+    
     def search_course(self, name: str) -> list:
         courses = list()
         sql = """select Name, Description, Image, Price, Number_of_hours, Date  from Courses where Name Like '%{}%';""".format(
@@ -202,19 +256,20 @@ class Show_Data():
         return courses
 
     def get_top_viewed_courses(self):
-        sql = """SELECT Name, Description, Image, Price, Number_of_hours , Views , Date 
+        sql = """SELECT Id, Name, Description, Image, Price, Number_of_hours , Views , Date 
                 FROM courses  ORDER BY  Views DESC ;"""
         courses = self.con.Select_Data_More_Row(sql)
         data = list()
         for items in courses:
             selected = dict()
-            selected['Name'] = items[0]
-            selected['Description'] = items[1]
-            selected['Image'] = items[2]
-            selected['Price'] = items[3]
-            selected['Number_of_hours'] = items[4]
-            selected['Views'] = items[5]
-            selected['Date'] = items[6]
+            selected['Id'] = items[0]
+            selected['Name'] = items[1]
+            selected['Description'] = items[2]
+            selected['Image'] = items[3]
+            selected['Price'] = items[4]
+            selected['Number_of_hours'] = items[5]
+            selected['Views'] = items[6]
+            selected['Date'] = items[7]
             data.append(selected)
         return data
 
@@ -253,8 +308,31 @@ class Show_Data():
             selected = dict()
             selected['Name'] = items[0]
             courses.append(selected)
-        return courses
-
+        return courses            
+#------------------------------------------------------------------------------
+    #Media Courses
+    def get_media_by_id_course (self , Id_Course : int  ) : 
+        sql = '''SELECT m.Type , m.Path  FROM media_courses as m , Items
+        WHERE m.Id_course = Items.Id  and Id_course = {}  ; '''.format(Id_Course)
+        medias = self.con.Select_Data_More_Row(sql)
+        data = list ()
+        for media in medias:
+            item = dict()
+            item ['Type'] = media[0]
+            item ['Path'] = media[1]
+            data.append(item)
+        return data
+#------------------------------------------------------------------------------    
+     #Features Products
+    def get_features_by_id_course (self , Id_Course : int  ) : 
+        sql = '''SELECT  f.Feature  FROM features_courses as f  ,Items
+        WHERE f.Id_course = Items.Id  and Id_course = {}  ; '''.format(Id_Course)
+        Features = self.con.Select_Data_More_Row(sql)
+        data = list ()
+        for Feature in Features:
+            data.append(Feature[0])
+        return data
+    
 #------------------------------------------------------------------------------
     # Student
     def search_students(self, value: str) -> list:
@@ -485,12 +563,15 @@ class Show_Data():
             Products.append(data)
         return Products
         
-    def check_offer_existe (self , Id_Product) :
+    def check_offer_existe (self , Id_Product : int , Type = 1 ) :
+        #Type 1 as a Product  and Type 2 as a Course 
         try : 
-            sql = 'Select Id from offers where Type = 1 and  Id_Item = {} ; '.format(Id_Product)
+            sql = 'Select Id from offers where Type = {} and  Id_Item = {} ; '.format( Type , Id_Product)
             data = self.con.Select_Data_One_Row(sql)
             if len(data) == 1 : 
                 return True 
+            else : 
+                return False 
         except : return False 
         
         
@@ -510,6 +591,27 @@ class Show_Data():
         data ['Availability'] = offer[7]
         data ['Sale'] =  int (offer[5]/offer[4]  * 100  - 100  )
         return data
+    
+    
+    def get_offer_by_id_course (self , Id_courses : int ) : 
+        sql = '''SELECT o.Id_Item , c.Name ,c.Description , c.Image , c.Price , o.New_Price , o.End_Date
+        , c.Number_of_hours , c.Views 
+        FROM offers as o , courses as c 
+        WHERE o.Id_Item = c.Id and o.Type = 2  and o.Id_Item = {} ;'''.format(Id_courses)
+        offer = self.con.Select_Data_One_Row(sql)
+        data = dict()
+        data ['Id'] = offer[0]
+        data ['Name'] = offer[1]
+        data ['Description'] = offer[2]
+        data ['Image'] = offer[3]
+        data ['Old_Price'] = offer[4]
+        data ['New_Price'] = offer[5]
+        data ['End_Date'] = offer[6]
+        data ['Number_of_hours'] = offer[7]
+        data ['Views'] = offer[8]
+        data ['Sale'] =  int (offer[5]/offer[4]  * 100  - 100  )
+        return data
+    
     
     def get_offer_by_courses (self) : 
         sql = '''SELECT o.Id_Item , c.Name ,c.Description , c.Image , c.Price , o.New_Price , o.End_Date
@@ -546,8 +648,22 @@ class Show_Data():
         data = self.con.Select_Data_One_Row(sql)
         return data    
        
-       
-       
+    def get_category_by_course (self , Id_Course : int ) : 
+        sql = 'Select Id_Category From courses Where Id = {} ;'.format(Id_Course)
+        data = self.con.Select_Data_One_Row(sql)
+        return data 
+    
+    def get_all_categories_item(self) -> list:
+        category = list()
+        sql = """select Id , Name  from Categories where Type = 1;"""
+        data = self.con.Select_Data_More_Row(sql)
+        for cat in data:
+            select = dict()
+            select['Id'] = cat[0]
+            select['Name'] = cat[1]
+            category.append(select)
+        return category
+    
        
        
        
@@ -823,4 +939,6 @@ class Register_And_login():
                 return False, 'Please enter a valid password'
         except:
             return False, 'Please enter a valid password'
+
+
 

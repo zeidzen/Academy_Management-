@@ -25,27 +25,25 @@
 								<div class="col-sm-12">
 									<div class="banner-policy">
 										<div class="policy policy1">
-											<a href="#"> 
+											<a> 
 												<span class="ico-policy"></span> 
 												<div class="service-info">
-													<span class="title">Free Shipping & Return</span> <br> <span>Free shipping on orders over $49</span> 
+													<span class="title">Free consultations and workshops</span> <br> <span>Free advice and workshops for students</span> 
 												</div>
 											</a>
 										</div>
 										<div class="policy policy2">
-											<a href="#">
+											<a >
 												<span class="ico-policy"></span>
 												<div class="service-info">
-													<span class="title">Money Guarantee</span> <br><span>30 days money back guarantee</span>
-												</div>
+													<span class="title">The Shop center of all robot parts</span> <br> <span>We provide all robotic parts</span> 												</div>
 											</a>
 										</div>
 										<div class="policy policy3">
-											<a href="#"> 
+											<a > 
 												<span class="ico-policy"></span> 
 												<div class="service-info">
-													<span class="title">Online Support</span> <br><span>We support online 24/24 on day</span> 
-												</div>
+													<span class="title">Professional training staff</span> <br> <span>We have a professional training staff</span> 												</div>
 											</a></div>
 										</div>
 									</div>
@@ -159,7 +157,7 @@
 													{{post ['brief']}}... </div>
 													<div class="blog-meta1">
 														<span class="author">
-															<a href="blog-detail.html">View more
+															<a href="/post/{{post ['Id']}}">View more
 																<i class="fa fa-angle-double-right" aria-hidden="true"></i>
 															</a>
 														</span>
@@ -284,22 +282,22 @@
 													<div class="fashion-jewerly-owl">
 														<div class=" owl-carousel fashion-jewerly-owl " data-dots="no" data-nav="yes" data-loop="yes" data-items_xs="1" data-items_sm="2" data-items_md="4" data-margin="10">
 
-															{% for product in  data ['all_courses'] : %}
+															{% for course in  data ['all_courses'] : %}
 															<div class="product-layout">
 																<div class="product-item-container">
 																	<div class="left-block">
 																		<div class="product-image-container  second_img ">
-																			<a href="product.html" class="product-img"><img  src="{{product ['Image']}}" alt=""></a>
+																			<a href="/course/{{course['Id']}}" class="product-img"><img  src="{{course ['Image']}}" alt=""></a>
 																			<!--Sale Label-->
 																			<span class="new">New</span>
 																		</div>
 																	</div>
 																	<div class="right-block">
 																		<div class="caption">
-																			<h4><a href="product.html">{{product ['Name']}}</a></h4>		
+																			<h4><a href="/course/{{course['Id']}}">{{course ['Name']}}</a></h4>		
 
 																			<div class="price">
-																				<span class="price-new">JD {{product ['Price']}}</span> 	
+																				<span class="price-new">JD {{course ['Price']}}</span> 	
 
 																			</div>
 																		</div>

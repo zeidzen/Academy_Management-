@@ -37,10 +37,9 @@ class Courses(Header):
     def __init__(self , page =1 ):
         super().__init__()
         self.data['title'] = 'Courses'
-        self.data ['title'] = 'Achievements'
-        self.data ['posts'] =self.show_data.get_all_courses()
+        self.data ['Courses'] =self.show_data.get_all_courses()
         self.data ['page'] =int (page)
-        self.data ['Max_page'] = math.ceil ( len (self.data ['posts'])/5)
+        self.data ['Max_page'] = math.ceil ( len (self.data ['Courses'])/5)
         
 
 class Products(Header):
@@ -55,6 +54,18 @@ class Products(Header):
         self.data ['Category_Name'] = 'All Products'
         self.data ['title'] = 'Products'
 
+class Search(Header):
+   def __init__(self , Search : str , page = 1 ):
+       super().__init__()
+       self.data ['all_products'] = self.show_data.get_all_items()
+       self.data ['Most_Watched'] = self.show_data.get_top_viewed_item()
+       self.data ['page'] =int (page)
+       self.data ['Max_page'] = math.ceil ( len (self.data ['all_products'])/9)
+       self.data ['Link_Page'] = '/products/page='
+       self.data ['Category_path'] = 'Search : {} '.format (Search)
+       self.data ['Category_Name'] = 'Search : {} '.format (Search)
+       self.data ['title'] = 'Products'
+        
         
 class Product(Header):
     def __init__(self , Id_Product : int ):
@@ -77,8 +88,32 @@ class Product(Header):
             self.data ['Number_Medias'] = len (self.data ['Media']) +1 
         self.data ['Most_Watched'] = self.show_data.get_top_viewed_item()
         
-        self.data ['Related_Product'] = self.show_data.get_all_products_by_categories(self.show_data.get_category_by_product (Id_Product) [0])        
+        self.data ['Related_Product'] = self.show_data.get_all_products_by_category(self.show_data.get_category_by_product (Id_Product)[0])        
     
+
+class Course(Header):
+    def __init__(self , Id_Course : int ):
+        super().__init__()
+        self.data ['check_offer_existe'] =self.show_data.check_offer_existe (Id_Course , 2 )
+        
+        if  self.data ['check_offer_existe']  == True : 
+            self.data ['Course'] = self.show_data.get_offer_by_id_course(Id_Course)
+            
+        elif  self.data ['check_offer_existe']  == False  :
+            self.data ['Course'] = self.show_data.get_course_by_Id(Id_Course)
+        
+        
+        self.data ['Title'] =self.data ['Course']['Name']
+        self.data ['Media']= self.show_data.get_media_by_id_course( Id_Course )
+        self.data ['Features']= self.show_data.get_features_by_id_course( Id_Course )
+        if len (self.data ['Media']) +1 > 4 : 
+            self.data ['Number_Medias'] = 4
+        else :
+            self.data ['Number_Medias'] = len (self.data ['Media']) +1 
+        self.data ['Most_Watched'] = self.show_data.get_top_viewed_courses()
+        
+        self.data ['Related_Product'] = self.show_data.get_all_courses_by_category(self.show_data.get_category_by_product (Id_Course)[0])   
+
         
 class Login(Header):
     def __init__(self):
@@ -166,8 +201,12 @@ class FAQ(Header):
 class ForgottenPassword(Header):
     def __init__(self):
         super().__init__()
-        self.data['title'] = 'Restore password'
 
 
+class Error_page (Header):
+    def __init__(self):
+        super().__init__()
+        self.data['title'] = 'The requested page does not exist'
+        
 
 
