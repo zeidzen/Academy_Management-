@@ -531,9 +531,9 @@ class Show_Data():
 
     # Offer
     def get_offer_by_produts(self):
-        sql = '''SELECT o.Id_Item , i.Name ,i.Description , i.Image , i.price , o.New_Price , o.End_Date 
-                FROM offers as o , items as i 
-                WHERE o.Id_Item = i.Id and o.Type = 1   ; '''
+        sql = """SELECT o.Id_Item , i.Name ,i.Description , i.Image , i.price , o.New_Price , o.End_Date 
+                FROM offers o , items i 
+                WHERE o.Id_Item = i.Id and o.Type = 1   ; """
 
         offers = self.con.Select_Data_More_Row(sql)
         Products = list()
