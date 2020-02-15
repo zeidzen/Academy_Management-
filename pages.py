@@ -139,7 +139,7 @@ class Post (Header):
 class Category (Header) : 
     def __init__(self , Id_Category : int , Page : int  ):
         super().__init__()
-        self.data ['all_products'] = self.show_data.get_all_products_by_categories(Id_Category)
+        self.data ['all_products'] = self.show_data.get_all_products_by_category(Id_Category)
         self.data ['Most_Watched'] = self.show_data.get_top_viewed_item()
         self.data ['Category_Name'] =self.show_data.get_category_by_Id(Id_Category)[1]
         self.data ['Id_Category'] = Id_Category
