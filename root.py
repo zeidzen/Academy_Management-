@@ -86,16 +86,28 @@ def Achievements_Page(page):
     return render_template('posts.html', data=Achievements_Class.data)
 
 
-@app.route('/post/<Id_post>')
+@app.route('/post/<Id_post>' )
 def Post_Page(Id_post):
     Post_Class = pages.Post(int (Id_post) )
     return render_template('post-detail.html', data=Post_Class.data)
 
-@app.route('/search = <search> /page = <page>')
-def Search_Page(search , page ):
-    Search_Class = pages.Search(search , int (page) )
-    return render_template('post-detail.html', data=Search_Class.data)
+@app.route('/search' , methods =['POST'] )
+def Search():
+    if  request.method=='POST' : 
+        Search = request.form['search']   
+        return redirect(url_for('Search_Page' ,search =Search , page =1 ))
+        #return redirect(url_for('Home_Page'))
+    else : 
+        return redirect(url_for('Home_Page'))
 
+
+@app.route('/search/page=<page>')
+def Search_Page(search , page = 1 ):
+        Search_Class = pages.Search(Search , int (page) )
+        return render_template('search.html', data=Search_Class.data)
+
+    
+    
 
 @app.route('/about')
 def About_Page():

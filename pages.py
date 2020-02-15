@@ -26,9 +26,9 @@ class Home( Header):
         self.data ['offers_Of_produts'] = self.show_data.get_offer_by_produts()
         self.data ['last_ten_Products'] = self.show_data.get_last_ten_Products ()
         self.data ['all_courses'] = self.show_data.get_all_courses()
-        self.data ['products_by_categories'] = self.show_data.get_all_products_by_categories(2)
-        self.data ['products_by_Robotics_Kits'] = self.show_data.get_all_products_by_categories(11)
-        self.data ['products_by_Arduino'] = self.show_data.get_all_products_by_categories(8)
+        self.data ['products_by_categories'] = self.show_data.get_all_products_by_category(2)
+        self.data ['products_by_Robotics_Kits'] = self.show_data.get_all_products_by_category(11)
+        self.data ['products_by_Arduino'] = self.show_data.get_all_products_by_category(8)
         self.data ['Most_Watched'] = self.show_data.get_top_viewed_item()
         self.data ['last_five_posts'] = self.show_data.get_last_number_posts(5)
         
@@ -57,14 +57,14 @@ class Products(Header):
 class Search(Header):
    def __init__(self , Search : str , page = 1 ):
        super().__init__()
-       self.data ['all_products'] = self.show_data.get_all_items()
+       self.data ['all_products'] = self.show_data.search_item(Search)
        self.data ['Most_Watched'] = self.show_data.get_top_viewed_item()
        self.data ['page'] =int (page)
        self.data ['Max_page'] = math.ceil ( len (self.data ['all_products'])/9)
-       self.data ['Link_Page'] = '/products/page='
+       self.data ['Link_Page'] = '/search/page='
        self.data ['Category_path'] = 'Search : {} '.format (Search)
        self.data ['Category_Name'] = 'Search : {} '.format (Search)
-       self.data ['title'] = 'Products'
+       self.data ['title'] = 'Search : {} '.format(Search)
         
         
 class Product(Header):
@@ -88,7 +88,7 @@ class Product(Header):
             self.data ['Number_Medias'] = len (self.data ['Media']) +1 
         self.data ['Most_Watched'] = self.show_data.get_top_viewed_item()
         
-        self.data ['Related_Product'] = self.show_data.get_all_products_by_category(self.show_data.get_category_by_product (Id_Product)[0])        
+        self.data ['Related_Product'] = self.show_data.get_all_products_by_category(self.show_data.get_category_by_product (Id_Product))        
     
 
 class Course(Header):
@@ -112,7 +112,7 @@ class Course(Header):
             self.data ['Number_Medias'] = len (self.data ['Media']) +1 
         self.data ['Most_Watched'] = self.show_data.get_top_viewed_courses()
         
-        self.data ['Related_Product'] = self.show_data.get_all_courses_by_category(self.show_data.get_category_by_product (Id_Course)[0])   
+        self.data ['Related_Product'] = self.show_data.get_all_courses_by_category(self.show_data.get_category_by_course (Id_Course))   
 
         
 class Login(Header):

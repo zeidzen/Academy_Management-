@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 from datetime import  datetime
-#from nltk import sent_tokenize
 import database as db
 import hashlib, binascii
 import re
@@ -32,9 +31,9 @@ class Show_Data():
         return item
 
 
-    def search_item(self, name: str) -> list:
+    def search_item(self, value: str) -> list:
         item = list()
-        sql = """select Id , Name, Description, Price, Date  from items where Name Like '%{}%';""".format(name)
+        sql = """select Id , Name, Description, Price, Date  from items where Name Like '%{}%';""".format(value)
         data = self.con.Select_Data_More_Row(sql)
         for items in data:
             selected = dict()
@@ -453,7 +452,7 @@ class Show_Data():
     
     def get_all_posts(self) -> list:
         post = list()
-        sql = """select Id , Title, Content, Media, Date  from post;"""
+        sql = """select Id , Title, Content, Media, Date , Brief  from post;"""
         data = self.con.Select_Data_More_Row(sql)
         for items in data:
             selected = dict()
@@ -462,14 +461,13 @@ class Show_Data():
             selected['Content'] = items[2]
             selected['Media'] = items[3]
             selected['Date'] = self.Convert_Date_From_Number_to_Text(str(items[4]))
-            selected['brief'] = ' '.join (sent_tokenize(items[2])[0:2] )
-
+            selected['Brief'] = items[5]
             post.append(selected)
         return post
     
     def get_last_number_posts (self ,number : int ) :
         post = list()
-        sql = """select Id , Title, Content, Media, Date  from post
+        sql = """select Id , Title, Content, Media, Date , Brief  from post
         ORDER BY  Id DESC LIMIT {}  ;""".format(number)
         data = self.con.Select_Data_More_Row(sql)
         for items in data:
@@ -479,13 +477,13 @@ class Show_Data():
             selected['Content'] = items[2]
             selected['Media'] = items[3]
             selected['Date'] = self.Convert_Date_From_Number_to_Text(str(items[4]))
-            selected['brief'] = ' '.join (sent_tokenize(items[2])[0:2] )
+            selected['Brief'] =items[5]
 
             post.append(selected)
         return post
     
     def get_post_by_id (self , Id_Post : int ) :
-        sql = """select Id , Title, Content, Media, Date  from post
+        sql = """select Id , Title, Content, Media, Date , Brief  from post
         Where Id = {}   ;""".format(Id_Post)
         data = self.con.Select_Data_One_Row(sql)
         post = dict()
@@ -494,7 +492,7 @@ class Show_Data():
         post['Content'] = data[2]
         post['Media'] = data[3]
         post['Date'] = self.Convert_Date_From_Number_to_Text(str(data[4]))
-        post['brief'] = ' '.join (sent_tokenize(data[2])[0:2] )
+        post['briBriefef'] = items[5]
         return post
     
 #------------------------------------------------------------------------------
@@ -646,12 +644,12 @@ class Show_Data():
     def get_category_by_product (self , Id_product : int ) : 
         sql = 'Select Id_Category From items Where Id = {} ;'.format(Id_product)
         data = self.con.Select_Data_One_Row(sql)
-        return data    
+        return data[0]
        
     def get_category_by_course (self , Id_Course : int ) : 
         sql = 'Select Id_Category From courses Where Id = {} ;'.format(Id_Course)
         data = self.con.Select_Data_One_Row(sql)
-        return data 
+        return data[0] 
     
     def get_all_categories_item(self) -> list:
         category = list()
