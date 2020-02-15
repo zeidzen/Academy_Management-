@@ -492,7 +492,7 @@ class Show_Data():
         post['Content'] = data[2]
         post['Media'] = data[3]
         post['Date'] = self.Convert_Date_From_Number_to_Text(str(data[4]))
-        post['briBriefef'] = items[5]
+        post['Brief'] =data[5]
         return post
     
 #------------------------------------------------------------------------------
