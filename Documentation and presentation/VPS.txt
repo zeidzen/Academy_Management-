@@ -1,0 +1,21 @@
+Performance data 
+CPU: two cores
+4 GB RAM (guaranteed)
+300 GB disk space (SSD-boosted)
+SSD boost
+
+Networking
+UNLIMITED traffic !
+100 Mbit/s port
+No restrictions, no throttling
+DDoS protection (details)
+
+Services and upgrades
+
+Live support every day, 365 days a year via e-mail and telephone
+Root access
+Reboot web interface
+OS reinstall console
+VNC access
+1 IP address included
+/64 IPv6 network included

@@ -531,9 +531,9 @@ class Show_Data():
 
     # Offer
     def get_offer_by_produts(self):
-        sql = """SELECT o.Id_Item , i.Name ,i.Description , i.Image , i.price , o.New_Price , o.End_Date 
-                FROM offers o , items i 
-                WHERE o.Id_Item = i.Id and o.Type = 1   ; """
+        sql = '''SELECT o.Id_Item , i.Name ,i.Description , i.Image , i.price , o.New_Price , o.End_Date 
+                FROM offers as o , items as i 
+                WHERE o.Id_Item = i.Id and o.Type = 1   ; '''
 
         offers = self.con.Select_Data_More_Row(sql)
         Products = list()
@@ -638,7 +638,9 @@ class Show_Data():
         sql = 'Select Id_Category From courses Where Id = {} ;'.format(Id_Course)
         data = self.con.Select_Data_One_Row(sql)
         return data[0]
-
+    
+    
+    #get_all_categories_by_products
     def get_all_categories_item(self) -> list:
         category = list()
         sql = """select Id , Name  from Categories where Type = 1;"""
@@ -650,32 +652,35 @@ class Show_Data():
             category.append(select)
         return category
 
-
-# -------------------------------------------------------------------------
-    # NEW ADDED
-
-    def get_items_categories(self):
-        sql = """select Id , Name from categories where Type = 1 ; """
-        data = self.con.Select_Data_More_Row(sql)
-        return data
-
+    #get_all_categories_by_courses
     def get_courses_categories(self):
         sql = """select Id , Name from categories where Type = 2 ; """
         data = self.con.Select_Data_More_Row(sql)
         return data
 
+# -------------------------------------------------------------------------
+    # NEW ADDED
+    #delete
+    def get_items_categories(self):
+        sql = """select Id , Name from categories where Type = 1 ; """
+        data = self.con.Select_Data_More_Row(sql)
+        return data
+
+
+    
+    ##delete
     def get_classes_name(self):
         sql = """select Id , Name from classes  ; """
         data = self.con.Select_Data_More_Row(sql)
         return data
-
+    
+    ##delete
     def get_student_name(self):
         sql = """select Id , FirstName from students  ; """
         data = self.con.Select_Data_More_Row(sql)
         return data
-
+    #delete
     def get_all_courses_for_classes(self):
-        courses = list()
         sql = """select Id, Name  from  courses;"""
         data = self.con.Select_Data_More_Row(sql)
         return data
@@ -952,19 +957,3 @@ class Register_And_login():
         except:
             return False, 'Please enter a valid password'
 
-
-# show = Show_Data()
-# show = Register_And_login()
-# #
-# info = {'Id': 0, 'FirstName': 'Haitham', 'LastName': 'Husam','Email': 'hhh1998@hotmail.com', 'Phone': '0789605882','Password':'hifj12345',
-#         'Gender': 1,
-#           'Id_Address': 3 }
-# data = show.Register_func(**info)
-
-
-# for d in data:
-#     print(d)
-# print(data)
-# dat = show.get_all_courses_for_classes()
-# for d in dat:
-#     print(d)
