@@ -22,11 +22,6 @@ class Header():
         self.data['courses_name'] = self.show_data.get_courses_name()
         self.data['categories'] = self.show_data.get_all_categories_item()
 
-    def Check_Image_Extenstion(self,filename):
-        ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'])
-        return '.' in filename and \
-               filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
-
 
 # Footer class
 class Footer():
@@ -35,7 +30,7 @@ class Footer():
 
 # Home class
 class Home(Header):
-    def __init__(self):
+    def __init(self):
         super().__init__()
         self.data['offers_Of_courses'] = self.show_data.get_offer_by_courses()
         self.data['offers_Of_produts'] = self.show_data.get_offer_by_produts()
@@ -65,7 +60,7 @@ class Courses(Header):
 class Products(Header):
     def __init__(self , page ):
         super().__init__()
-        self.data ['all_products'] = self.show_data.get_all_products()
+        self.data ['all_products'] = self.show_data.get_all_items()
         self.data ['Most_Watched'] = self.show_data.get_top_viewed_item()
         self.data ['page'] = int(page)
         self.data ['Max_page'] = math.ceil(len(self.data['all_products'])/9)
@@ -146,7 +141,7 @@ class Login(Header):
         super().__init__()
         self.data['title'] = 'Login'
     def get_login(self, **info):
-        return self.register_user.Login_func(info)
+        self.register_user.Login_func(info)
 
 
 # Achievements class
@@ -195,7 +190,7 @@ class Signup(Header):
         self.data['Cities'] = self.show_data.get_all_cities()
 
     def Regiter(self, **info):
-        return self.register_user.Register_func(**info)
+        self.register_user.Register_func(**info)
 
 
 # category class
@@ -260,13 +255,6 @@ class About(Header):
     def __init__(self):
         super().__init__()
         self.data['title'] = 'About Us'
-
-
-# Content class
-class Contact(Header):
-    def __init__(self):
-        super().__init__()
-        self.data['title'] = 'Content'
 
 
 # FAQ class
