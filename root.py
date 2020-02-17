@@ -18,30 +18,39 @@ app.secret_key = 'YYYY@#$%'
 def index():
     return redirect(url_for('Home_Page'))
 
-
 @app.route('/home')
 def Home_Page():
     Home_Class = pages.Home()
     return render_template('home.html', data=Home_Class.data)
 
+# ----------------------------------------------------------------
 
-@app.route('/category=<id_category>/page=<page>')
-def Category_Page(id_category , page ):
-    Category_Class = pages.Category(int(id_category) , int(page))
-    return render_template('products.html', data=Category_Class.data)
+@app.route('/category=<Id_Category>/page=<page>')
+def Category_Page(Id_Category :int  , page = 1 , sort = 0 ):
+    Category_Class = pages.Category(  int (Id_Category) ,page =int (page)
+                                    , sort = int (sort) )
+    if Category_Class.data['Max_Page'] < int(page) : 
+        Category_Class.data['page'] = 1
+    return render_template('products_by_Category.html', data=Category_Class.data)
 
+@app.route('/category=<Id_Category>/sort=<Sort>_maxnumber=<MaxNumber>_page=<page>')
+def Sort_Product_By_Category ( Id_Category :int  , Sort : str , MaxNumber : int , page ):
+    Category_Class = pages.Category(int (Id_Category) ,int (page) , int(Sort) , int (MaxNumber) )
+    return render_template('products.html', data=Category_Class.data)    
 
-@app.route('/categoryC=<id_category>/page=<page>')
-def Category_Courses_Page(id_category , page ):
-    Category_Class = pages.Courses_Category(int(id_category) , int(page))
-    return render_template('courses.html', data=Category_Class.data)
-
-
+# ----------------------------------------------------------------
+    
 @app.route('/products/page=<page>')
-def products_Page(page):
-    Products_Class = pages.Products(int (page) )
+def products_Page(page = 1 , sort = 0 ):  
+    Products_Class = pages.Products(int (page) , int (sort) )
+    if Products_Class.data['Max_Page'] < int(page) : 
+        Products_Class.data['page'] = 1
     return render_template('products.html', data=Products_Class.data)
 
+@app.route('/products/sort=<Sort>_maxnumber=<MaxNumber>_page=<page>')
+def Method_Show_Product (Sort : str , MaxNumber : int , page ):
+    Products_Class = pages.Products(int (page) , int(Sort) , int (MaxNumber) )
+    return render_template('products.html', data=Products_Class.data)
 
 @app.route('/product/<Id_product>')
 def product_Page(Id_product):
@@ -49,80 +58,19 @@ def product_Page(Id_product):
     return render_template('product-detail.html', data=Product_Class.data)
 
 
-@app.route('/login')
-def Login_Page():
-    Login_Class = pages.Login()
-    return render_template('login.html', data=Login_Class.data)
-
-
-@app.route('/login_check', methods=['POST'])
-def check_Login_Page():
-    data = dict()
-    Login_Class = pages.Login()
-    if request.method == 'POST':
-        data['Email'] = request.form['email']
-        data['Password'] = request.form['pass']
-        Login_Class.get_login(**data)
-
-        return render_template('/DashBoard/index-2.html')
-    else:
-        return redirect(url_for('Login_Page'))
-
-@app.route('/sinup')
-def Sinup_Page():
-    Sinup_Class = pages.Signup()
-    return render_template('register.html', data=Sinup_Class.data)
-
-
-# def allowed_file(filename):
-#     ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'])
-#     return '.' in filename and \
-#            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
-
-
-@app.route('/register', methods=['POST'])
-def register_data():
-    data = dict()
-    Sinup_Class = pages.Signup()
-    if request.method == 'POST':
-        data['ID'] = 0
-        data['FirstName'] = request.form['firstname']
-        data['LastName'] = request.form['lastname']
-        data['Email'] = request.form['email']
-        data['Phone'] = request.form['telephone']
-        data['Password'] = request.form['password']
-        data['Gender'] = request.form['newsletter']
-        data['Id_Address'] = request.form['country_id']
-        birthday = request.form['birthday']
-        data['birthday'] = birthday.replace('/', '-')
-        UPLOAD_FOLDER = 'user_image'
-        app = Flask(__name__)
-        app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
-        image = request.files['Image']
-        if image and Sinup_Class.Check_Image_Extenstion(image.filename):
-            filename = secure_filename(image.filename)
-            image.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-        data['image'] = image.filename
-        Sinup_Class.Regiter(**data)
-
-
-        Home_Class = pages.Home()
-        return render_template('home.html', data=Home_Class.data)
-    else:
-        return redirect(url_for('Sinup_Page'))
-
+# ----------------------------------------------------------------
 
 @app.route('/courses/page=<page>')
 def Courses_Page(page):
     Courses_Class = pages.Courses (page)
     return render_template('courses.html', data=Courses_Class.data)
 
-
 @app.route('/course/<Id_Course>')
 def Course_Page(Id_Course):
     Course_Class = pages.Course (int (Id_Course))
     return render_template('courses-detail.html', data=Course_Class.data)
 
+# ----------------------------------------------------------------
 
 @app.route('/achievements/page=<page>')
 def Achievements_Page(page):
@@ -135,23 +83,117 @@ def Post_Page(Id_post):
     Post_Class = pages.Post(int (Id_post) )
     return render_template('post-detail.html', data=Post_Class.data)
 
-
+# ----------------------------------------------------------------
+    
 @app.route('/search' , methods =['POST'] )
 def Search():
     if  request.method=='POST' :
         Search = request.form['search']
-        return redirect(url_for('Search_Page' ,search =Search , page =1 ))
-        #return redirect(url_for('Home_Page'))
+        return redirect(url_for('Search_Page',search =str(Search),page =1 ))
     else :
         return redirect(url_for('Home_Page'))
 
 
-@app.route('/search/page=<page>')
+@app.route('/search=<search>/page=<page>')
 def Search_Page(search , page = 1 ):
-        Search_Class = pages.Search(Search , int (page) )
+        Search_Class = pages.Search( search , int (page) )
         return render_template('search.html', data=Search_Class.data)
 
+# -----------------------------------------------------------------------------
 
+@app.route('/about')
+def About_Page():
+    About_Class = pages.About()
+    return render_template('about.html', data=About_Class.data)
+
+
+@app.route('/faqs')
+def Faqs_Page():
+    FAQ_Class = pages.FAQ()
+    return render_template('faqs.html', data=FAQ_Class.data)
+
+
+#==============================================================================
+#==============================================================================
+#==============================================================================
+#Dashboard
+@app.route('/TTADP')
+def Dashboard_Page():
+    return render_template('Dashboard/login.html')
+# -----------------------------------------------------------------------------
+    
+@app.route('/login')
+def Login_Page():
+    Login_Class = pages.Login()
+    if 'Login_Error' in session : 
+        Login_Class.data['Login_Error'] = session['Login_Error']
+        del session['Login_Error']
+    return render_template('login.html', data=Login_Class.data)
+
+@app.route('/login_check', methods=['POST'])
+def check_Login_Page():
+    data = dict()
+    Login_Class = pages.Login()
+    if request.method == 'POST':
+        data['Email'] = request.form['email']
+        data['Password'] = request.form['password']
+        #Cheak User Information
+        status = Login_Class.get_login(**data)
+        if status[0] == True :
+            session['Id_User'] =status[1]
+            return redirect(url_for('Home_Page'))
+        elif status[0] == False :
+            session['Login_Error'] = status[1]
+            return redirect(url_for('Login_Page'))
+    else : 
+        return redirect(url_for('Login_Page'))
+
+# ----------------------------------------------------------------
+        
+@app.route('/sinup')
+def Sinup_Page():
+    Sinup_Class = pages.Signup()
+    if 'Sinup_Error' in session : 
+        Sinup_Class.data['Sinup_Error'] = session['Sinup_Error']
+        del session['Sinup_Error']
+    return render_template('register.html', data=Sinup_Class.data)
+
+
+@app.route('/register', methods=['POST'])
+def register_data():
+    data = dict()
+    Sinup_Class = pages.Signup ()
+    UPLOAD_FOLDER = 'static/img/user_image'
+    if request.method == 'POST':
+        data['FirstName'] = request.form['firstname']
+        data['LastName'] = request.form['lastname']
+        data['Email'] = request.form['email']
+        data['Phone'] = request.form['telephone']
+        data['Password'] = request.form['password']
+        data['Gender'] = request.form['newsletter']
+        data['Id_Address'] = request.form['country_id']
+        #birthday
+        birthday = request.form['birthday']
+        data['birthday'] = birthday.replace('/', '-')
+        #Image 
+        app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+        image = request.files['Image']
+        if image and Sinup_Class.Cheak_Image_Extension(image.filename):
+            filename = secure_filename(image.filename)
+            image.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+        data['image'] = image.filename
+        
+        #Insert Data
+        status = Sinup_Class.Regiter(**data)
+        if status[0] == True : 
+            session['Id_User'] =status[1]
+            return redirect(url_for('Home_Page'))
+        
+        elif  status[0] == False  : 
+            session['Sinup_Error'] = status[1]
+            return redirect(url_for('Sinup_Page'))    
+    
+# ----------------------------------------------------------------------------
 @app.route('/add_courses')
 def Add_Courses_Page():
     courses_Class = pages.Courses()
@@ -189,7 +231,7 @@ def Add_Courses():
     else:
         return redirect(url_for('Add_Courses_Page'))
 
-
+# ----------------------------------------------------------------------------
 @app.route('/Add_category')
 def add_category_Page():
     Add_Class = pages.Add_Category()
@@ -209,8 +251,8 @@ def add_Category():
         return render_template('Add_category.html', data=Add_Class.data)
     else:
         return redirect(url_for('add_category_Page'))
-
-
+ 
+# ----------------------------------------------------------------------------
 @app.route('/Add_items')
 def add_item_Page():
     Add_Class = pages.Add_Item()
@@ -254,6 +296,7 @@ def add_Items():
     else:
         return redirect(url_for('add_item_Page'))
 
+# ----------------------------------------------------------------------------
 
 @app.route('/Add_student')
 def add_student_Page():
@@ -286,6 +329,7 @@ def add_Student():
     else:
         return redirect(url_for('add_student_Page'))
 
+# ----------------------------------------------------------------------------
 
 @app.route('/Add_classes')
 def add_class_Page():
@@ -317,7 +361,7 @@ def add_Class():
     else:
         return redirect(url_for('add_class_Page'))
 
-
+# ----------------------------------------------------------------------------
 @app.route('/Add_Student_Class')
 def add_Student_Class_Page():
     Add_Stu_Classes = pages.Add_Student_Class()
@@ -340,28 +384,14 @@ def add_student_class():
         return render_template('home.html', data=Home_Class.data)
     else:
         return redirect(url_for('add_Student_Class_Page'))
-
-
-@app.route('/about')
-def About_Page():
-    About_Class = pages.About()
-    return render_template('about.html', data=About_Class.data)
-
-
-@app.route('/faqs')
-def Faqs_Page():
-    FAQ_Class = pages.FAQ()
-    return render_template('faqs.html', data=FAQ_Class.data)
-
+    
+# ----------------------------------------------------------------------------
+#==============================================================================
+#==============================================================================
 
 @app.route('/ForgottenPassword')
 def ForgottenPassword_Page():
     pass
-
-
-@app.route('/TTADP')
-def Dashboard_Page():
-    return render_template('Dashboard/login.html')
 
 
 @app.errorhandler(404)
