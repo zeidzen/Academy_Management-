@@ -118,33 +118,34 @@ def Faqs_Page():
 #Dashboard
 @app.route('/TTADP')
 def Dashboard_Page():
-    return render_template('Dashboard/login.html')
+    return render_template('/Dashboard/login.html')
 # -----------------------------------------------------------------------------
     
 @app.route('/login')
 def Login_Page():
     Login_Class = pages.Login()
-    if 'Login_Error' in session : 
+    if 'Login_Error' in session:
         Login_Class.data['Login_Error'] = session['Login_Error']
         del session['Login_Error']
-    return render_template('login.html', data=Login_Class.data)
+    return render_template('/DashBoard/DashBoard_index.html', data=Login_Class.data)
 
 @app.route('/login_check', methods=['POST'])
 def check_Login_Page():
     data = dict()
     Login_Class = pages.Login()
     if request.method == 'POST':
+        data['Password'] = request.form['pass']
         data['Email'] = request.form['email']
-        data['Password'] = request.form['password']
-        #Cheak User Information
+
+        # Cheak User Information
         status = Login_Class.get_login(**data)
-        if status[0] == True :
-            session['Id_User'] =status[1]
+        if status[0] == True:
+            session['Id_User'] = status[1]
             return redirect(url_for('Home_Page'))
-        elif status[0] == False :
+        elif status[0] == False:
             session['Login_Error'] = status[1]
             return redirect(url_for('Login_Page'))
-    else : 
+    else:
         return redirect(url_for('Login_Page'))
 
 # ----------------------------------------------------------------
@@ -196,7 +197,7 @@ def register_data():
 @app.route('/add_courses')
 def Add_Courses_Page():
     courses_Class = pages.Courses()
-    return render_template('Add_courses.html', data=courses_Class.data)
+    return render_template('/DashBoard/add_courses.html', data=courses_Class.data)
 
 
 @app.route('/Add_courses_to_DB', methods=['POST'])
@@ -204,11 +205,13 @@ def Add_Courses():
     data = dict()
     courses_Class = pages.Courses()
     if request.method == 'POST':
-        data['ID'] = 0
-        data['category_Id'] = request.form['category_Id']
-        data['courses_name'] = request.form['courses_name']
-        data['courses_description'] = request.form['courses_description']
-        UPLOAD_FOLDER = 'course_image'
+        data['Id'] = 0
+        data['Id_category'] = request.form['category_Id']
+        data['Name'] = request.form['courses_name']
+        data['Brief'] = request.form['courses_brief']
+        data['Description'] = request.form['courses_description']
+
+        UPLOAD_FOLDER = 'static/img/course_image'
         app = Flask(__name__)
         app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
@@ -220,13 +223,13 @@ def Add_Courses():
             filename = secure_filename(image.filename)
             image.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
 
-        data['courses_image'] = image.filename
-        data['courses_price'] = request.form['courses_price']
-        data['courses_num_of_hours'] = request.form['courses_num_of_hours']
-        data['courses_view'] = request.form['courses_view']
+        data['Image'] = '../'+UPLOAD_FOLDER + image.filename
+        data['Price'] = request.form['courses_price']
+        data['Number_of_hours'] = request.form['courses_num_of_hours']
+        data['Views'] = request.form['courses_view']
+
         courses_Class.add_courses(**data)
-        Courses_Class = pages.Courses()
-        return render_template('home.html', data=Courses_Class.data)
+        return render_template('/DashBoard/add_courses.html', data=courses_Class.data)
     else:
         return redirect(url_for('Add_Courses_Page'))
 
@@ -234,20 +237,20 @@ def Add_Courses():
 @app.route('/Add_category')
 def add_category_Page():
     Add_Class = pages.Add_Category()
-    return render_template('/DashBoard/form-select2.html',data= Add_Class.data)
+    return render_template('/DashBoard/add_category.html', data=Add_Class.data)
 
 
 @app.route('/Add_category_to_DB', methods=['POST'])
 def add_Category():
-    data =  dict()
+    data = dict()
     Add_Class = pages.Add_Category()
     if request.method == 'POST':
         data['ID'] = 0
         data['Name'] = request.form['category_name']
         data['Type'] = request.form['category_type']
         Add_Class.Add_category(**data)
-        About_Class = pages.About()
-        return render_template('Add_category.html', data=Add_Class.data)
+
+        return render_template('/DashBoard/add_category.html', data=Add_Class.data)
     else:
         return redirect(url_for('add_category_Page'))
  
@@ -255,7 +258,7 @@ def add_Category():
 @app.route('/Add_items')
 def add_item_Page():
     Add_Class = pages.Add_Item()
-    return render_template('Add_items.html', data=Add_Class.data)
+    return render_template('/DashBoard/add_items.html', data=Add_Class.data)
 
 
 @app.route('/Add_items_to_DB', methods=['POST'])
@@ -265,11 +268,12 @@ def add_Items():
     if request.method == 'POST':
 
         data['ID'] = 0
-        data['category_Id'] = request.form['category_Id']
-        data['item_name'] = request.form['item_name']
-        data['item_description'] = request.form['item_description']
-        data['item_price'] = request.form['item_price']
-        UPLOAD_FOLDER = 'item_image'
+        data['Id_category'] = request.form['category_Id']
+        data['Name'] = request.form['item_name']
+        data['Brief'] = request.form['item_brief']
+        data['Description'] = request.form['item_description']
+        data['Price'] = request.form['item_price']
+        UPLOAD_FOLDER = 'static/img/item_image'
         reg_class = pages.Add_Item()
         app = Flask(__name__)
         app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
@@ -282,16 +286,17 @@ def add_Items():
         # submit a empty part without filename
         if image.filename == '':
             flash('No selected file')
-            return redirect('Add_items.html')
+            return redirect(url_for('add_item_Page'))
         if image and Add_Class.Check_Image_Extenstion(image.filename):
             filename = secure_filename(image.filename)
             image.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
 
-        data['item_image'] = image.filename
-        data['item_view'] = request.form['item_view']
-        pages.Add_Item.Add_items(**data)
-        Add_Item = pages.Add_Item()
-        return render_template('Add_items.html', data=Add_Item.data)
+        data['Image'] = '../'+UPLOAD_FOLDER + image.filename
+        data['Views'] = request.form['item_view']
+        data['Availability'] = request.form['item_availability']
+        Add_Class.Add_items(**data)
+
+        return render_template('/DashBoard/add_items.html', data=Add_Class.data)
     else:
         return redirect(url_for('add_item_Page'))
 
@@ -300,7 +305,7 @@ def add_Items():
 @app.route('/Add_student')
 def add_student_Page():
     Add_Student = pages.Add_Student()
-    return render_template('Add_student.html', data=Add_Student.data)
+    return render_template('/DashBoard/add_student.html', data=Add_Student.data)
 
 
 @app.route('/Add_student_to_DB', methods=['POST'])
@@ -308,23 +313,21 @@ def add_Student():
     data = dict()
     Add_Student = pages.Add_Student()
     if request.method == 'POST':
-        data['ID'] = 0
+        data['Id'] = 0
         data['FirstName'] = request.form['firstname']
         data['LastName'] = request.form['lastname']
         data['Gender'] = request.form['newsletter']
         data['Phone'] = request.form['telephone']
         data['Email'] = request.form['email']
-        data['birthday'] = request.form['birthday']
-        data['birthday'] = data['birthday'].replace('/', '-')
-        data['Address'] = request.form['country_id']
-        data['university'] = request.form['university_id']
-        data['specialization'] = request.form['specialization_id']
+        data['Birthday'] = request.form['birthday']
+        data['Birthday'] = data['Birthday'].replace('/', '-')
+        data['Id_Address'] = request.form['country_id']
+        data['Id_University'] = request.form['university_id']
+        data['Id_Specialization'] = request.form['specialization_id']
 
         Add_Student.Add_students(**data)
 
-        Home_Class = pages.Home()
-
-        return render_template('home.html', data=Home_Class.data)
+        return render_template('/DashBoard/add_student.html', data=Add_Student.data)
     else:
         return redirect(url_for('add_student_Page'))
 
@@ -333,7 +336,7 @@ def add_Student():
 @app.route('/Add_classes')
 def add_class_Page():
     Add_Classes = pages.Add_Classes()
-    return render_template('Add_classes.html', data=Add_Classes.data)
+    return render_template('/DashBoard/add_classes.html', data=Add_Classes.data)
 
 
 @app.route('/Add_class_to_DB', methods=['POST'])
@@ -342,21 +345,19 @@ def add_Class():
     Add_Classes = pages.Add_Classes()
     if request.method == 'POST':
 
-        data['ID'] = 0
-        data['Course_id'] = request.form['Course_id']
-        data['class_name'] = request.form['class_name']
-        data['start_date'] = request.form['start_date']
-        data['start_date'] = data['start_date'].replace('/', '-')
-        data['end_date'] = request.form['end_date']
-        data['end_date'] = data['end_date'].replace('/', '-')
-        data['lecturer_name'] = request.form['lecturer_name']
+        data['Id'] = 0
+        data['Id_course'] = request.form['Course_id']
+        data['Name'] = request.form['class_name']
+        data['Start_Date'] = request.form['start_date']
+        data['Start_Date'] = data['Start_Date'].replace('/', '-')
+        data['End_Date'] = request.form['end_date']
+        data['End_Date'] = data['End_Date'].replace('/', '-')
+        data['Lecturer'] = request.form['lecturer_name']
         data['capacity'] = request.form['capacity']
 
         Add_Classes.Add_class(**data)
 
-        Home_Class = pages.Home()
-
-        return render_template('home.html', data=Home_Class.data)
+        return render_template('/DashBoard/add_classes.html', data=Add_Classes.data)
     else:
         return redirect(url_for('add_class_Page'))
 
@@ -364,7 +365,7 @@ def add_Class():
 @app.route('/Add_Student_Class')
 def add_Student_Class_Page():
     Add_Stu_Classes = pages.Add_Student_Class()
-    return render_template('Add_stu_class.html', data=Add_Stu_Classes.data)
+    return render_template('/DashBoard/add_stu_class.html', data=Add_Stu_Classes.data)
 
 
 @app.route('/Add_student_class_to_DB', methods=['POST'])
@@ -373,14 +374,14 @@ def add_student_class():
     Add_Stu_Classes = pages.Add_Student_Class()
     if request.method == 'POST':
 
-        data['ID'] = 0
-        data['class_id'] = request.form['class_id']
-        data['student_id'] = request.form['student_id']
+        data['Id'] = 0
+        data['Id_Student'] = request.form['student_id']
+        data['Id_Class'] = request.form['class_id']
+
 
         Add_Stu_Classes.Add_stu_class(**data)
-        Home_Class = pages.Home()
 
-        return render_template('home.html', data=Home_Class.data)
+        return render_template('/DashBoard/add_stu_class.html', data=Add_Stu_Classes.data)
     else:
         return redirect(url_for('add_Student_Class_Page'))
     
