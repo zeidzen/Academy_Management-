@@ -88,29 +88,16 @@
 
 					<!--Left Part Start -->
 					<aside class="col-xs-12 col-sm-12 col-md-4 col-lg-3" id="column-left">
-						<div class="block-search">
-							<div class="search">
-								<div class="modsearch">
-									<input class="autosearch-input form-control" type="text" value="" size="50" autocomplete="off" placeholder="Search product..." name="search">
-
-									<button type="submit" class="button-search btn btn-primary" name="submit_search"><i class="fa fa-search"></i></button>
-
-								</div>
-							</div>
-
-						</div>
 
 						<div class="module blog-category titleLine">
 
 
-							<h3 class="modtitle">Blog Category</h3>
+							<h3 class="modtitle"> Courses Categories</h3>
 							<div class="modcontent">
 								<ul class="list-group ">
-									<li class="list-group-item"> <a href="blog-page.html"class="group-item active">Our Blog</a></li>
-									<li class="list-group-item"><a href="blog-page.html" class="group-item">Demo Category 2</a></li>
-									<li class="list-group-item"><a href="blog-page.html" class="group-item">Demo Category 3</a></li>
-									<li class="list-group-item"><a href="blog-page.html" class="group-item">Demo Category 4</a></li>
-									<li class="list-group-item"><a href="blog-page.html" class="group-item">Demo Category 5</a></li>
+									{% for category in data['courses_categories'] :  %}
+									<li class="list-group-item"> <a href="/category={{category['Id']}}/page=1"class="group-item active">{{category['Name']}}</a></li>
+									{%endfor%}
 								</ul>
 
 							</div>
