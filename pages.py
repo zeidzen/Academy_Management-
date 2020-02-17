@@ -1,13 +1,10 @@
 # -*- coding: utf-8 -*-
 
-from datetime import datetime
-from flask import Flask, request, jsonify
-import processes_DB
-from flask import session
 import processes_DB
 import math
-
-
+#==============================================================================
+#==============================================================================
+#==============================================================================
 # Header class
 class Header():
     def __init__(self):
@@ -22,17 +19,21 @@ class Header():
         self.data['courses_name'] = self.show_data.get_courses_name()
         self.data['categories'] = self.show_data.get_all_categories_item()
 
-    def Check_Image_Extenstion(self,filename):
+
+    def Cheak_Image_Extension (self , filename):
         ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'])
         return '.' in filename and \
                filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
+# -----------------------------------------------------------------------------
 
 # Footer class
 class Footer():
     pass
 
 
+#==============================================================================
+# -----------------------------------------------------------------------------
 # Home class
 class Home(Header):
     def __init__(self):
@@ -47,26 +48,24 @@ class Home(Header):
         self.data['Most_Watched'] = self.show_data.get_top_viewed_item()
         self.data['last_five_posts'] = self.show_data.get_last_number_posts(5)
 
-
+# -----------------------------------------------------------------------------
 # Courses class
 class Courses(Header):
     def __init__(self, page=1):
         super().__init__()
         self.data['title'] = 'Courses'
         self.data['Courses'] = self.show_data.get_all_courses()
-        self.data['Category_path'] = 'All Courses'
         self.data['page'] = int(page)
         self.data['Max_page'] = math.ceil(len(self.data['Courses']) / 5)
 
     def add_courses(self, **info):
         self.insert_data.add_course(**info)
 
-
+# -----------------------------------------------------------------------------
 # Category class
 class Courses_Category(Header):
     def __init__(self, Id_Category: int, Page: int):
         super().__init__()
-        self.data['Courses'] = self.show_data.get_all_courses_by_category(Id_Category)
         self.data['Most_Watched'] = self.show_data.get_top_viewed_courses()
         self.data['Category_Name'] = self.show_data.get_category_by_Id(Id_Category)[1]
         self.data['Id_Category'] = Id_Category
@@ -75,51 +74,86 @@ class Courses_Category(Header):
         self.data['Max_page'] = math.ceil(len(self.data['Courses']) / 9)
         self.data['Link_Page'] = '/category={}/page='.format(Id_Category)
         self.data['title'] = self.data['Category_Name']
-
-
-# Products class
-class Products(Header):
-    def __init__(self , page ):
+        
+# -----------------------------------------------------------------------------        
+# Course class
+class Course(Header):
+    def __init__(self, Id_Course: int):
         super().__init__()
-        self.data ['all_products'] = self.show_data.get_all_products()
+        self.data['check_offer_existe'] = self.show_data.check_offer_existe(Id_Course, 2)
+
+        if self.data['check_offer_existe'] == True:
+            self.data['Course'] = self.show_data.get_offer_by_id_course(Id_Course)
+
+        elif self.data['check_offer_existe'] == False:
+            self.data['Course'] = self.show_data.get_course_by_Id(Id_Course)
+
+        self.data['Title'] = self.data['Course']['Name']
+        self.data['Media'] = self.show_data.get_media_by_id_course(Id_Course)
+        self.data['Features'] = self.show_data.get_features_by_id_course(Id_Course)
+        if len(self.data['Media']) + 1 > 4:
+            self.data['Number_Medias'] = 4
+        else:
+            self.data['Number_Medias'] = len(self.data['Media']) + 1
+        self.data['Most_Watched'] = self.show_data.get_top_viewed_courses()
+
+        self.data['Related_Product'] = self.show_data.get_all_courses_by_category(
+            self.show_data.get_category_by_course(Id_Course))
+        
+# -----------------------------------------------------------------------------
+# Products class
+class Products (Header):
+    
+    global Sort_List  
+    Sort_List = { 0 :'Default'  , 1 : 'Name( A - Z )' , 2 : 'Name ( Z - A )' , 
+        3 :'Price (Low &gt; High)' , 4 : 'Price (High &gt; Low)' }
+    
+    Number_Of_Products_List = [ 9 ,12 , 15 ,18 , 21 , 24  , 48 , 100 ]
+            
+    def __init__(self , page = 1 , sort = 0 , Number_Products_In_Page  = 9 ):
+        super().__init__()
+        self.data ['all_products'] = self.show_data.get_all_products(sort)
         self.data ['Most_Watched'] = self.show_data.get_top_viewed_item()
         self.data ['page'] = int(page)
-        self.data ['Max_page'] = math.ceil(len(self.data['all_products'])/9)
-        self.data ['Link_Page'] = '/products/page='
-        self.data ['Category_path'] = 'All Products'
-        self.data ['Category_Name'] = 'All Products'
-        self.data ['title'] = 'Products'
+        self.data ['Max_Page'] = math.ceil(len(self.data['all_products'])/Number_Products_In_Page )
+        self.data ['Number_Products_In_Page'] = Number_Products_In_Page
+        self.data ['Sort_List'] = Sort_List
+        self.data ['Selected_Sort'] = Sort_List[sort]
+        self.data ['Number_Of_Products'] = Products.Number_Of_Products_List
+        self.data ['Method_Sort'] = sort
 
+        if len (self.data['all_products']) <= 9 : 
+            self.data ['Number_Products_In_Page'] = len (self.data['all_products'])
+            
+        self.data ['layer'] = int (math.ceil(self.data ['Number_Products_In_Page']/3))        
 
+# -----------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 # Category class
-class Category(Header):
-    def __init__(self, Id_Category: int, Page: int):
+class Category_Products (Header):
+    global Sort_List  
+    Sort_List = { 0 :'Default'  , 1 : 'Name( A - Z )' , 2 : 'Name ( Z - A )' , 
+        3 :'Price (Low &gt; High)' , 4 : 'Price (High &gt; Low)' }
+    
+    Number_Of_Products_List = [ 9 ,12 , 15 ,18 , 21 , 24  , 48 , 100 ]
+            
+    def __init__ (self , Id_Category , page = 1 , sort = 0 , Number_Products_In_Page  = 9 ):
         super().__init__()
-        self.data['all_products'] = self.show_data.get_all_products_by_category(Id_Category)
-        self.data['Most_Watched'] = self.show_data.get_top_viewed_item()
-        self.data['Category_Name'] = self.show_data.get_category_by_Id(Id_Category)[1]
-        self.data['Id_Category'] = Id_Category
-        self.data['Category_path'] = 'Categories    >    {}'.format(self.data['Category_Name'])
-        self.data['page'] = Page
-        self.data['Max_page'] = math.ceil(len(self.data['all_products']) / 9)
-        self.data['Link_Page'] = '/category={}/page='.format(Id_Category)
-        self.data['title'] = self.data['Category_Name']
-
-
-# Search class
-class Search(Header):
-    def __init__(self, Search: str, page = 1 ):
-        super().__init__()
-        self.data ['all_products'] = self.show_data.search_item(Search)
+        self.data ['Id_Category'] = Id_Category
+        self.data ['all_products'] = self.show_data.get_all_products_by_category(Id_Category , sort )
         self.data ['Most_Watched'] = self.show_data.get_top_viewed_item()
-        self.data ['page'] =int (page)
-        self.data ['Max_page'] = math.ceil ( len (self.data ['all_products'])/9)
-        self.data ['Link_Page'] = '/search/page='
-        self.data ['Category_path'] = 'Search : {} '.format (Search)
-        self.data ['Category_Name'] = 'Search : {} '.format (Search)
-        self.data ['title'] = 'Search : {} '.format(Search)
-
-
+        self.data ['page'] = int(page)
+        self.data ['Max_Page'] = math.ceil(len(self.data['all_products']) /Number_Products_In_Page )
+        self.data ['Number_Products_In_Page'] = Number_Products_In_Page
+        self.data ['Sort_List'] = Sort_List
+        self.data ['Selected_Sort'] = Sort_List[sort]
+        self.data ['Number_Of_Products'] = Products.Number_Of_Products_List
+        self.data ['Method_Sort'] = sort
+        if len (self.data['all_products']) <= 9 : 
+            self.data ['Number_Products_In_Page'] = len (self.data['all_products'])
+        self.data ['layer'] = int (math.ceil(self.data ['Number_Products_In_Page']/3))  
+        
+# -----------------------------------------------------------------------------                
 # Product class
 class Product(Header):
     def __init__(self, Id_Product: int):
@@ -145,42 +179,19 @@ class Product(Header):
         self.data['Related_Product'] = self.show_data.get_all_products_by_category(
             self.show_data.get_category_by_product(Id_Product))
 
-
-# Course class
-class Course(Header):
-    def __init__(self, Id_Course: int):
+# -----------------------------------------------------------------------------
+# Search class
+class Search(Header):
+    def __init__(self, Name_Search : str, page = 1 ):
         super().__init__()
-        self.data['check_offer_existe'] = self.show_data.check_offer_existe(Id_Course, 2)
+        self.data ['all_Items'] = self.show_data.search_items(Name_Search)
+        self.data ['Most_Watched'] = self.show_data.get_top_viewed_item()
+        self.data ['page'] =int (page)
+        self.data ['Max_page'] = math.ceil ( len (self.data ['all_Items'])/9)
+        self.data ['title'] = 'Search : {} '.format(Name_Search)
+        self.data ['Name_Search'] = Name_Search
 
-        if self.data['check_offer_existe'] == True:
-            self.data['Course'] = self.show_data.get_offer_by_id_course(Id_Course)
-
-        elif self.data['check_offer_existe'] == False:
-            self.data['Course'] = self.show_data.get_course_by_Id(Id_Course)
-
-        self.data['Title'] = self.data['Course']['Name']
-        self.data['Media'] = self.show_data.get_media_by_id_course(Id_Course)
-        self.data['Features'] = self.show_data.get_features_by_id_course(Id_Course)
-        if len(self.data['Media']) + 1 > 4:
-            self.data['Number_Medias'] = 4
-        else:
-            self.data['Number_Medias'] = len(self.data['Media']) + 1
-        self.data['Most_Watched'] = self.show_data.get_top_viewed_courses()
-
-        self.data['Related_Product'] = self.show_data.get_all_courses_by_category(
-            self.show_data.get_category_by_course(Id_Course))
-
-
-# Login class
-class Login(Header):
-    def __init__(self):
-        super().__init__()
-        self.data['title'] = 'Login'
-
-    def get_login(self, **info):
-        return self.register_user.Login_func(**info)
-
-
+# -----------------------------------------------------------------------------
 # Achievements class
 class Achievements(Header):
     def __init__(self, page=1):
@@ -190,20 +201,71 @@ class Achievements(Header):
         self.data['page'] = int(page)
         self.data['Max_page'] = math.ceil(len(self.data['posts']) / 5)
 
-
+# -----------------------------------------------------------------------------
 # Post class
 class Post(Header):
     def __init__(self, Id_Post: int):
         super().__init__()
-        self.data['post'] = self.show_data.get_post_by_id(Id_Post)
+        self.data['post'] = self.show_data.get_post_by_id(Id_Post)        
+# -----------------------------------------------------------------------------
+# Category class
+class Category_Products (Header):
+    global Sort_List  
+    Sort_List = { 0 :'Default'  , 1 : 'Name( A - Z )' , 2 : 'Name ( Z - A )' , 
+        3 :'Price (Low &gt; High)' , 4 : 'Price (High &gt; Low)' }
+    
+    Number_Of_Products_List = [ 9 ,12 , 15 ,18 , 21 , 24  , 48 , 100 ]
+            
+    def __init__ (self , Id_Category , page = 1 , sort = 0 , Number_Products_In_Page  = 9 ):
+        super().__init__()
+        self.data ['Id_Category'] = Id_Category
+        self.data ['all_products'] = self.show_data.get_all_products_by_category(Id_Category , sort )
+        self.data ['Most_Watched'] = self.show_data.get_top_viewed_item()
+        self.data ['page'] = int(page)
+        self.data ['Max_Page'] = math.ceil(len(self.data['all_products']) /Number_Products_In_Page )
+        self.data ['Number_Products_In_Page'] = Number_Products_In_Page
+        self.data ['Sort_List'] = Sort_List
+        self.data ['Selected_Sort'] = Sort_List[sort]
+        self.data ['Number_Of_Products'] = Products.Number_Of_Products_List
+        self.data ['Method_Sort'] = sort
+        if len (self.data['all_products']) <= 9 : 
+            self.data ['Number_Products_In_Page'] = len (self.data['all_products'])
+        self.data ['layer'] = int (math.ceil(self.data ['Number_Products_In_Page']/3))  
+        
+# -----------------------------------------------------------------------------
 
+# About class
+class About(Header):
+    def __init__(self):
+        super().__init__()
+        self.data['title'] = 'About Us'
+# -----------------------------------------------------------------------------
+# FAQ class
+class FAQ(Header):
+    def __init__(self):
+        super().__init__()
+        self.data['title'] = 'Frequent Asked Question'
 
+#==============================================================================
+#==============================================================================
+#==============================================================================
+# ----------------------------------------------------------------------------
 # Dashboard class
 class Dashboard(Header):
     def __init__(self):
         super().__init__()
+        
+#------------------------------------------------------------------------------
+# Login class
+class Login(Header):
+    def __init__(self):
+        super().__init__()
+        self.data['title'] = 'Login'
 
-
+    def get_login(self, **info):
+        return self.register_user.Login_func(**info)
+    
+# -----------------------------------------------------------------------------
 # Signup class
 class Signup(Header):
     def __init__(self):
@@ -214,8 +276,8 @@ class Signup(Header):
     def Regiter(self, **info):
         return self.register_user.Register_func(**info)
 
-
-# category class
+# -----------------------------------------------------------------------------
+# Add category class
 class Add_Category(Header):
     def __init__(self):
         super().__init__()
@@ -224,7 +286,7 @@ class Add_Category(Header):
     def Add_category(self, **info):
         self.insert_data.add_category(**info)
 
-
+# -----------------------------------------------------------------------------
 # Item class
 class Add_Item(Header):
     def __init__(self):
@@ -234,9 +296,9 @@ class Add_Item(Header):
 
     def Add_items(self, **info):
         self.insert_data.add_items(**info)
-
-
-# Student class
+        
+# -----------------------------------------------------------------------------
+# Add Student class 
 class Add_Student(Header):
     def __init__(self):
         super().__init__()
@@ -247,8 +309,7 @@ class Add_Student(Header):
 
     def Add_students(self, **info):
         self.insert_data.add_student(**info)
-
-
+# -----------------------------------------------------------------------------
 # Classes class
 class Add_Classes(Header):
     def __init__(self):
@@ -259,8 +320,9 @@ class Add_Classes(Header):
     def Add_class(self, **info):
         self.insert_data.add_class(**info)
 
-
-# Student_Class class
+        
+# -----------------------------------------------------------------------------
+# Add Student To Class
 class Add_Student_Class(Header):
     def __init__(self):
         super().__init__()
@@ -270,29 +332,16 @@ class Add_Student_Class(Header):
 
     def Add_stu_class(self, **info):
         self.insert_data.add_student_to_class(**info)
-
-
-# About class
-class About(Header):
-    def __init__(self):
-        super().__init__()
-        self.data['title'] = 'About Us'
-
-
-# FAQ class
-class FAQ(Header):
-    def __init__(self):
-        super().__init__()
-        self.data['title'] = 'Frequent Asked Question'
-
-
+# -----------------------------------------------------------------------------
 # ForgottenPassword class
 class ForgottenPassword(Header):
     def __init__(self):
         super().__init__()
         self.data['title'] = 'Restore password'
-
-
+# -----------------------------------------------------------------------------
+#==============================================================================
+#==============================================================================
+#==============================================================================
 # Error class
 class Error_page (Header):
     def __init__(self):

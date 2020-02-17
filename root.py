@@ -33,7 +33,7 @@ def Category_Page(Id_Category :int  , page = 1 , sort = 0 ):
         Category_Class.data['page'] = 1
     return render_template('products_by_Category.html', data=Category_Class.data)
 
-@app.route('/category=<Id_Category>/sort=<Sort>_maxnumber=<MaxNumber>_page=<page>')
+@app.route('/category_products=<Id_Category>/sort=<Sort>_maxnumber=<MaxNumber>_page=<page>')
 def Sort_Product_By_Category ( Id_Category :int  , Sort : str , MaxNumber : int , page ):
     Category_Class = pages.Category_Products(int (Id_Category) ,int (page) , int(Sort) , int (MaxNumber) )
     return render_template('products.html', data=Category_Class.data)    
@@ -64,6 +64,11 @@ def product_Page(Id_product):
 def Courses_Page(page):
     Courses_Class = pages.Courses (page)
     return render_template('courses.html', data=Courses_Class.data)
+
+@app.route('/course/<Id_Course>')
+def Course_Page(Id_Course):
+    Course_Class = pages.Course (int (Id_Course))
+    return render_template('courses-detail.html', data=Course_Class.data)
 
 @app.route('/course/<Id_Course>')
 def Course_Page(Id_Course):
