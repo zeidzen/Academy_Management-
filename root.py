@@ -25,9 +25,9 @@ def Home_Page():
 
 # ----------------------------------------------------------------
 
-@app.route('/category=<Id_Category>/page=<page>')
+@app.route('/category_products=<Id_Category>/page=<page>')
 def Category_Page(Id_Category :int  , page = 1 , sort = 0 ):
-    Category_Class = pages.Category(  int (Id_Category) ,page =int (page)
+    Category_Class = pages.Category_Products(  int (Id_Category) ,page =int (page)
                                     , sort = int (sort) )
     if Category_Class.data['Max_Page'] < int(page) : 
         Category_Class.data['page'] = 1
@@ -35,7 +35,7 @@ def Category_Page(Id_Category :int  , page = 1 , sort = 0 ):
 
 @app.route('/category=<Id_Category>/sort=<Sort>_maxnumber=<MaxNumber>_page=<page>')
 def Sort_Product_By_Category ( Id_Category :int  , Sort : str , MaxNumber : int , page ):
-    Category_Class = pages.Category(int (Id_Category) ,int (page) , int(Sort) , int (MaxNumber) )
+    Category_Class = pages.Category_Products(int (Id_Category) ,int (page) , int(Sort) , int (MaxNumber) )
     return render_template('products.html', data=Category_Class.data)    
 
 # ----------------------------------------------------------------
