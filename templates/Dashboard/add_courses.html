@@ -1,0 +1,98 @@
+
+{% include  "/DashBoard/dashboardheader.html" %}
+
+
+						<!-- Page content -->
+						<div class="container-fluid pt-8">
+							<div class="page-header mt-0 shadow p-3">
+								<ol class="breadcrumb mb-sm-0">
+									<li class="breadcrumb-item"><a href="#">Forms</a></li>
+									<li class="breadcrumb-item active" aria-current="page">Courses</li>
+								</ol>
+								<div class="btn-group mb-0">
+									<button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Actions</button>
+									<div class="dropdown-menu">
+										<a class="dropdown-item" href="#"><i class="fas fa-plus mr-2"></i>Add new Page</a>
+										<a class="dropdown-item" href="#"><i class="fas fa-eye mr-2"></i>View the page Details</a>
+										<a class="dropdown-item" href="#"><i class="fas fa-edit mr-2"></i>Edit Page</a>
+										<div class="dropdown-divider"></div>
+										<a class="dropdown-item" href="#"><i class="fas fa-cog mr-2"></i> Settings</a>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-12">
+									<div class="card shadow">
+										<div class="card-header">
+											<h2 class="mb-0">ADD Courses</h2>
+										</div>
+										<div class="card-body">
+											<div class="row">
+
+												<div class="col-md-12">
+													<div class="form-group">
+														<form action="/Add_courses_to_DB" method="post" enctype="multipart/form-data" >
+
+															<label  for="input-CategoryId">Category</label>
+															<select name="category_Id" id="input-CategoryId" class="form-control w-100">
+																<option value=""> --- Please Select --- </option>
+																{% for  category in data ['courses_categories'] :%}
+																<option value="{{ category['Id'] }}">{{category['Name']}}</option>
+																{% endfor %}
+															</select>
+															<br>
+
+															<label>Name</label>
+															<input type="text" name="courses_name" value="" placeholder="Courses Name"  class="form-control w-100">
+															<br>
+															<label>Brief</label>
+															<input type="text" name="courses_brief" value="" placeholder="Courses Brief"  class="form-control w-100">
+															<br>
+
+															<label>Description</label>
+															<input type="text" name="courses_description" value="" placeholder="Courses Description"  class="form-control w-100">
+															<br>
+
+															<label>Image</label>
+															<input type="file" name="courses_image" value="" placeholder="Courses Image"  class="form-control w-100">
+															<br>
+
+															<label>Price</label>
+															<input type="number" name="courses_price" value="" placeholder="Courses Price"  class="form-control w-100">
+															<br>
+
+															<label>Number Of Hours</label>
+															<input type="number" name="courses_num_of_hours" value="" placeholder="Courses Hours"  class="form-control w-100">
+															<br>
+
+															<label>View</label>
+															<input type="number" name="courses_view" value="" placeholder="Courses View" min = "25" class="form-control w-100">
+															<br>
+
+
+															<div class="container-login100-form-btn">
+																	<input  type="submit" name="ADD_Courses" value="ADD Courses" class="login100-form-btn btn-primary"
+																							style="background:#00c3ed">
+															</div>
+
+														</form>
+
+
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+
+
+
+
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--app-content-->
+		</div>
+	</div>
+
+{% include  "/DashBoard/dashboardfooter.html" %}
