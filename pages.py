@@ -13,11 +13,11 @@ class Header():
         self.insert_data = processes_DB.insert_data()
         self.register_user = processes_DB.Register_And_login()
         self.data['title'] = 'Tabasheer Training Academy'
-        self.data['products_categories'] = self.show_data.get_all_categories_item()
-        self.data['courses_categories'] = self.show_data.get_all_categories_course()
+        self.data['products_categories'] = self.show_data.get_all_categories_for_products()
+        self.data['courses_categories'] = self.show_data.get_all_categories_for_course()
         self.data['courses'] = self.show_data.get_all_courses()
         self.data['courses_name'] = self.show_data.get_courses_name()
-        self.data['categories'] = self.show_data.get_all_categories_item()
+        self.data['categories'] = self.show_data.get_all_categories_for_products()
 
 
     def Cheak_Image_Extension (self , filename):
@@ -98,7 +98,7 @@ class Course(Header):
         self.data['Most_Watched'] = self.show_data.get_top_viewed_courses()
 
         self.data['Related_Product'] = self.show_data.get_all_courses_by_category(
-            self.show_data.get_category_by_course(Id_Course))
+            self.show_data.get_category_by_id_course(Id_Course))
         
 # -----------------------------------------------------------------------------
 # Products class
@@ -177,7 +177,7 @@ class Product(Header):
         self.data['Most_Watched'] = self.show_data.get_top_viewed_item()
 
         self.data['Related_Product'] = self.show_data.get_all_products_by_category(
-            self.show_data.get_category_by_product(Id_Product))
+            self.show_data.get_category_by_id_product(Id_Product))
 
 # -----------------------------------------------------------------------------
 # Search class
@@ -287,7 +287,7 @@ class Add_Category(Header):
         self.insert_data.add_category(**info)
 
 # -----------------------------------------------------------------------------
-# Item class
+# Item class 
 class Add_Item(Header):
     def __init__(self):
         super().__init__()
