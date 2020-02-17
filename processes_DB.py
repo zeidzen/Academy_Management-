@@ -861,7 +861,7 @@ class insert_data():
 
     def add_student_to_class(self, **info) -> bool:
         try:
-            self.con.Insert_Data(table='stu_class', **info)
+            self.con.Insert_Data('stu_class', **info)
             return True
         except:
             return False, 'A system error occurred, please try again later'
