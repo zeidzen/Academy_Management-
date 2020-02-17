@@ -119,37 +119,30 @@
 						</div>
 						<!-- //end Filters -->
 						<!--changed listings-->
-						{% for index in range (  data ['layer']  ) :  %}
+						{% for index in range (  data ['layer'] ) :  %}
 						<div class="products-list grid">
-							<!---->
-							{% if  ((index*3)+(max*page-max) + 3) > max  : %}
-								{%set end = max * page %}
-							{%else%}
-								{%set end = (index*3)+(max*page-max) + 3   %}
-							{%endif%}
-
-							{% for product in data ['all_products'][ (index*3)+(max*page-max) : end ] :  %}
-									<div class="product-layout">
-										<div class="product-item-container">
-											<div class="left-block">
-												<div class="product-image-container  second_img ">
-													<a   class="product-img" href="/product/{{product ['Id']}}"><img src="{{product ['Image'] }}" alt=""></a>
-												</div>
-											</div>
-											<div class="right-block">
-												<div class="caption">
-													<h4><a href="/product/{{product ['Id'] }}">{{product ['Name'] }}</a></h4>	
-
-													<div class="price">
-														<span class="price-new">JD {{product ['Price']}} </span>
-													</div>
-													<div class="description item-desc hidden">
-														<p>{{product ['Brief'] }} </p>
-													</div>
-												</div>
-											</div><!-- right block -->
+							{% for product in data ['all_products'][ (index*3)+(max*page-max) : (index*3)+(max*page-max) + 3  ] :  %}
+							<div class="product-layout">
+								<div class="product-item-container">
+									<div class="left-block">
+										<div class="product-image-container  second_img ">
+											<a   class="product-img" href="/product/{{product ['Id']}}"><img src="{{product ['Image'] }}" alt=""></a>
 										</div>
 									</div>
+									<div class="right-block">
+										<div class="caption">
+											<h4><a href="/product/{{product ['Id'] }}">{{product ['Name'] }}</a></h4>	
+
+											<div class="price">
+												<span class="price-new">JD {{product ['Price']}} </span>
+											</div>
+											<div class="description item-desc hidden">
+												<p>{{product ['Brief'] }} </p>
+											</div>
+										</div>
+									</div><!-- right block -->
+								</div>
+							</div>
 							{%endfor%}
 						</div>	
 						{%endfor%}	

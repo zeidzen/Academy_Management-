@@ -16,24 +16,26 @@
 						<div class="left-content-product col-lg-9 col-xs-12">
 							<div class="row">
 								<div class="content-product-left class-honizol col-md-6 col-sm-12 col-xs-12 ">
-									<div class="large-image  ">
+
+
+									<div class="large-image ">
 										<img itemprop="image" class="product-image-zoom" src="{{product['Image']}}" data-zoom-image="{{product['Image']}}" title="Bint Beef" alt="Bint Beef">
 									</div>
-									
-
-
-									{% if data ['Media']|length > 1 :   %}
+									{% if data ['Media']|length >= 1 :   %}
 									<div id="thumb-slider" class="owl-theme owl-loaded owl-drag full_slider owl-carousel " data-nav='yes' data-loop="yes" data-margin="10" data-items_xs="2" data-items_sm="3" data-items_md="{{data ['Number_Medias']}}">
 										<a  class="img thumbnail " data-image="{{product['Image']}}" title="{{product['Name']}}">
-											<img src="{{product['Image']}}" title="{{product['Name']}}" alt="{{product['Name']}}">
+											<img src="{{product ['Image']}}" title="{{product['Name']}}" alt="{{product['Name']}}">
 										</a>
 										{% for Media  in   data ['Media'] : %}
-										<a  class="img thumbnail " data-image="{{product ['Image'] }}" title="{{product['Name']}}">
-											<img src="{{product ['Image'] }}" title="{{product['Name']}}" alt="{{product['Name']}}">
+										<a  class="img thumbnail " data-image="{{Media ['Path'] }}" title="{{Media ['Path']}}">
+											<img src="{{Media['Path'] }}" title="{{Media ['Path']}}" alt="image">
 										</a>
 										{%endfor%}
 									</div>
 									{%endif%}
+					
+
+
 
 								</div>
 

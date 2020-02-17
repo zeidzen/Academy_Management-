@@ -1,186 +1,143 @@
-{% include  "header2.html" %}
+{% include  "header.html" %}
+
+
 		<!-- Main Container  -->
 		<div class="main-container container">
 			<ul class="header-main">
-				<li class="home"><a href="/home" >Home   </a><i class="fa fa-angle-right" aria-hidden="true"></i></li>
-				<li> {{data ['Category_path']}}</li>
+				<li class="home"><a href="#">Home</a><i class="fa fa-angle-right" aria-hidden="true"></i></li>
+
+				<li><a >{{ data ['title'] }}</a></li>
+
 			</ul>
 
 			<div class="row">
-				<!--Left Part Start -->
-				<aside class="col-sm-4 col-md-3 type-1" id="column-left">
-					<div class="module menu-category titleLine">
-						<h3 class="modtitle">Categories</h3>
-						<div class="modcontent">
-							<div class="box-category">
-
-								<ul id="cat_accordion" class="list-group">
-									{% for category  in data ['products_categories'] : %}
-									<li class=""><a href="/category={{category ['Id'] }}/page=1" class="cutom-parent">{{category ['Name'] }}</a>  <span class="dcjq-icon"></span></li>
-									{%endfor%}
-								</ul>
-							</div>
-						</div>
-					</div>
-					<div class="module latest-product titleLine">
-
-
-						<h3 class="modtitle">Most Watched</h3>
-						<div class="modcontent ">
-							{% for product in data ['Most_Watched'][0:5] %}
-							<div class="product-latest-item transition">
-								<div class="media">
-									<div class="media-left">
-										<a href="/product/{{product['Id']}}" class="product-img"><img src="{{product['Image']}}" alt="{{product['Image']}}" title="{{product['Image']}}" class="img-responsive" style="width: 100px; height:82px;"></a>
-									</div>
-									<div class="media-body">
-										<div class="caption">
-											<h4><a href="/product/{{product['Id']}}" class="product-img">{{product['Name']}}</a></h4>
-											<div class="price">
-												<span class="price-new">JD {{product['Price']}}</span>
-											</div>
-										</div>
-
-									</div>
-								</div>
-							</div>
-							{%endfor%}
-						</div>
-
-
-					</div>
-
-				</aside>
+				
 				<!--Left Part End -->
 
 				<!--Middle Part Start-->
-				<div id="content" class="col-md-9 col-sm-8 type-1">
-					<div class="products-category">
-						<!-- Filters -->
-						<div>
-							<h3>{{data ['Category_Name']}}</h3>
-						</div>
-						<div class="product-filter filters-panel">
-							<div class="row">
-								<div class="col-md-5 visible-lg">
-									<div class="view-mode">
-										<div class="list-view">
-											<button class="btn btn-default grid active" data-view="grid" data-toggle="tooltip" data-original-title="Grid"><i class="fa fa-th-large" aria-hidden="true"></i></button>
-											<button class="btn btn-default list" data-view="list" data-toggle="tooltip" data-original-title="List"><i class="fa fa-th-list"></i></button>
-										</div>
-									</div>
-								</div>
-								<div class="short-by-show form-inline text-right col-lg-7 col-md-12 col-sm-12 col-xs-12">
-									<div class="text">
-										<p>item 01 - 16 of 47 total</p>
-									</div>
-									<div class="form-group short-by">
-										<label class="control-label" for="input-sort">Sort By:</label>
-										<select id="input-sort" class="form-control" onchange="location = this.value;">
-
-											<option value="" selected="selected">Default </option>
-											<option value="">Name (A - Z)</option>
-											<option value="">Name (Z - A)</option>
-											<option value="">Price (Low &gt; High)</option>
-											<option value="">Price (High &gt; Low)</option>
-											<option value="">Rating (Highest)</option>
-											<option value="">Rating (Lowest)</option>
-											<option value="">Model (A - Z)</option>
-											<option value="">Model (Z - A)</option>
-										</select>
-									</div>
-									<div class="form-group">
-										<select id="input-limit" class="form-control" onchange="location = this.value;">
-											<option value="" selected="selected">16</option>
-											<option value="">25</option>
-											<option value="">50</option>
-											<option value="">75</option>
-											<option value="">100</option>
-										</select>
+				<div id="content" class="col-lg-9 col-md-8 col-sm-12 col-xs-12">
+					<div class="blog-header">
+						<h3 class="modtitle">{{ data ['title'] }}</h3>
+					</div>
+					<div class="blog-listitem">
+						{% set page  =  data ['page'] %}
+						{% for Item in data ['all_Items'][5 * (page-1) : page * 5 ] :  %}
+						<div class="blog-item ">
+							<div class="itemBlogImg ">
+								<div class="article-image ">
+									<div>
+										<a class="popup-gallery" href="{{Item['Image']}}"><img src="{{Item['Image']}}" alt="{{Item ['Name']}}"></a>
 									</div>
 								</div>
 							</div>
-						</div>
-						<!-- //end Filters -->
-						<!--changed listings-->
-						<div class="products-list grid">
-							{% set page  =  data ['page'] %}
-							
-							{% for product in data ['all_products'][9 * (page-1) : page * 9 ] :  %}
-							<div class="product-layout">
-								<div class="product-item-container">
-									<div class="left-block">
-										<div class="product-image-container  second_img ">
-											<a   class="product-img" href="/product/{{product ['Id'] }}"><img src="{{product ['Image'] }}" alt=""></a>
+							<div class="itemBlogContent ">
+								<div class="article-title">
+									{% if  Item ['Type'] == 1 : %}
+										<h4>
+											<a href="/product/{{Item['Id']}}">{{Item['Name']}}</a>
+										</h4>
+									{%elif Item ['Type'] == 2 %}
+										<h4>
+											<a href="/course/{{Item['Id']}}">{{Item['Name']}}</a>
+										</h4>
+									{%endif%}
+								</div>
+
+								<div class="article-description">{{Item['Brief']}} ... </div>
+									<div class="blog-meta">
+										<span class="author">
+
+										{% if Item ['Id_Category'] == 1 : %}
+											<a href="/product/{{Item ['Id']}}">View more
+												<i class="fa fa-angle-double-right" aria-hidden="true"></i>
+											</a>
+										{%else%}
+											<a href="/course/{{Item ['Id']}}">View more
+												<i class="fa fa-angle-double-right" aria-hidden="true"></i>
+											</a>
+										{%endif%}
+										</span>
+									</div>
+									<div class="share">
+										<p>Share This:</p>
+										<div class="share-icon">
+											<ul>
+												<li class="facebook"><a href="https://web.facebook.com/TTA.IRBED/?epa=SEARCH_BOX"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+												<li class="twitter"><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+												<li class="google"><a href="#"><i class="fa fa-google-plus" aria-hidden="true"></i></a></li>
+												<li class="skype"><a href="#"><i class="fa fa-skype" aria-hidden="true"></i></a></li>
+
+											</ul>
 										</div>
 									</div>
-									<div class="right-block">
-										<div class="caption">
-											<h4><a href="/product/{{product ['Id'] }}">{{product ['Name'] }}</a></h4>	
-
-											<div class="price">
-												<span class="price-new">JD {{product ['Price']}} </span>
-											</div>
-											<div class="description item-desc hidden">
-												<p>{{product ['Brief'] }} </p>
-											</div>
-										</div>
-									</div><!-- right block -->
-								</div>
 							</div>
-							{%endfor%}
+						</div>
+						{%endfor%}
 
-						</div>	
-							
 						
-						<!--// End Changed listings-->
-						<!-- Filters -->
-						
-						{% if  data ['all_products']|length > 9 :  %}
+						{% if  data ['all_Items']|length > 5 :  %}
 						{% block pages  %}
-						<div class="product-filter filters-panel">
-							<div class="row">
-								<div class="col-md-5 visible-lg">
-									<div class="view-mode">
-										<div class="list-view">
-											<button class="btn btn-default grid active" data-view="grid" data-toggle="tooltip" data-original-title="Grid"><i class="fa fa-th-large" aria-hidden="true"></i></button>
-											<button class="btn btn-default list" data-view="list" data-toggle="tooltip" data-original-title="List"><i class="fa fa-th-list"></i></button>
-										</div>
-									</div>
-								</div>
-								<div class="short-by-show form-inline text-right col-lg-7 col-sm-12 col-xs-12">
-									<div class="text">
-										<p>item {{9 * (page-1)  }} - 09 of {{data ['all_products'] |length}}  total</p>
-																		</div>
-									<div class="box-pagination text-right">
-										<ul class="pagination">
-											{% if page > 1 :  %}
-											{% block previous_page  %}
-											<li><a href="{{data ['Link_Page']}}{{page-1}}">&lt;</a></li>
-											<li><a href="{{data ['Link_Page']}}{{page-1}}">{{page-1}}</a></li>
-											{% endblock  previous_page %}
-											{% endif %}
-											<li class="active"><span>{{page}}</span></li>
-											{% if page != data ['Max_page'] :  %}
-											<li><a href="{{data ['Link_Page']}}{{page+1}}">{{page+1}}</a></li>
-											<li><a href="{{data ['Link_Page']}}{{page+1}}">&gt;</a></li>
-											{% endif %}
-										</ul>
-									</div>
-								</div>
-							</div>
+						<div class="blog-listitem-bottom">
+							<p>item {{5 * (page-1)  }} - 05 of {{data ['all_Items'] |length}}  total</p>
+							<ul class="pagination">
+								{% if page > 1 :  %}
+								{% block previous_page  %}
+								<li><a href="/search={{data['Name_Search']}}/page={{page-1}}">&lt;</a></li>
+								<li><a href="/search={{data['Name_Search']}}/page={{page-1}}">{{page-1}}</a></li>
+								{% endblock  previous_page %}
+								{% endif %}
+								<li class="active"><span>{{page}}</span></li>
+								{% if page != data ['Max_page'] :  %}
+								<li><a href="/search={{data['Name_Search']}}/page={{page+1}}">{{page+1}}</a></li>
+								<li><a href="/search={{data['Name_Search']}}/page={{page+1}}">&gt;</a></li>
+								{% endif %}
+							</ul>
 						</div>
 						{% endblock  pages %}
-						{% endif %}		
-						<!-- //end Filters -->
+						{% endif %}
 
 					</div>
-
 				</div>
 
 
+					<!--Left Part Start -->
+					<aside class="col-xs-12 col-sm-12 col-md-4 col-lg-3" id="column-left">
+						<div class="block-search">
+							<div class="search">
+								<div class="modsearch">
+									<input class="autosearch-input form-control" type="text" value="" size="50" autocomplete="off" placeholder="Search product..." name="search">
+
+									<button type="submit" class="button-search btn btn-primary" name="submit_search"><i class="fa fa-search"></i></button>
+
+								</div>
+							</div>
+
+						</div>
+
+						<div class="module blog-category titleLine">
+
+
+							<h3 class="modtitle">Blog Category</h3>
+							<div class="modcontent">
+								<ul class="list-group ">
+									<li class="list-group-item"> <a href="blog-page.html"class="group-item active">Our Blog</a></li>
+									<li class="list-group-item"><a href="blog-page.html" class="group-item">Demo Category 2</a></li>
+									<li class="list-group-item"><a href="blog-page.html" class="group-item">Demo Category 3</a></li>
+									<li class="list-group-item"><a href="blog-page.html" class="group-item">Demo Category 4</a></li>
+									<li class="list-group-item"><a href="blog-page.html" class="group-item">Demo Category 5</a></li>
+								</ul>
+
+							</div>
+						</div>
+
+						<div class="banners">
+							<div>
+								<a href="#"><img src="../static/img/demo/cms/left-image-static.png" alt="Latest Product"></a>
+							</div>
+						</div>
+					</aside>
+				</div>
+				<!--Middle Part End-->
 			</div>
-			<!--Middle Part End-->
-		</div>
-		<!-- //Main Container -->
-		{% include  "footer.html" %}
+			<!-- //Main Container -->
+			{% include  "footer.html" %}

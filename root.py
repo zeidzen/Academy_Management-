@@ -69,12 +69,6 @@ def Courses_Page(page):
 def Course_Page(Id_Course):
     Course_Class = pages.Course (int (Id_Course))
     return render_template('courses-detail.html', data=Course_Class.data)
-
-@app.route('/course/<Id_Course>')
-def Course_Page(Id_Course):
-    Course_Class = pages.Course (int (Id_Course))
-    return render_template('courses-detail.html', data=Course_Class.data)
-
 # ----------------------------------------------------------------
 
 @app.route('/achievements/page=<page>')
