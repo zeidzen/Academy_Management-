@@ -22,6 +22,11 @@ class Header():
         self.data['courses_name'] = self.show_data.get_courses_name()
         self.data['categories'] = self.show_data.get_all_categories_item()
 
+    def Check_Image_Extenstion(self,filename):
+        ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'])
+        return '.' in filename and \
+               filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
 
 # Footer class
 class Footer():
@@ -30,7 +35,7 @@ class Footer():
 
 # Home class
 class Home(Header):
-    def __init(self):
+    def __init__(self):
         super().__init__()
         self.data['offers_Of_courses'] = self.show_data.get_offer_by_courses()
         self.data['offers_Of_produts'] = self.show_data.get_offer_by_produts()
@@ -49,6 +54,7 @@ class Courses(Header):
         super().__init__()
         self.data['title'] = 'Courses'
         self.data['Courses'] = self.show_data.get_all_courses()
+        self.data['Category_path'] = 'All Courses'
         self.data['page'] = int(page)
         self.data['Max_page'] = math.ceil(len(self.data['Courses']) / 5)
 
@@ -56,11 +62,26 @@ class Courses(Header):
         self.insert_data.add_course(**info)
 
 
+# Category class
+class Courses_Category(Header):
+    def __init__(self, Id_Category: int, Page: int):
+        super().__init__()
+        self.data['Courses'] = self.show_data.get_all_courses_by_category(Id_Category)
+        self.data['Most_Watched'] = self.show_data.get_top_viewed_courses()
+        self.data['Category_Name'] = self.show_data.get_category_by_Id(Id_Category)[1]
+        self.data['Id_Category'] = Id_Category
+        self.data['Category_path'] = 'Categories    >    {}'.format(self.data['Category_Name'])
+        self.data['page'] = Page
+        self.data['Max_page'] = math.ceil(len(self.data['Courses']) / 9)
+        self.data['Link_Page'] = '/category={}/page='.format(Id_Category)
+        self.data['title'] = self.data['Category_Name']
+
+
 # Products class
 class Products(Header):
     def __init__(self , page ):
         super().__init__()
-        self.data ['all_products'] = self.show_data.get_all_items()
+        self.data ['all_products'] = self.show_data.get_all_products()
         self.data ['Most_Watched'] = self.show_data.get_top_viewed_item()
         self.data ['page'] = int(page)
         self.data ['Max_page'] = math.ceil(len(self.data['all_products'])/9)
@@ -68,6 +89,21 @@ class Products(Header):
         self.data ['Category_path'] = 'All Products'
         self.data ['Category_Name'] = 'All Products'
         self.data ['title'] = 'Products'
+
+
+# Category class
+class Category(Header):
+    def __init__(self, Id_Category: int, Page: int):
+        super().__init__()
+        self.data['all_products'] = self.show_data.get_all_products_by_category(Id_Category)
+        self.data['Most_Watched'] = self.show_data.get_top_viewed_item()
+        self.data['Category_Name'] = self.show_data.get_category_by_Id(Id_Category)[1]
+        self.data['Id_Category'] = Id_Category
+        self.data['Category_path'] = 'Categories    >    {}'.format(self.data['Category_Name'])
+        self.data['page'] = Page
+        self.data['Max_page'] = math.ceil(len(self.data['all_products']) / 9)
+        self.data['Link_Page'] = '/category={}/page='.format(Id_Category)
+        self.data['title'] = self.data['Category_Name']
 
 
 # Search class
@@ -140,8 +176,9 @@ class Login(Header):
     def __init__(self):
         super().__init__()
         self.data['title'] = 'Login'
+
     def get_login(self, **info):
-        self.register_user.Login_func(info)
+        return self.register_user.Login_func(**info)
 
 
 # Achievements class
@@ -161,21 +198,6 @@ class Post(Header):
         self.data['post'] = self.show_data.get_post_by_id(Id_Post)
 
 
-# Category class
-class Category(Header):
-    def __init__(self, Id_Category: int, Page: int):
-        super().__init__()
-        self.data['all_products'] = self.show_data.get_all_products_by_category(Id_Category)
-        self.data['Most_Watched'] = self.show_data.get_top_viewed_item()
-        self.data['Category_Name'] = self.show_data.get_category_by_Id(Id_Category)[1]
-        self.data['Id_Category'] = Id_Category
-        self.data['Category_path'] = 'Categories    >    {}'.format(self.data['Category_Name'])
-        self.data['page'] = Page
-        self.data['Max_page'] = math.ceil(len(self.data['all_products']) / 9)
-        self.data['Link_Page'] = '/category={}/page='.format(Id_Category)
-        self.data['title'] = self.data['Category_Name']
-
-
 # Dashboard class
 class Dashboard(Header):
     def __init__(self):
@@ -190,7 +212,7 @@ class Signup(Header):
         self.data['Cities'] = self.show_data.get_all_cities()
 
     def Regiter(self, **info):
-        self.register_user.Register_func(**info)
+        return self.register_user.Register_func(**info)
 
 
 # category class
