@@ -1,9 +1,10 @@
-
 import database as db
 import hashlib, binascii
 import re
 import os
-from datetime import  datetime
+from datetime import datetime
+
+
 # -*- coding: utf-8 -*-
 
 # All it Work
@@ -20,28 +21,29 @@ from datetime import  datetime
 class Show_Data():
     def __init__(self):
         self.con = db.DataBase()
-# ------------------------------------------------------------------------------
-# Products
-# ------------------------------------------------------------------------------
-        
-    def get_all_products( self , sort = 0 ) -> list:
+
+    # ------------------------------------------------------------------------------
+    # Products
+    # ------------------------------------------------------------------------------
+
+    def get_all_products(self, sort=0) -> list:
         item = list()
-        if sort == 1 : 
+        if sort == 1:
             sql = """select Id , Name ,Image, Description, Price, Date , Brief
                     from items  ORDER BY Name  ;"""
-        elif sort == 2 : 
+        elif sort == 2:
             sql = """select Id , Name ,Image, Description, Price, Date , Brief
                     from items  ORDER BY Name desc ;"""
-        elif sort == 3 : 
+        elif sort == 3:
             sql = """select Id , Name ,Image, Description, Price, Date , Brief
                     from items  ORDER BY Price  ;"""
-                    
-        elif sort == 4 : 
+
+        elif sort == 4:
             sql = """select Id , Name ,Image, Description, Price, Date , Brief
                     from items  ORDER BY Price desc ;"""
-        else : 
+        else:
             sql = """select Id , Name,Image, Description, Price, Date , Brief from items;"""
-            
+
         data = self.con.Select_Data_More_Row(sql)
         for items in data:
             selected = dict()
@@ -54,10 +56,6 @@ class Show_Data():
             selected['Brief'] = items[6]
             item.append(selected)
         return item
-
-
-
-
 
     def get_top_viewed_item(self) -> list:
         sql = """SELECT Id  , Name, Description,  Price, Image, Views , Date 
@@ -112,39 +110,38 @@ class Show_Data():
             Products.append(data)
         return Products
 
-    def get_all_products_by_category(self, Category: int , sort = 0) -> list:
-        
-        if sort == 1 : 
+    def get_all_products_by_category(self, Category: int, sort=0) -> list:
+
+        if sort == 1:
             sql = '''SELECT Id , Name , Description ,Image , Price , Views , Date   
                     FROM items 
                     WHERE Id_Category = {}                
                     ORDER BY Name ;'''.format(Category)
-        elif sort == 2 : 
+        elif sort == 2:
             sql = '''SELECT Id , Name , Description ,Image , Price , Views , Date   
                     FROM items 
                     WHERE Id_Category = {}                
                     ORDER BY Name desc ;'''.format(Category)
-                    
-        elif sort == 3 : 
-            
+
+        elif sort == 3:
+
             sql = '''SELECT Id , Name , Description ,Image , Price , Views , Date   
                     FROM items 
                     WHERE Id_Category = {}                
                     ORDER BY Price  ;'''.format(Category)
-                    
-                    
-        elif sort == 4 : 
-            
+
+
+        elif sort == 4:
+
             sql = '''SELECT Id , Name , Description ,Image , Price , Views , Date   
                     FROM items 
                     WHERE Id_Category = {}                
                     ORDER BY Price  desc ;'''.format(Category)
-        else : 
+        else:
             sql = '''SELECT Id , Name , Description ,Image , Price , Views , Date   
                     FROM items 
                     WHERE Id_Category = {}                
                     ORDER BY Id  ;'''.format(Category)
-            
 
         items = self.con.Select_Data_More_Row(sql)
         Products = list()
@@ -175,18 +172,16 @@ class Show_Data():
         data['Availability'] = Product[6]
         data['Date'] = Product[7]
         return data
-    
-    
-    def get_number_all_products (self) :
+
+    def get_number_all_products(self):
         sql = "SELECT COUNT(Id) AS total FROM items"
         total = self.con.Select_Data_One_Row(sql)
         return total[0]
-    
-    
-# ------------------------------------------------------------------------------
-# Media Products
-# ------------------------------------------------------------------------------
-    
+
+    # ------------------------------------------------------------------------------
+    # Media Products
+    # ------------------------------------------------------------------------------
+
     def get_media_by_id_product(self, Id_Product: int):
         sql = '''SELECT m.Id , m.Type , m.Path  FROM media_products  as m, Items
         WHERE m.Id_Item = Items.Id  and m.Id_Item = {}  ; '''.format(Id_Product)
@@ -199,10 +194,10 @@ class Show_Data():
             item['Path'] = media[2]
             data.append(item)
         return data
-    
-# ------------------------------------------------------------------------------
-# Features Products
-# ------------------------------------------------------------------------------    
+
+    # ------------------------------------------------------------------------------
+    # Features Products
+    # ------------------------------------------------------------------------------
     def get_features_by_id_product(self, Id_Product: int):
         sql = '''SELECT  f.Feature  FROM features_products as f  ,Items
         WHERE Id_Item = Items.Id  and Id_Item = {}  ; '''.format(Id_Product)
@@ -211,11 +206,11 @@ class Show_Data():
         for Feature in Features:
             data.append(Feature[0])
         return data
-    
-# ------------------------------------------------------------------------------
-# Courses
-# ------------------------------------------------------------------------------
-    
+
+    # ------------------------------------------------------------------------------
+    # Courses
+    # ------------------------------------------------------------------------------
+
     def get_all_courses(self) -> list:
         courses = list()
         sql = """select Id , Name, Description, Image, Price, Number_of_hours, Date , Brief
@@ -267,7 +262,6 @@ class Show_Data():
         course['Brief'] = data[7]
         return course
 
-
     def get_top_viewed_courses(self):
         sql = """SELECT Id, Name, Description, Image, Price, Number_of_hours , Views , Date 
                 FROM courses  ORDER BY  Views DESC ;"""
@@ -303,29 +297,28 @@ class Show_Data():
             data.append(selected)
         return data
 
-    
-    def get_number_all_courses (self) :
+    def get_number_all_courses(self):
         sql = "SELECT COUNT(Id) AS total FROM courses"
         total = self.con.Select_Data_One_Row(sql)
         return total[0]
-    
-# ------------------------------------------------------------------------------  
-# Search
-# ------------------------------------------------------------------------------
-        
+
+    # ------------------------------------------------------------------------------
+    # Search
+    # ------------------------------------------------------------------------------
+
     def search_items(self, value: str) -> list:
         item = list()
         sql = """select i.Id , i.Id_Category ,g.Type , i.Name , i.Brief , i.Description,i.Image, i.Date  
                 from items as i , categories as g 
                 where i.Id_Category = g.Id and  i.Name Like "%{}%"  ;""".format(value)
         data1 = self.con.Select_Data_More_Row(sql)
-        
+
         sql = """select i.Id , i.Id_Category ,g.Type , i.Name , i.Brief , i.Description,i.Image, i.Date  
                 from courses as i , categories as g 
-                where i.Id_Category = g.Id and  i.Name Like "%{}%"  ;""".format(value)        
+                where i.Id_Category = g.Id and  i.Name Like "%{}%"  ;""".format(value)
         data2 = self.con.Select_Data_More_Row(sql)
-        
-        data = data1+data2
+
+        data = data1 + data2
         for items in data:
             selected = dict()
             selected['Id'] = items[0]
@@ -337,7 +330,6 @@ class Show_Data():
             selected['Image'] = items[6]
             item.append(selected)
         return item
-
 
     def search_course(self, name: str) -> list:
         courses = list()
@@ -355,9 +347,8 @@ class Show_Data():
             courses.append(selected)
         return courses
 
-
     def search_classes(self, class_name: str) -> list:
-        
+
         sql = """SELECT cl.Id , co.Name, cl.Name ,cl.Start_Date , cl.End_Date  ,cl.capacity , cl.Lecturer  
                          FROM classes cl , courses co 
                           WHERE cl.Id_course=co.Id and cl.Name Like '%{}%'; """.format(class_name)
@@ -374,14 +365,14 @@ class Show_Data():
             class_['Lecturer'] = item[6]
             data.append(class_)
         return data
-    
+
     def search_students(self, value: str) -> list:
         sql = """select st.Id , st.FirstName , st.LastName , st.Gender , st.Phone , st.Email , st.Birthday ,
              c.Name, u.Name , sp.Name
              From students st , city c, university u , specialization sp
              WHERE st.Id_Address = c.Id and st.Id_University = u.Id and st.Id_Specialization = sp.Id and
              st.FirstName LIKE '%{}%' or  st.LastName LIKE '%{}%' or st.Phone LIKE '%{}%'  
-             or st.Email LIKE '%{}%' ; """.format(value , value , value , value)
+             or st.Email LIKE '%{}%' ; """.format(value, value, value, value)
 
         students = self.con.Select_Data_More_Row(sql)
         data = list()
@@ -399,13 +390,11 @@ class Show_Data():
             student['Specialization'] = item[9]
             data.append(student)
         return data
-    
-    
-    
-# ------------------------------------------------------------------------------
-# Media Courses
-# ------------------------------------------------------------------------------
-        
+
+    # ------------------------------------------------------------------------------
+    # Media Courses
+    # ------------------------------------------------------------------------------
+
     def get_media_by_id_course(self, Id_Course: int):
         sql = '''SELECT m.Type , m.Path  FROM media_courses as m , Items
         WHERE m.Id_course = Items.Id  and Id_course = {}  ; '''.format(Id_Course)
@@ -417,10 +406,11 @@ class Show_Data():
             item['Path'] = media[1]
             data.append(item)
         return data
-# ------------------------------------------------------------------------------
-# Features Products
-# ------------------------------------------------------------------------------
-    
+
+    # ------------------------------------------------------------------------------
+    # Features Products
+    # ------------------------------------------------------------------------------
+
     def get_features_by_id_course(self, Id_Course: int):
         sql = '''SELECT  f.Feature  FROM features_courses as f  ,Items
         WHERE f.Id_course = Items.Id  and Id_course = {}  ; '''.format(Id_Course)
@@ -429,10 +419,10 @@ class Show_Data():
         for Feature in Features:
             data.append(Feature[0])
         return data
-    
-# ------------------------------------------------------------------------------
-# Categories
-# ------------------------------------------------------------------------------
+
+    # ------------------------------------------------------------------------------
+    # Categories
+    # ------------------------------------------------------------------------------
     def get_all_categories_for_course(self) -> list:
         category = list()
         sql = """select Id , Name  from Categories where Type = 2 ;"""
@@ -444,7 +434,7 @@ class Show_Data():
             category.append(select)
         return category
 
-    def get_all_categories_for_products (self) -> list:
+    def get_all_categories_for_products(self) -> list:
         category = list()
         sql = """select Id , Name  from Categories where Type = 1;"""
         data = self.con.Select_Data_More_Row(sql)
@@ -454,8 +444,7 @@ class Show_Data():
             select['Name'] = cat[1]
             category.append(select)
         return category
-    
-    
+
     def get_category_by_Id(self, Id_category: int):
         sql = 'Select Id , Name From categories Where Id = {} ;'.format(Id_category)
         data = self.con.Select_Data_One_Row(sql)
@@ -470,12 +459,12 @@ class Show_Data():
         sql = 'Select Id_Category From courses Where Id = {} ;'.format(Id_Course)
         data = self.con.Select_Data_One_Row(sql)
         return data[0]
-    
-# ------------------------------------------------------------------------------
-# Student
-# ------------------------------------------------------------------------------
-        
-    def get_student_for_id (self, id_student: int) -> dict:
+
+    # ------------------------------------------------------------------------------
+    # Student
+    # ------------------------------------------------------------------------------
+
+    def get_student_for_id(self, id_student: int) -> dict:
         sql = """select st.Id , st.FirstName , st.LastName , st.Gender , st.Phone , st.Email , st.Birthday ,
                      c.Name, u.Name , sp.Name
                      From students st , city c, university u , specialization sp
@@ -505,7 +494,7 @@ class Show_Data():
            From students st , city c, university u , specialization sp
            Where st.Id_Address = c.Id and st.Id_University = u.Id and st.Id_Specialization = sp.Id ;"""
         students = self.con.Select_Data_More_Row(sql)
-        
+
         data = list()
         for item in students:
             student = dict()
@@ -521,16 +510,15 @@ class Show_Data():
             student['Specialization'] = item[9]
             data.append(student)
         return data
-    
-    
-    def get_number_all_student (self) :
+
+    def get_number_all_student(self):
         sql = "SELECT COUNT(Id) AS total FROM students"
         total = self.con.Select_Data_One_Row(sql)
         return total[0]
-    
-# ------------------------------------------------------------------------------
-# Classes
-# ------------------------------------------------------------------------------
+
+    # ------------------------------------------------------------------------------
+    # Classes
+    # ------------------------------------------------------------------------------
 
     def get_all_classes(self) -> list:
         sql = """SELECT cl.Id , co.Name, cl.Name ,cl.Start_Date , cl.End_Date  ,cl.capacity , cl.Lecturer  
@@ -542,24 +530,23 @@ class Show_Data():
             class_ = dict()
             class_['Id'] = item[0]
             class_['courses_Name'] = item[1]
-            class_['Class_Name'] = item[2]
+            class_['class_Name'] = item[2]
             class_['Start_Date'] = item[3]
             class_['End_Date'] = item[4]
             class_['capacity'] = item[5]
             class_['Lecturer'] = item[6]
             data.append(class_)
         return data
-    
-    def get_number_all_classes (self) :
+
+    def get_number_all_classes(self):
         sql = "SELECT COUNT(Id) AS total FROM classes"
         total = self.con.Select_Data_One_Row(sql)
         return total[0]
 
+    # ------------------------------------------------------------------------------
+    # Posts
+    # ------------------------------------------------------------------------------
 
-# ------------------------------------------------------------------------------
-# Posts
-# ------------------------------------------------------------------------------
-    
     def Convert_Date_From_Number_to_Text(self, date: str):
         date = datetime.strptime(date, '%Y-%m-%d %H:%M:%S')
         date = date.strftime("%A,%d %B, %Y")
@@ -609,18 +596,18 @@ class Show_Data():
         post['Date'] = self.Convert_Date_From_Number_to_Text(str(data[4]))
         post['Brief'] = data[5]
         return post
-    
-# ------------------------------------------------------------------------------
-# Payments
-# ------------------------------------------------------------------------------
-    
+
+    # ------------------------------------------------------------------------------
+    # Payments
+    # ------------------------------------------------------------------------------
+
     def get_payment(self) -> list:
         payment = list()
         sql = """select p.Payment , CONCAT(u.FirstName,' ' ,u.LastName), 
                 CONCAT(s.FirstName,' ' ,s.LastName), p.Payoff , p.Date
                 from payments p , users u , students s
                 where p.Id_User = u.Id and p.Id_Student = s.Id ;"""
-                
+
         data = self.con.Select_Data_More_Row(sql)
         for items in data:
             selected = dict()
@@ -633,50 +620,49 @@ class Show_Data():
             selected['Date'] = items[4]
             payment.append(selected)
         return payment
-    
-    
-    def get_value_payments_today (self) : 
-        sql= """SELECT SUM(Payment) AS total
+
+    def get_value_payments_today(self):
+        sql = """SELECT SUM(Payment) AS total
                 FROM payments WHERE (Date > DATE_SUB(now(), INTERVAL 1 DAY));"""
-        
+
         total = self.con.Select_Data_One_Row(sql)
         return total[0]
-    
-    def get_value_monthly_payments (self) :
+
+    def get_value_monthly_payments(self):
         sql = "SELECT SUM(Payment) FROM payments WHERE month(curdate()) = month(Date) ;"
         total = self.con.Select_Data_One_Row(sql)
         return total[0]
-    
-    
-# ------------------------------------------------------------------------------
-# Specialization
-# ------------------------------------------------------------------------------
+
+    # ------------------------------------------------------------------------------
+    # Specialization
+    # ------------------------------------------------------------------------------
 
     def get_all_specialization(self):
         sql = """select Id , Name from specialization ; """
         data = self.con.Select_Data_More_Row(sql)
         return data
-# ------------------------------------------------------------------------------
-# University
-# ------------------------------------------------------------------------------
+
+    # ------------------------------------------------------------------------------
+    # University
+    # ------------------------------------------------------------------------------
 
     def get_all_universities(self):
         sql = """select Id , Name from university ; """
         data = self.con.Select_Data_More_Row(sql)
         return data
-    
-# ------------------------------------------------------------------------------
-# City
-# ------------------------------------------------------------------------------
+
+    # ------------------------------------------------------------------------------
+    # City
+    # ------------------------------------------------------------------------------
 
     def get_all_cities(self):
         sql = """select Id , Name from City ; """
         data = self.con.Select_Data_More_Row(sql)
         return data
-    
-# ------------------------------------------------------------------------------
-# Offer
-# ------------------------------------------------------------------------------
+
+    # ------------------------------------------------------------------------------
+    # Offer
+    # ------------------------------------------------------------------------------
 
     def get_offer_by_produts(self):
         sql = '''SELECT o.Id_Item , i.Name ,i.Description , i.Image , i.price , o.New_Price , o.End_Date 
@@ -697,7 +683,7 @@ class Show_Data():
             data['Sale'] = int(offer[5] / offer[4] * 100 - 100)
             Products.append(data)
         return Products
-    
+
     def get_offer_by_courses(self):
         sql = '''SELECT o.Id_Item , c.Name ,c.Description , c.Image , c.Price , o.New_Price , o.End_Date
                 , c.Number_of_hours , c.Views 
@@ -721,7 +707,6 @@ class Show_Data():
             Products.append(data)
         return Products
 
-
     def check_offer_existe(self, Id_Product: int, Type=1):
         # Type 1 as a Product  and Type 2 as a Course
         try:
@@ -733,7 +718,6 @@ class Show_Data():
                 return False
         except:
             return False
-
 
     def get_offer_by_id_produt(self, Id_Product: int) -> dict:
         sql = '''SELECT o.Id_Item , i.Name ,i.Description , i.Image , i.price , o.New_Price , o.End_Date , i.Availability
@@ -751,7 +735,6 @@ class Show_Data():
         data['Availability'] = offer[7]
         data['Sale'] = int(offer[5] / offer[4] * 100 - 100)
         return data
-
 
     def get_offer_by_id_course(self, Id_courses: int):
         sql = '''SELECT o.Id_Item , c.Name ,c.Description , c.Image , c.Price , o.New_Price , o.End_Date
@@ -771,24 +754,21 @@ class Show_Data():
         data['Views'] = offer[8]
         data['Sale'] = int(offer[5] / offer[4] * 100 - 100)
         return data
-    
-    
-    
-    def get_number_all_offers (self) :
+
+    def get_number_all_offers(self):
         sql = "SELECT COUNT(Id) AS total FROM offers"
         total = self.con.Select_Data_One_Row(sql)
         return total[0]
-    
-    
-# ------------------------------------------------------------------------------
-# User
-# ------------------------------------------------------------------------------
-        
-    def get_info_user_by_Id ( self , Id_User : int ) : 
+
+    # ------------------------------------------------------------------------------
+    # User
+    # ------------------------------------------------------------------------------
+
+    def get_info_user_by_Id(self, Id_User: int):
         sql = '''SELECT u.Id , u.FirstName , u.LastName , u.Email , u.Phone , u.Gender , c.Name , u.Image , u.Birthday  
                 FROM users as u  , city as c 
                 WHERE u.Id_Address = c.Id and u.Id = {}  ; '''.format(Id_User)
-                
+
         User_info = self.con.Select_Data_One_Row(sql)
         data = dict()
         data['Id'] = User_info[0]
@@ -801,30 +781,45 @@ class Show_Data():
         data['Image'] = User_info[7]
         data['Birthday'] = User_info[8]
         return data
-        
-# ------------------------------------------------------------------------------
-# ------------------------------------------------------------------------------
-# ------------------------------------------------------------------------------
-# ------------------------------------------------------------------------------
-# ------------------------------------------------------------------------------
-# ------------------------------------------------------------------------------
-# ------------------------------------------------------------------------------
-# ------------------------------------------------------------------------------
-# ------------------------------------------------------------------------------
-# ------------------------------------------------------------------------------
-# ------------------------------------------------------------------------------
+
+    # product for offer page
+    def get_all_product(self) -> list:
+        item = list()
+        sql = """select Id , Name,Image, Description, Price, Date , Brief from items;"""
+        data = self.con.Select_Data_More_Row(sql)
+        for items in data:
+            selected = dict()
+            selected['Id'] = items[0]
+            selected['Name'] = items[1]
+            selected['Image'] = items[2]
+            selected['Description'] = items[3]
+            selected['Price'] = items[4]
+            selected['Date'] = items[5]
+            selected['Brief'] = items[6]
+            item.append(selected)
+        return item
 
 
-
+# ------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 
 
 class insert_data():
     def __init__(self):
         self.con = db.DataBase()
-        
-# ------------------------------------------------------------------------------        
-#  Student       
-# ------------------------------------------------------------------------------
+
+    # ------------------------------------------------------------------------------
+    #  Student
+    # ------------------------------------------------------------------------------
 
     def check_Student_exists(self, column: str, value) -> bool:
         sql = """SELECT count(*) FROM students WHERE {} ='{}' ;""".format(column, value)
@@ -833,7 +828,6 @@ class insert_data():
             return False
         else:
             return True
-
 
     def add_student(self, **info) -> bool:
         try:
@@ -855,9 +849,7 @@ class insert_data():
 
         except:
             return False, 'A system error occurred, please try again later'
-        
-    
-    
+
     def Update_info_Student(self, **info) -> bool:
 
         if self.check_Student_exists('Email', info['Email']) == False:
@@ -877,22 +869,17 @@ class insert_data():
         print(info)
         self.con.Update_Data_All_Coulmn_String('students', Id, **info)
         return True
-    
-    
-    
-    
-# ------------------------------------------------------------------------------
-# Course
-# ------------------------------------------------------------------------------
-        
+
+    # ------------------------------------------------------------------------------
+    # Course
+    # ------------------------------------------------------------------------------
+
     def add_course(self, **info) -> bool:
         try:
             self.con.Insert_Data('courses', **info)
             return True
         except:
             return False, 'A system error occurred, please try again later'
-        
-        
 
     # test
     def Update_info_course(self, **info) -> bool:
@@ -902,11 +889,18 @@ class insert_data():
         except:
             return False, 'A system error occurred, please try again later'
 
-        
-# ------------------------------------------------------------------------------
-# Class
-# ------------------------------------------------------------------------------        
-        
+    # Feautre
+    def add_feautre(self, **info) -> bool:
+        try:
+            self.con.Insert_Data('features_courses', **info)
+            return True
+        except:
+            return False, 'A system error occurred, please try again later'
+
+    # ------------------------------------------------------------------------------
+    # Class
+    # ------------------------------------------------------------------------------
+
     def add_class(self, **info) -> bool:
         try:
             self.con.Insert_Data(table='classes', **info)
@@ -915,14 +909,12 @@ class insert_data():
             return False, 'A system error occurred, please try again later'
 
     def add_student_to_class(self, **info) -> bool:
-       
+        try:
             self.con.Insert_Data('stu_class', **info)
             return True
-        #  try:
-        # except:
-        #     return False, 'A system error occurred, please try again later'
-        
-    
+        except:
+            return False, 'A system error occurred, please try again later'
+
     # test
     def Update_info_classes(self, **info) -> bool:
         try:
@@ -931,12 +923,9 @@ class insert_data():
         except:
             return False, 'A system error occurred, please try again later'
 
-
-
-        
-# ------------------------------------------------------------------------------
-# Category
-# ------------------------------------------------------------------------------        
+    # ------------------------------------------------------------------------------
+    # Category
+    # ------------------------------------------------------------------------------
 
     # test
     def add_category(self, **info) -> bool:
@@ -945,23 +934,23 @@ class insert_data():
             return True
         except:
             return False, 'A system error occurred, please try again later'
-        
 
     # test ??????????
     def add_product(self, **info) -> bool:
-        
-            self.con.Insert_Data(table='items', **info)
-            return True ,'successfully added the product'
-        # try:
-        # except:
-        #     return False, 'A system error occurred, please try again later'
-        
+
+        self.con.Insert_Data('items', **info)
+        return True, 'successfully added the product'
+
+    # try:
+    # except:
+    #     return False, 'A system error occurred, please try again later'
+
     # test
     def Update_info_category(self, **info) -> bool:
         try:
             id = info['Id']
             del info['Id']
-            self.con.Update_Data_All_Coulmn_String('categories', id , **info)
+            self.con.Update_Data_All_Coulmn_String('categories', id, **info)
             return True
         except:
             return False, 'A system error occurred, please try again later'
@@ -970,11 +959,57 @@ class insert_data():
         try:
             id = info['Id']
             del info['Id']
-            self.con.Update_Data_All_Coulmn_String('items', id , **info)
+            self.con.Update_Data_All_Coulmn_String('items', id, **info)
             return True
         except:
             return False, 'A system error occurred, please try again later'
-        
+
+    # ------------------------------------------------------------------------------
+    # Post # Offers # Payment
+    # ------------------------------------------------------------------------------
+
+    def add_post(self, **info) -> bool:
+        try:
+            self.con.Insert_Data('post', **info)
+            return True
+        except:
+            return False, 'A system error occurred, please try again later'
+
+    def add_offer(self, **info) -> bool:
+        try:
+            self.con.Insert_Data('offers', **info)
+            return True
+        except:
+            return False, 'A system error occurred, please try again later'
+
+    def add_payment(self, **info) -> bool:
+        try:
+            self.con.Insert_Data('payments', **info)
+            return True
+        except:
+            return False, 'A system error occurred, please try again later'
+
+    def add_city(self, **info) -> bool:
+        try:
+            self.con.Insert_Data('city', **info)
+            return True
+        except:
+            return False, 'A system error occurred, please try again later'
+
+    def add_university(self, **info) -> bool:
+        try:
+            self.con.Insert_Data('university', **info)
+            return True
+        except:
+            return False, 'A system error occurred, please try again later'
+
+    def add_specialization(self, **info) -> bool:
+        try:
+            self.con.Insert_Data('specialization', **info)
+            return True
+        except:
+            return False, 'A system error occurred, please try again later'
+
 # ------------------------------------------------------------------------------
 # ------------------------------------------------------------------------------
 # ------------------------------------------------------------------------------
@@ -992,10 +1027,10 @@ class delete_data():
     def __init__(self):
         self.con = db.DataBase()
 
-# ------------------------------------------------------------------------------
-# student
-# ------------------------------------------------------------------------------
-        
+    # ------------------------------------------------------------------------------
+    # student
+    # ------------------------------------------------------------------------------
+
     def check_student_exists(self, column, value):
         sql = """SELECT count(*) FROM students WHERE {} ='{}' ;""".format(column, value)
         data = self.con.Select_Data_One_Row(sql)
@@ -1004,8 +1039,7 @@ class delete_data():
             return False
         else:
             return True
-        
-        
+
     def delete_Student_by_Id(self, Id_Student: int) -> bool:
         try:
             if self.check_student_exists('Id', Id_Student) == False:
@@ -1016,10 +1050,9 @@ class delete_data():
         except:
             return False, 'Something went wrong please try again later'
 
-
-# ------------------------------------------------------------------------------
-# Course
-# ------------------------------------------------------------------------------
+    # ------------------------------------------------------------------------------
+    # Course
+    # ------------------------------------------------------------------------------
 
     def delete_course_by_Id(self, Id_course: int) -> bool:
         try:
@@ -1027,10 +1060,10 @@ class delete_data():
             return True
         except:
             return False, 'Something went wrong please try again later'
-        
-# ------------------------------------------------------------------------------
-# Classes
-# ------------------------------------------------------------------------------
+
+    # ------------------------------------------------------------------------------
+    # Classes
+    # ------------------------------------------------------------------------------
     def delete_classes_by_Id(self, Id_classes: int) -> bool:
         try:
             self.con.Delete_Data('classes', 'Id', Id_classes)
@@ -1038,9 +1071,9 @@ class delete_data():
         except:
             return False, 'Something went wrong please try again later'
 
-# ------------------------------------------------------------------------------
-# Product
-# -----------------------------------------------------------------------------
+    # ------------------------------------------------------------------------------
+    # Product
+    # -----------------------------------------------------------------------------
     # test
     def delete_product_by_Id(self, Id_items: int) -> bool:
         try:
@@ -1048,17 +1081,17 @@ class delete_data():
             return True
         except:
             return False, 'Something went wrong please try again later'
-# ------------------------------------------------------------------------------
-# Category
-# ------------------------------------------------------------------------------
-     # test
+
+    # ------------------------------------------------------------------------------
+    # Category
+    # ------------------------------------------------------------------------------
+    # test
     def delete_category_by_Id(self, Id_category: int) -> bool:
         try:
             self.con.Delete_Data('categories', 'Id', Id_category)
             return True
         except:
             return False, 'Something went wrong please try again later'
-
 
 
 # ------------------------------------------------------------------------------
@@ -1078,15 +1111,15 @@ class Register_And_login():
     def __init__(self):
         self.con = db.DataBase()
 
-    def hash_password(self,password):
+    def hash_password(self, password):
         """Hash a password for storing."""
         salt = hashlib.sha256(os.urandom(60)).hexdigest().encode('ascii')
         pwdhash = hashlib.pbkdf2_hmac('sha512', password.encode('utf-8'),
-                                    salt, 100000)
+                                      salt, 100000)
         pwdhash = binascii.hexlify(pwdhash)
         return (salt + pwdhash).decode('ascii')
 
-    def verify_password(self,stored_password, provided_password):
+    def verify_password(self, stored_password, provided_password):
         """Verify a stored password against one provided by user"""
         salt = stored_password[:64]
         stored_password = stored_password[64:]
@@ -1097,54 +1130,54 @@ class Register_And_login():
         pwdhash = binascii.hexlify(pwdhash).decode('ascii')
         return pwdhash == stored_password
 
-    def check_user_exists(self, column , value ):
-        sql="""SELECT count(*) FROM users WHERE {} ='{}' ;""".format(column,value)
+    def check_user_exists(self, column, value):
+        sql = """SELECT count(*) FROM users WHERE {} ='{}' ;""".format(column, value)
         data = self.con.Select_Data_One_Row(sql)
-        print (data)
-        if data[0] == 0 : return False
-        else : return True
+        print(data)
+        if data[0] == 0:
+            return False
+        else:
+            return True
 
     def Register_func(self, **info):
-        try :
+        try:
             """
             This function adds information to the database
             that the user entered in the fields in the (Sinup) interface :
             ( First Name , Last Name , Username , Email , Phone , Password ,Birthday,
               Gender  Country  )
-    
+
             Initially it checks whether the entry is correct or incorrect and
             returns an error message in this case
-    
+
             After , data is sent to the database to make sure the entered data
             is not duplicate
-    
+
             If correct returns a message that the operation completed
             successfully and if there is an error returns an error message with
             the duplicate data specified
             """
-    
+
             Email_Pattern = "[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
             if re.search(Email_Pattern, info['Email']) == True:
                 return False, 'please enter a working email address'
-    
+
             if self.check_user_exists('Email', info['Email']) == True:
                 return False, 'An email already exists Please enter a new email'
-    
+
             if self.check_user_exists('Phone', info['Phone']) == True:
                 return False, 'Phone number already exists. Please enter a new number'
-    
+
             info['Password'] = self.hash_password(info['Password'])
-    
+
             self.con.Insert_Data('users', **info)
             sql = "SELECT Id FROM users WHERE Email='{}' ; ".format(info['Email'])
             Id_User = self.con.Select_Data_One_Row(sql)
             return True, Id_User
-        except :
-            return False , 'System error occurred, please try again later'
+        except:
+            return False, 'System error occurred, please try again later'
 
-
-
-    def Login_func(self, **info ) -> int:
+    def Login_func(self, **info) -> int:
         """
         This function makes sure that the logon information is correct
         """
@@ -1155,8 +1188,8 @@ class Register_And_login():
                 return False, 'Email does not exist'
         except:
             return False, 'Email does not exist'
-        
-        try :      
+
+        try:
             if self.verify_password(data[2], info['Password']):
                 return True, data[0]
             else:

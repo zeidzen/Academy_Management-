@@ -4,7 +4,7 @@
 							<div class="page-header mt-0 shadow p-3">
 								<ol class="breadcrumb mb-sm-0">
 									<li class="breadcrumb-item"><a href="#">Forms</a></li>
-									<li class="breadcrumb-item active" aria-current="page">Student & Class</li>
+									<li class="breadcrumb-item active" aria-current="page">Offer</li>
 								</ol>
 								<div class="btn-group mb-0">
 									<button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Actions</button>
@@ -17,41 +17,45 @@
 									</div>
 								</div>
 							</div>
-
 							<div class="row">
 								<div class="col-md-12">
 									<div class="card shadow">
 										<div class="card-header">
-											<h2 class="mb-0">Add Student to Class</h2>
+											<h2 class="mb-0">Add Offer</h2>
 										</div>
 										<div class="card-body">
 											<div class="row">
 
 												<div class="col-md-12">
 													<div class="form-group">
-														<form action="/Add_student_class_to_DB" method="POST"  >
+														<form action="/Add_offers_to_DB" method="post" enctype="multipart/form-data" >
 
-															<label>Class</label>
-															<select name="class_id" id="input-class" class="form-control">
+
+															<label  for="input-CategoryId">Product</label>
+															<select name="Product_id" id="input-CategoryId" class="form-control">
 																<option value=""> --- Please Select --- </option>
-																{% for  Id , class in data ['class'] :%}
-																<option value="{{ Id }}">{{class}}</option>
+																{% for  item in data ['product'] :%}
+																<option value="{{ item ['Id'] }}">{{item ['Name']}}</option>
 																{% endfor %}
 															</select>
 															<br>
 
-															<label>Student</label>
-															<select name="student_id" id="input-student" class="form-control">
-																<option value=""> --- Please Select --- </option>
-																{% for  Id , student in data ['student'] :%}
-																<option value="{{ Id }}">{{student}}</option>
-																{% endfor %}
-															</select>
+															<label>New Price</label>
+															<input type="number" name="new_price" value="" placeholder="Offer New Price"  class="form-control w-100" required >
+															<br>
+
+															<label>End Date</label>
+															<input type="date" name="end_date" value="" placeholder="Offer End Date"  class="form-control w-100">
+															<br>
+
+
+															<label>Type</label>
+															<input type="number" name="type" value="" placeholder="Offer Type" min="1" max="2" class="form-control w-100">
 															<br>
 
 
 															<div class="container-login100-form-btn">
-																	<input  type="submit" name="ADD_Student" value="ADD Student" class="login100-form-btn btn-primary"
+																	<input  type="submit" name="ADD_Item" value="ADD Offer" class="login100-form-btn btn-primary"
 																							style="background:#00c3ed">
 															</div>
 
@@ -69,12 +73,12 @@
 
 						</div>
 					</div>
-
 						</div>
 					</div>
 				</div>
 			</div>
-			<!--app-content-->
+			<!-- app-content -->
 		</div>
 	</div>
-{% include  "DB_Footer.html" %}
+
+	{% include  "DB_Footer.html" %}

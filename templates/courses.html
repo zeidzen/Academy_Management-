@@ -35,6 +35,7 @@
 									<h4>
 										<a href="/course/{{course['Id']}}">{{course['Name']}}</a>
 									</h4>
+
 								</div>
 								<div class="article-description">{{course['Brief']}} ... </div>
 									<div class="blog-meta">
@@ -94,7 +95,7 @@
 							<h3 class="modtitle"> Courses Categories</h3> 
 							<div class="modcontent">
 								<ul class="list-group ">
-									{% for category in data['Courses_Categories'] :  %}
+									{% for category in data['courses_categories'] :  %}
 									<li class="list-group-item"  > <a href="/category_courses={{category['Id']}}/page=1"class="group-item active">{{category['Name']}}</a></li>
 									{%endfor%}
 								</ul>
@@ -102,6 +103,7 @@
 							</div>
 							
 						</div>
+a
 						<div class="banners">
 							<div>
 								<a href="#"><img src="../static/img/demo/cms/left-image-static.png" alt="Latest Product"></a>
