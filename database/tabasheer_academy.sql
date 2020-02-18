@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Feb 17, 2020 at 02:11 PM
+-- Generation Time: Feb 18, 2020 at 12:45 PM
 -- Server version: 5.7.26
 -- PHP Version: 7.2.18
 
@@ -34,7 +34,7 @@ CREATE TABLE IF NOT EXISTS `categories` (
   `Name` varchar(255) NOT NULL,
   `Type` int(1) NOT NULL,
   PRIMARY KEY (`Id`)
-) ENGINE=MyISAM AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `categories`
@@ -56,7 +56,11 @@ INSERT INTO `categories` (`Id`, `Name`, `Type`) VALUES
 (13, 'computer science', 2),
 (14, 'software engineering ', 2),
 (15, 'Engineering', 2),
-(16, 'Languages', 2);
+(16, 'Languages', 2),
+(17, 'IOT', 2),
+(18, 'IOT', 1),
+(19, 'test2', 1),
+(20, 'test3', 2);
 
 -- --------------------------------------------------------
 
@@ -99,7 +103,7 @@ CREATE TABLE IF NOT EXISTS `classes` (
   `Date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`Id`),
   KEY `FK_classes_course` (`Id_course`)
-) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `classes`
@@ -107,7 +111,8 @@ CREATE TABLE IF NOT EXISTS `classes` (
 
 INSERT INTO `classes` (`Id`, `Id_course`, `Name`, `Start_Date`, `End_Date`, `Lecturer`, `capacity`, `Date`) VALUES
 (1, 1, 'A1', '2020-02-08', '2020-04-04', 'Osama Yousef', 8, '2020-02-08 21:53:08'),
-(2, 2, 'A2', '2020-02-08', '2020-02-29', 'zeid zein alabdeen', 8, '2020-02-08 21:53:08');
+(2, 2, 'A2', '2020-02-08', '2020-02-29', 'zeid zein alabdeen', 8, '2020-02-08 21:53:08'),
+(4, 12, 'توم و جيري ', '2020-02-13', '2020-02-20', 'علي', 20, '2020-02-18 11:58:56');
 
 -- --------------------------------------------------------
 
@@ -129,7 +134,7 @@ CREATE TABLE IF NOT EXISTS `courses` (
   `Date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`Id`),
   KEY `FK_courses_category` (`Id_Category`)
-) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `courses`
@@ -137,11 +142,16 @@ CREATE TABLE IF NOT EXISTS `courses` (
 
 INSERT INTO `courses` (`Id`, `Id_Category`, `Name`, `Brief`, `Description`, `Image`, `Price`, `Number_of_hours`, `Views`, `Date`) VALUES
 (1, 6, 'Wireless Communication & Sensors Network ', 'Instrument cultivated alteration any favourable expression law far nor. Both new like tore but year. An from mean on with when sing pain. Oh to as principles devonshire companions unsatiable an delightful. The ourselves suffering the sincerity. Inhabit her manners adapted age certain. Debating offended at branched striking be subjects.', 'Pic Microcontroller.\r\nWireless solutions and their applications.\r\nGSM (Global System for Mobile Communications.\r\nPrograming GSM using AT Command.\r\nSending and Receiving (SMS) via Microcontroller and Laptop.\r\nMake a call via Microcontroller and laptop.\r\nSMS Control applications.\r\nBluetooth interfacing with Microcontroller.\r\nControl your home devices using your smart phone.\r\nBuild your Smart Home system using (Zigbee, Bluetooth, GSM).\r\nWireless Sensor Network: technology, protocols, and applications.\r\nZigBee communication system.\r\nSend and Receive data via ZigBee communication.\r\nInterfacing between PC and Microcontroller via ZigBee with point-to-point tropology.\r\nMicrocontroller point-to-point network via ZigBee.\r\nPoint-to-Multipoint network.\r\nGSM based home security system to get intrusion alerts like door, windows open alerts onto your cell phone.\r\nReal-time Bluetooth communication system for control of a mobile Robot.\r\nAntitheft System using motion Sensor and Zigbee.\r\nMulti-sensor (Smoke, Fire, Temperature, Motion, LDR,) Based Smart Home – Zigbee.\r\nAn On-line Monitoring System of Temperature and Motion sensors on GSM, SMS, Zigbee and Bluetooth. \r\nRemote-controlled Smart Home with Zigbee Sensor Network.\r\nZigbee for Building Control Wireless Sensor Networks.\r\nZigbee based Wireless Sensor Networks and Its Applications in Industry.\r\nZigbee based Gas Leak Detection and Data Monitoring System\r\nGPS and Tracking System.\r\nWi-Fi communication system for control of home appliances using android', 'http://mikroelectron.com/UploadedFile/wireless-communication.jpg', 200, 40, 25, '2020-02-08 21:37:54'),
-(2, 6, 'Advanced Arduino Course', 'Instrument cultivated alteration any favourable expression law far nor. Both new like tore but year. An from mean on with when sing pain. Oh to as principles devonshire companions unsatiable an delightful. The ourselves suffering the sincerity. Inhabit her manners adapted age certain. Debating offended at branched striking be subjects.', ' التعرف على الاردوينو وأنواعها وقدراتها الصناعية\r\n التعرف على لغات برمجة الاردوينو \r\n التعامل مع المداخل والمخارج الرقمية والتماثلية\r\n التعامل مع جمل التحكم كاملة \r\n كيفية قراءة المجسات المختلفة والتعامل معها من خلال الاردوينو\r\n عمل دوائر تحكم بناءعلى قراءة درجات الحرارة وشدة الاضاءة والفولتية وغيرها \r\n بناء ساعة قياس للفولتية والمقاومة وعرض القراءة على LCD\r\n استخدام انظمة السيريال USART & SPI\r\n ربط اكثر من اردوينو معا وعمل شبكة اتصال \r\nربط الاردوينو بالكمبيوتر و بناء نظام تحكم ومراقبة من خلاله\r\nربط الاردوينو مع SD-card وطرق تخزين البيانات عليها \r\nربط الاردوينو مع اكسل شيت لتسجيل وتخزين قراءات مجسات مختلفة\r\nكيف التعامل مع EEPROM وتخزين البيانات\r\n بناء نظام حماية عن طريق key-pad و LCD\r\nبناء دوئر للتحكم باجهزة 220 V عن طريق الاردوينو\r\n بناء عدادات تصاعدية وتنازلية باستخدام الاردوينو و7-Segments\r\n التعرف على نظام الــ Interrupt وتطبيقاته الاحترافية والعملية\r\n التحكم بسرعة الــ DC Motor من خلال PWM\r\n استخدام Servo motor والتحكم بالاتجاهات\r\n كيفية استخدام الاردوينو في التطبيقات الصناعية\r\n بناء مشاريع تحكم بالاعتماد على قراءات مجسات مختلفة\r\nمدة الدورة : 30 ساعة عملية', 'http://mikroelectron.com/UploadedFile/12715434_822252037896889_325499139670144592_n.jpg', 150, 30, 28, '2020-02-08 21:37:54'),
+(2, 13, 'Advanced Arduino Course', 'Instrument cultivated alteration any favourable expression law far nor. Both new like tore but year. An from mean on with when sing pain. Oh to as principles devonshire companions unsatiable an delightful. The ourselves suffering the sincerity. Inhabit her manners adapted age certain. Debating offended at branched striking be subjects.', ' التعرف على الاردوينو وأنواعها وقدراتها الصناعية\r\n التعرف على لغات برمجة الاردوينو \r\n التعامل مع المداخل والمخارج الرقمية والتماثلية\r\n التعامل مع جمل التحكم كاملة \r\n كيفية قراءة المجسات المختلفة والتعامل معها من خلال الاردوينو\r\n عمل دوائر تحكم بناءعلى قراءة درجات الحرارة وشدة الاضاءة والفولتية وغيرها \r\n بناء ساعة قياس للفولتية والمقاومة وعرض القراءة على LCD\r\n استخدام انظمة السيريال USART & SPI\r\n ربط اكثر من اردوينو معا وعمل شبكة اتصال \r\nربط الاردوينو بالكمبيوتر و بناء نظام تحكم ومراقبة من خلاله\r\nربط الاردوينو مع SD-card وطرق تخزين البيانات عليها \r\nربط الاردوينو مع اكسل شيت لتسجيل وتخزين قراءات مجسات مختلفة\r\nكيف التعامل مع EEPROM وتخزين البيانات\r\n بناء نظام حماية عن طريق key-pad و LCD\r\nبناء دوئر للتحكم باجهزة 220 V عن طريق الاردوينو\r\n بناء عدادات تصاعدية وتنازلية باستخدام الاردوينو و7-Segments\r\n التعرف على نظام الــ Interrupt وتطبيقاته الاحترافية والعملية\r\n التحكم بسرعة الــ DC Motor من خلال PWM\r\n استخدام Servo motor والتحكم بالاتجاهات\r\n كيفية استخدام الاردوينو في التطبيقات الصناعية\r\n بناء مشاريع تحكم بالاعتماد على قراءات مجسات مختلفة\r\nمدة الدورة : 30 ساعة عملية', 'http://mikroelectron.com/UploadedFile/12715434_822252037896889_325499139670144592_n.jpg', 150, 30, 28, '2020-02-08 21:37:54'),
 (3, 6, 'Little Engineer', 'Instrument cultivated alteration any favourable expression law far nor. Both new like tore but year. An from mean on with when sing pain. Oh to as principles devonshire companions unsatiable an delightful. The ourselves suffering the sincerity. Inhabit her manners adapted age certain. Debating offended at branched striking be subjects.', 'المحاور العلمية التي يستند اليها البرنامج :\r\n\r\nيتعرف الطالب على القطع الالكترونية و استخداماتها.\r\nيتعلم الطالب أساسيات الدارات الكهربائية و الالكترونية.\r\nيطبق الطالب ما تعلمه في تصميم أنظمة الكترونية و بنائها.\r\nيتعلم الطالب فحص الدارات الالكترونية بأجهزة القياس.\r\nيتعلم الطالب حل المشكلات التقنية التي تواجهه في التطبيق العملي للالكترونيات.\r\nينتهي البرنامج بمشروع تخرج عملي لكل طالب على أحد الأنظمة الالكترونية.\r\n\r\n\r\nبرنامج هندسي متكامل :\r\n\r\nيعزز استراتيجية التفكير الهندسي و حل المشكلات.\r\nجميع محاور الدورة ضمن تطبيقات عملية و اشراف كادر مهندسين محترفين.\r\nعمل مشروع الكتروني متكامل لكل طالب يتضمن أحد الأنظمة الاكترونية العملية', 'http://mikroelectron.com/UploadedFile/12741868_822252067896886_2093391076941503606_n.jpg', 100, 40, 25, '2020-02-08 21:40:08'),
 (4, 6, 'Raspberry Pi course', 'Instrument cultivated alteration any favourable expression law far nor. Both new like tore but year. An from mean on with when sing pain. Oh to as principles devonshire companions unsatiable an delightful. The ourselves suffering the sincerity. Inhabit her manners adapted age certain. Debating offended at branched striking be subjects.', 'Introduction to Raspberry\r\nInstallation, configuration, accessories and other aspects (3 hours)\r\nIntroduction to Python\r\nIntroduction to programming in Python on the Raspberry Pi (3 hours)\r\nA complete example in Python\r\nRaspberry Pi GPIO module for external connections \r\nHardware basics and using the GPIO (3 hours)\r\nOpencV install and compile (3 hours)\r\nOpenCV Image Processing Basics\r\nObject Detection (Build object follower robot)\r\nFace Detection using OpenCV (6 hours)\r\nHome Automation (Control and monitor sensors from web) (3 hours)\r\nHome Automation (Control and monitor sensors Using bluetooth) (3 hours)\r\nIntroduction, installation Windows 10 Iot Core\r\nIntroduction to C# \r\nIntroduction to programming in C# on the Raspberry Pi (3 hours)\r\nRecord video and capture image \r\nSmart Security System (send an email when motion detect) (3 hours) ', 'http://mikroelectron.com/UploadedFile/10437466_822254871229939_9097033907592208534_n.jpg', 300, 80, 25, '2020-02-08 21:40:08'),
 (5, 6, 'Android course', 'Instrument cultivated alteration any favourable expression law far nor. Both new like tore but year. An from mean on with when sing pain. Oh to as principles devonshire companions unsatiable an delightful. The ourselves suffering the sincerity. Inhabit her manners adapted age certain. Debating offended at branched striking be subjects.', 'Android Studio and build User Interface (Set up and walkthrough)\r\nFundamentals of Java Programming used to build Android apps\r\nInputs, Buttons and Reactive (Tap) Interfaces\r\nAndroid Building blocks\r\nVariables, Arrays, Loops, ArrayLists, Listview\r\nNavigate between screens\r\nPassing information between screens\r\nLearn how professional android apps developers think and work\r\nLearn how to design android apps\r\nBuild several amazing apps - Hands on\r\nPublish your apps on Google Play\r\nEarn Money from your Android apps - How to integrate ads in your apps\r\nsync to a server (send and receive data from server)\r\nsend push notification using (GCM)', 'http://mikroelectron.com/UploadedFile/12729090_822251997896893_4890317293145588367_n.jpg', 240, 40, 25, '2020-02-08 21:41:31'),
-(6, 6, 'Arduino Course - دورة اردوينو', 'Instrument cultivated alteration any favourable expression law far nor. Both new like tore but year. An from mean on with when sing pain. Oh to as principles devonshire companions unsatiable an delightful. The ourselves suffering the sincerity. Inhabit her manners adapted age certain. Debating offended at branched striking be subjects.', 'هل واجهت مشكلة في استخدام الاردوينو !!!\r\nهل تريد تطوير مهاراتك في استخدام الاردوينو !!!\r\nحاب تحترف اردوينو وتبدأ في بناء مشاريع ودوائر تحكم خاصة بك !!!\r\nشركة مايكروالكترون بتقدم لك دورة عملية خاصة بالمحترفين حيث تأهلك هذه الدورة لان تصبح محترف اردوينو من البداية حتى النهائية ...\r\n\r\nمحتوى الدورة : \r\n1. التعرف على الاردوينو وأنواعها وقدراتها الصناعية\r\n2. التعرف على لغات برمجة الاردوينو \r\n3. التعامل مع المداخل والمخارج الرقمية والتماثلية\r\n4. التعامل مع جمل التحكم كاملة \r\n5. كيفية قراءة المجسات المختلفة والتعامل معها من خلال الاردوينو\r\n6. عمل دوائر تحكم بناءعلى قراءة درجات الحرارة وشدة الاضاءة والفولتية وغيرها \r\n7. بناء ساعة قياس للفولتية والمقاومة وعرض القراءة على LCD\r\n8. استخدام انظمة السيريال USART & SPI\r\n9. ربط اكثر من اردوينو معا وعمل شبكة اتصال \r\n10. ربط الاردوينو بالكمبيوتر و بناء نظام تحكم ومراقبة من خلاله\r\n11. ربط الاردوينو مع SD-card وطرق تخزين البيانات عليها \r\n12. ربط الاردوينو مع اكسل شيت لتسجيل وتخزين قراءات مجسات مختلفة\r\n13. كيف التعامل مع EEPROM وتخزين البيانات\r\n14. بناء نظام حماية عن طريق key-pad و LCD\r\n15. بناء دوئر للتحكم باجهزة 220 V عن طريق الاردوينو\r\n16. بناء عدادات تصاعدية وتنازلية باستخدام الاردوينو و7-Segments\r\n17. التعرف على نظام الــ Interrupt وتطبيقاته الاحترافية والعملية\r\n18. التحكم بسرعة الــ DC Motor من خلال PWM\r\n19. استخدام Servo motor والتحكم بالاتجاهات\r\n20. كيفية استخدام الاردوينو في التطبيقات الصناعية\r\n21 بناء مشاريع تحكم بالاعتماد على قراءات مجسات مختلفة', 'http://mikroelectron.com/UploadedFile/66518799_2122211281234285_5172539684210868224_n.png', 40, 25, 25, '2020-02-08 21:41:31');
+(6, 6, 'Arduino Course - دورة اردوينو', 'Instrument cultivated alteration any favourable expression law far nor. Both new like tore but year. An from mean on with when sing pain. Oh to as principles devonshire companions unsatiable an delightful. The ourselves suffering the sincerity. Inhabit her manners adapted age certain. Debating offended at branched striking be subjects.', 'هل واجهت مشكلة في استخدام الاردوينو !!!\r\nهل تريد تطوير مهاراتك في استخدام الاردوينو !!!\r\nحاب تحترف اردوينو وتبدأ في بناء مشاريع ودوائر تحكم خاصة بك !!!\r\nشركة مايكروالكترون بتقدم لك دورة عملية خاصة بالمحترفين حيث تأهلك هذه الدورة لان تصبح محترف اردوينو من البداية حتى النهائية ...\r\n\r\nمحتوى الدورة : \r\n1. التعرف على الاردوينو وأنواعها وقدراتها الصناعية\r\n2. التعرف على لغات برمجة الاردوينو \r\n3. التعامل مع المداخل والمخارج الرقمية والتماثلية\r\n4. التعامل مع جمل التحكم كاملة \r\n5. كيفية قراءة المجسات المختلفة والتعامل معها من خلال الاردوينو\r\n6. عمل دوائر تحكم بناءعلى قراءة درجات الحرارة وشدة الاضاءة والفولتية وغيرها \r\n7. بناء ساعة قياس للفولتية والمقاومة وعرض القراءة على LCD\r\n8. استخدام انظمة السيريال USART & SPI\r\n9. ربط اكثر من اردوينو معا وعمل شبكة اتصال \r\n10. ربط الاردوينو بالكمبيوتر و بناء نظام تحكم ومراقبة من خلاله\r\n11. ربط الاردوينو مع SD-card وطرق تخزين البيانات عليها \r\n12. ربط الاردوينو مع اكسل شيت لتسجيل وتخزين قراءات مجسات مختلفة\r\n13. كيف التعامل مع EEPROM وتخزين البيانات\r\n14. بناء نظام حماية عن طريق key-pad و LCD\r\n15. بناء دوئر للتحكم باجهزة 220 V عن طريق الاردوينو\r\n16. بناء عدادات تصاعدية وتنازلية باستخدام الاردوينو و7-Segments\r\n17. التعرف على نظام الــ Interrupt وتطبيقاته الاحترافية والعملية\r\n18. التحكم بسرعة الــ DC Motor من خلال PWM\r\n19. استخدام Servo motor والتحكم بالاتجاهات\r\n20. كيفية استخدام الاردوينو في التطبيقات الصناعية\r\n21 بناء مشاريع تحكم بالاعتماد على قراءات مجسات مختلفة', 'http://mikroelectron.com/UploadedFile/66518799_2122211281234285_5172539684210868224_n.png', 40, 25, 25, '2020-02-08 21:41:31'),
+(8, 13, 'OS', 'An operating system (OS) is the program that, after being initially loaded into the computer by a boot program, manages all of the other application programs in a computer. The application programs make use of the operating system by making requests for services through a defined application program interface (API).', 'An operating system (OS) is the program that, after being initially loaded into the computer by a boot program, manages all of the other application programs in a computer. The application programs make use of the operating system by making requests for services through a defined application program interface (API).', '../static/img/course_image/abstract-technology-particle-background_52683-25766.jpg', 200, 30, 25, '2020-02-18 00:51:12'),
+(9, 13, 'Machine Learning', 'Machine learning is an application of artificial intelligence (AI) that provides systems the ability to automatically learn and improve from experience without being explicitly programmed. Machine learning focuses on the development of computer programs that can access data and use it learn for themselves.', 'Machine learning is an application of artificial intelligence (AI) that provides systems the ability to automatically learn and improve from experience without being explicitly programmed. Machine learning focuses on the development of computer programs that can access data and use it learn for themselves.', '../static/img/course_image/research_paper_introduction.jpg', 300, 90, 25, '2020-02-18 00:56:27'),
+(10, 14, 'Testing', 'Software testing is an investigation conducted to provide stakeholders with information about the quality of the software product or service under test.', 'Software testing is an investigation conducted to provide stakeholders with information about the quality of the software product or service under test.', '../static/img/course_image/t_a_s_t_i_n_g.png', 100, 20, 25, '2020-02-18 01:11:28'),
+(11, 17, 'Arduino  With Python', 'Learn Arduino Online At Your Own Pace. Start Today and Become an Expert in Days. Join Over 40 Million People Learning Online with Udemy. 30-Day Money-Back Guarantee! Pandas Tutorials. 30-Day Money Guarantee. Lifetime Access. REST APIs With Flask.', 'Learn Arduino Online At Your Own Pace. Start Today and Become an Expert in Days. Join Over 40 Million People Learning Online with Udemy. 30-Day Money-Back Guarantee! Pandas Tutorials. 30-Day Money Guarantee. Lifetime Access. REST APIs With Flask.', '../static/img/course_image/Arduino-With-Python-How-to-Get-Started_Watermarked.67d3c045231b.jpg', 300, 60, 25, '2020-02-18 06:34:54'),
+(12, 13, 'Deep Learning', 'Deep learning is a subset of machine learning in artificial intelligence (AI) that has networks capable of learning unsupervised from data that is unstructured or unlabeled. Also known as deep neural learning or deep neural network.', 'Deep learning is a subset of machine learning in artificial intelligence (AI) that has networks capable of learning unsupervised from data that is unstructured or unlabeled. Also known as deep neural learning or deep neural network.', '../static/img/course_image/iStock-1181216327-750x422.jpg', 500, 50, 25, '2020-02-18 08:01:31');
 
 -- --------------------------------------------------------
 
@@ -245,7 +255,7 @@ CREATE TABLE IF NOT EXISTS `items` (
   `Date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`Id`),
   KEY `FK_Items_category` (`Id_Category`)
-) ENGINE=MyISAM AUTO_INCREMENT=44 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=49 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `items`
@@ -295,7 +305,12 @@ INSERT INTO `items` (`Id`, `Id_Category`, `Name`, `Brief`, `Description`, `Price
 (41, 8, 'ARDUINO NANO ORIGINAL\r\n', 'Instrument cultivated alteration any favourable expression law far nor. Both new like tore but year. An from mean on with when sing pain. Oh to as principles devonshire companions unsatiable an delightful. The ourselves suffering the sincerity. Inhabit her manners adapted age certain. Debating offended at branched striking be subjects.', 'Arduino Nano is a surface mount breadboard embedded version with integrated USB. It is a smallestcompleteand breadboard friendly. It has everything that Diecimila/Duemilanove has (electrically) with more analog input pins and onboard +5V AREF jumper. Physicallyit is missing power jack. The Nano is automatically sense and switch to the higher potential source of powerthere is no need for the power select jumper.\r\n\r\nNano’s got the breadboard-ability of the Boarduino and the Mini+USB with smaller footprint than eitherso users have more breadboard space. It’s got a pin layout that works well with the Mini or the Basic Stamp (TXRXATNGND on one toppower and ground on the other). This new version 3.0 comes with ATMEGA328 which offer more programming and data memory space. It is two layers. That make it easier to hack and more affordable.\r\n\r\nYou end up paying less with Nano than Mini and USB combined!', 10, 'https://mikroelectron.com/ProImg/X4/972576cb-e634-4a37-9514-0eea62fffa92.jpg', 25, 1, '2020-02-13 15:43:05'),
 (42, 8, 'ARDUINO DUE MICROCONTROLLER BOARD', 'Instrument cultivated alteration any favourable expression law far nor. Both new like tore but year. An from mean on with when sing pain. Oh to as principles devonshire companions unsatiable an delightful. The ourselves suffering the sincerity. Inhabit her manners adapted age certain. Debating offended at branched striking be subjects.', 'Arduino Due Microcontroller Board is based on the 32-bit processor Atmel SAM3X8E ARM Cortex-M3 MCUand improves all the standard Arduino functionalities and adds many new features.\r\n\r\nThe Arduino Due offers 54 digital input/output pins (of which 12 can be used as PWM outputswith selectable resolution)12 analog inputs with 12 bits of resolution4 UARTstwo DAC outputsan 84MHz crystal oscillatortwo USB connections2 TWIa power jackan ICSP headeran SPI headera JTAG headerand a reset button and erase button. The maximum voltage that the I/O pins can provide or tolerate is 3.3V. The board has two micro USB connectors--one for debugging purposes and a second one capable of acting as a USB hostallowing external USB peripherals such as mousekeyboardssmartphonesetc. to be connected to the Arduino Due.\r\n\r\nThe board contains everything needed to support the microcontroller; simply connect it to a computer with a USB cable or power it with a AC-to-DC adapter or battery to get started. The Due is compatible with all Arduino shields that work at 3.3V and are compliant with the 1.0 Arduino pinout.\r\n\r\n', 25, 'https://mikroelectron.com/ProImg/X4/9810e57e-fc7f-4cec-af47-b20c276c4b93.jpg', 25, 1, '2020-02-13 15:51:11');
 INSERT INTO `items` (`Id`, `Id_Category`, `Name`, `Brief`, `Description`, `Price`, `Image`, `Views`, `Availability`, `Date`) VALUES
-(43, 8, 'SD CARD READER MODULE', 'SD Card module can make your SD application more easier and simple.\r\nIt is easily interfaced as a peripheral to your arduino sensor shield module.\r\nThrough programmingyou can read and write to the SD card using your arduino.', 'Description:\r\n\r\nSD Card module can make your SD application more easier and simple.\r\nIt is easily interfaced as a peripheral to your arduino sensor shield module.\r\nThrough programmingyou can read and write to the SD card using your arduino.\r\nCan be used for SD Card more eaislysuch as for MP3 PlayerMCU/ARM system control.\r\nAll SD SPI pins outputMOSISCKMISO and CS.\r\nSupport 5V/3.3V input.\r\nSize:5.1cm x 3.1cm - 2.01inch x 1.22inch.', 5, 'https://mikroelectron.com/ProImg/X4/fbe95053-58f5-4a76-af00-0defdd97bd8e.jpg', 25, 1, '2020-02-17 01:31:56');
+(43, 8, 'SD CARD READER MODULE', 'SD Card module can make your SD application more easier and simple.\r\nIt is easily interfaced as a peripheral to your arduino sensor shield module.\r\nThrough programmingyou can read and write to the SD card using your arduino.', 'Description:\r\n\r\nSD Card module can make your SD application more easier and simple.\r\nIt is easily interfaced as a peripheral to your arduino sensor shield module.\r\nThrough programmingyou can read and write to the SD card using your arduino.\r\nCan be used for SD Card more eaislysuch as for MP3 PlayerMCU/ARM system control.\r\nAll SD SPI pins outputMOSISCKMISO and CS.\r\nSupport 5V/3.3V input.\r\nSize:5.1cm x 3.1cm - 2.01inch x 1.22inch.', 5, 'https://mikroelectron.com/ProImg/X4/fbe95053-58f5-4a76-af00-0defdd97bd8e.jpg', 25, 1, '2020-02-17 01:31:56'),
+(44, 2, 'www', 'www', 'www', 22, '../static/img/defult_image/product.png', 29, 0, '2020-02-18 11:11:26'),
+(45, 18, 'qqq', 'qqq', 'qqq', 26, '../static/img/defult_image/product.png', 26, 0, '2020-02-18 11:15:28'),
+(46, 18, 'qqq2', 'qqq2', 'qqq2', 26, '../static/img/defult_image/product.png', 26, 0, '2020-02-18 11:15:56'),
+(47, 18, 'test3 ', 'test3 ', 'test3', 50, '../static/img/product_image/CV_ZEID-Recovered.jpg', 150, 0, '2020-02-18 11:22:17'),
+(48, 1, 'sss', 'sss', 'sss', 222, '../static/img/product_image/Build-a-Web-Scraper-With-Requests-and-Beautiful-Soup_Watermarked.37918fb3906c.jpg', 50, 0, '2020-02-18 11:42:35');
 
 -- --------------------------------------------------------
 
@@ -394,15 +409,17 @@ CREATE TABLE IF NOT EXISTS `payments` (
   PRIMARY KEY (`Id`),
   KEY `FK_Payments_User` (`Id_User`),
   KEY `FK_Payments_student` (`Id_Student`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `payments`
 --
 
 INSERT INTO `payments` (`Id`, `Id_User`, `Id_Student`, `Payment`, `Payoff`, `Date`) VALUES
-(1, 1, 2, 50, 'Ali Ahmad', '2020-02-08 22:08:41'),
-(2, 2, 1, 75, 'yaser', '2020-02-08 22:08:41');
+(1, 1, 2, 50, 'Ali Ahmad', '2020-04-08 21:08:41'),
+(2, 2, 1, 75, 'yaser', '2020-02-08 22:08:41'),
+(3, 1, 1, 500, 'zeid', '2020-02-18 03:28:46'),
+(4, 1, 2, 300, 'zein', '2020-02-18 03:28:46');
 
 -- --------------------------------------------------------
 
@@ -489,7 +506,7 @@ CREATE TABLE IF NOT EXISTS `students` (
   KEY `FK_Address` (`Id_Address`),
   KEY `FK_University` (`Id_University`),
   KEY `FK_specialization` (`Id_Specialization`)
-) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `students`
@@ -499,7 +516,8 @@ INSERT INTO `students` (`Id`, `FirstName`, `LastName`, `Gender`, `Phone`, `Email
 (1, 'zeid', 'zein alabdeen', 1, '0791749367', 'zeid.zen@gmail.com', '1996-01-10', 3, 5, 3, '2020-02-08 22:01:18'),
 (2, 'Osama', 'yousef', 1, '0790083761', 'fotboy1788@hotmail.com', '1993-04-04', 2, 5, 4, '2020-02-08 22:01:18'),
 (3, 'ali22', 'ali22', 1, '0781472596', 'ali.ali44@gmail.com', '1996-01-10', 3, 2, 1, '2020-02-09 02:07:18'),
-(5, 'Haitham', 'Husam', 1, '0789605872', 'hhh1998@hotmail.com', '1996-01-10', 3, 5, 3, '2020-02-10 01:42:23');
+(5, 'Haitham', 'Husam', 1, '0789605872', 'hhh1998@hotmail.com', '1996-01-10', 3, 5, 3, '2020-02-10 01:42:23'),
+(6, 'qqq', 'qqq', 2, '0771478523', 'syrgsst@gmail.com', '2020-02-06', 1, 1, 1, '2020-02-18 12:08:36');
 
 -- --------------------------------------------------------
 
@@ -583,7 +601,7 @@ CREATE TABLE IF NOT EXISTS `users` (
 --
 
 INSERT INTO `users` (`Id`, `FirstName`, `LastName`, `Email`, `Phone`, `Password`, `Gender`, `Id_Address`, `Image`, `Birthday`, `Date`) VALUES
-(1, 'zeid', 'zein alabdeen', 'zeid.zen@gmail.com', '0791749367', '6c15e561c79f69541cb12eda5717bcb17475492945ae87b26bede25a0d4c7964188cb02ab0291b7364e15215c2a027abb19c5a75fe45589cb337dbdcab67b77182824662e26be2e3fd365ff52ef6c189536250eff82b4a90bbf1c03c07012bfd', 1, 3, NULL, '1996-01-10', '2020-02-08 22:07:24'),
+(1, 'zeid', 'zein alabdeen', 'zeid.zen@gmail.com', '0791749367', '6c15e561c79f69541cb12eda5717bcb17475492945ae87b26bede25a0d4c7964188cb02ab0291b7364e15215c2a027abb19c5a75fe45589cb337dbdcab67b77182824662e26be2e3fd365ff52ef6c189536250eff82b4a90bbf1c03c07012bfd', 1, 3, '../static/img/user_image/82246523_2459293421054355_1831006581907521536_o.jpg', '1996-01-10', '2020-02-08 22:07:24'),
 (2, 'osama', 'yousef', 'fotboy1788@hotmail.com', '0790083761', '123456789', 1, 2, NULL, '1993-04-04', '2020-02-08 22:07:24'),
 (3, 'zeid', 'zein alabdeen', 'zeid.zen23@gmail.com', '0798524657', '6c15e561c79f69541cb12eda5717bcb17475492945ae87b26bede25a0d4c7964188cb02ab0291b7364e15215c2a027abb19c5a75fe45589cb337dbdcab67b77182824662e26be2e3fd365ff52ef6c189536250eff82b4a90bbf1c03c07012bfd', 1, 1, '86278699_844682099326554_5104062684148531200_n.jpg', '2020-02-18', '2020-02-16 01:13:21');
 COMMIT;

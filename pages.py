@@ -61,9 +61,7 @@ class Courses(Header):
         self.data['Courses'] = self.show_data.get_all_courses()
         self.data['page'] = int(page)
         self.data['Max_page'] = math.ceil(len(self.data['Courses']) / 5)
-
-
-
+        self.data['Courses_Categories'] = self.show_data.get_all_categories_for_course()
 
 # -----------------------------------------------------------------------------
 # Category class
@@ -77,7 +75,7 @@ class Courses_Category(Header):
         self.data['page'] = int(Page)
         self.data['Max_page'] = math.ceil(len(self.data['Courses']) / 5)
         self.data['title'] = 'Courses : {}'.format(self.data['Category_Name'])      
-        
+        self.data['Courses_Categories'] = self.show_data.get_all_categories_for_course()
         
         # self.data['Most_Watched'] = self.show_data.get_top_viewed_courses()
         # self.data['Category_Name'] = self.show_data.get_category_by_Id(Id_Category)[1]
@@ -223,9 +221,7 @@ class Post(Header):
     def __init__(self, Id_Post: int):
         super().__init__()
         self.data['post'] = self.show_data.get_post_by_id(Id_Post)        
-
 # -----------------------------------------------------------------------------
-
 # About class
 class About(Header):
     def __init__(self):
@@ -247,10 +243,10 @@ class FAQ(Header):
 #==============================================================================
 #==============================================================================
 #==============================================================================
-# -----------------------------------------------------------------------------
+        
+# ----------------------------------------------------------------------------
 # Dashboard Header
 #------------------------------------------------------------------------------
-        
 class DB_Header():
     def __init__(self , Id_User):
         self.data = dict()
@@ -397,7 +393,7 @@ class Add_Student_Class(DB_Header):
         self.insert_data.add_student_to_class(**info)
 # -----------------------------------------------------------------------------
         
-# Add Student To Class
+# Add Course
 class Add_Course(DB_Header):
     def __init__(self , Id_User):
         super().__init__(Id_User)
