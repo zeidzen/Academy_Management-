@@ -1,5 +1,5 @@
 
-{% include  "/DashBoard/dashboardheader.html" %}
+{% include  "DB_Header.html" %}
 
 
 						<!-- Page content -->
@@ -34,11 +34,11 @@
 														<form action="/Add_student_to_DB" method="post"  >
 
 															<label>First Name</label>
-															<input type="text" name="firstname" value="" placeholder="First Name"  class="form-control w-100">
+															<input type="text" name="firstname" value="" placeholder="First Name"  class="form-control w-100" required>
 															<br>
 
 															<label>Last Name</label>
-															<input type="text" name="lastname" value="" placeholder="Last Name"   class="form-control w-100">
+															<input type="text" name="lastname" value="" placeholder="Last Name"   class="form-control w-100" required >
 															<br>
 
 															<label>Gender</label>
@@ -53,19 +53,19 @@
 															<br>
 
 															<label>Telephone</label>
-															<input type="tel" name="telephone" value="" placeholder="077/078/079"  class="form-control w-100">
+															<input type="tel" name="telephone" value="" placeholder="077/078/079"  class="form-control w-100" required > 
 															<br>
 
 															<label>E-Mail</label>
-															<input type="email" name="email" value="" placeholder="E-Mail" class="form-control w-100">
+															<input type="email" name="email" value="" placeholder="E-Mail" class="form-control w-100" required>
 															<br>
 
 															<label>Birthday</label>
-															<input type="date"  name="birthday" value=""  placeholder="DD-MM-YYYY"  pattern="[0-9]{2}-[0-9]{2}-[0-9]{4}" class="form-control w-100">
+															<input type="date"  name="birthday" value=""  placeholder="DD-MM-YYYY"  pattern="[0-9]{2}-[0-9]{2}-[0-9]{4}" class="form-control w-100" required >
 															<br>
 
 															<label>City</label>
-															<select name="country_id" class="form-control">
+															<select name="country_id" class="form-control" required>
 																<option value=""> --- Please Select --- </option>
 																{% for  Id , city in data ['Cities'] :%}
 																<option value="{{ Id }}">{{city}}</option>
@@ -75,7 +75,7 @@
 
 
 															<label>University</label>
-															<select name="university_id"  class="form-control">
+															<select name="university_id"  class="form-control"  required >
 																<option value=""> --- Please Select --- </option>
 																{% for  Id , university in data ['University'] :%}
 																<option value="{{ Id }}">{{university}}</option>
@@ -84,7 +84,7 @@
 															<br>
 
 															<label>Specialization</label>
-															<select name="specialization_id"  class="form-control">
+															<select name="specialization_id"  class="form-control" required>
 																<option value=""> --- Please Select --- </option>
 																{% for  Id , specialization in data ['Specialization'] :%}
 																<option value="{{ Id }}">{{specialization}}</option>
@@ -124,4 +124,4 @@
 			<!--app-content-->
 		</div>
 	</div>
-{% include  "/DashBoard/dashboardfooter.html" %}
+	{% include  "DB_Footer.html" %}

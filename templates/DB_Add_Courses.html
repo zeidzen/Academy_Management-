@@ -1,10 +1,12 @@
-{% include  "/DashBoard/dashboardheader.html" %}
+
+{% include  "DB_Header.html" %}
+
 						<!-- Page content -->
 						<div class="container-fluid pt-8">
 							<div class="page-header mt-0 shadow p-3">
 								<ol class="breadcrumb mb-sm-0">
-									<li class="breadcrumb-item"><a href="#">Forms</a></li>
-									<li class="breadcrumb-item active" aria-current="page">Product</li>
+									<li class="breadcrumb-item"><a>Forms</a></li>
+									<li class="breadcrumb-item active" aria-current="page">Courses</li>
 								</ol>
 								<div class="btn-group mb-0">
 									<button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Actions</button>
@@ -21,55 +23,54 @@
 								<div class="col-md-12">
 									<div class="card shadow">
 										<div class="card-header">
-											<h2 class="mb-0">Add Product</h2>
+											<h2 class="mb-0">ADD Courses</h2>
 										</div>
 										<div class="card-body">
 											<div class="row">
 
 												<div class="col-md-12">
 													<div class="form-group">
-														<form action="/Add_items_to_DB" method="post" enctype="multipart/form-data" >
+														<form action="/Add_courses_to_DB" method="post" enctype="multipart/form-data" >
 
 															<label  for="input-CategoryId">Category</label>
-															<select name="category_Id" id="input-CategoryId" class="form-control">
+															<select name="category_Id" id="input-CategoryId" class="form-control w-100" required >
 																<option value=""> --- Please Select --- </option>
-																{% for  Id , Name in data ['Category'] :%}
-																<option value="{{ Id }}">{{Name}}</option>
+																{% for  category in data ['Courses_Categories'] :%}
+																<option value="{{ category['Id'] }}">{{category['Name']}}</option>
 																{% endfor %}
 															</select>
 															<br>
 
 															<label>Name</label>
-															<input type="text" name="item_name" value="" placeholder="Product Name"  class="form-control w-100">
+															<input type="text" name="courses_name" value="" placeholder="Courses Name"  class="form-control w-100" required >
 															<br>
-
 															<label>Brief</label>
-															<input type="text" name="item_brief" value="" placeholder="Product Brief"  class="form-control w-100">
+															<input type="text" name="courses_brief" value="" placeholder="Courses Brief"  class="form-control w-100" required > 
 															<br>
 
 															<label>Description</label>
-															<input type="text" name="item_description" value="" placeholder="Product Description"  class="form-control w-100">
-															<br>
-
-															<label>Price</label>
-															<input type="number" name="item_price" value="" placeholder="Product Price" min = "0" class="form-control w-100">
+															<input type="text" name="courses_description" value="" placeholder="Courses Description"  class="form-control w-100">
 															<br>
 
 															<label>Image</label>
-															<input type="file" name="item_image" value="" placeholder="Product Image"  class="form-control w-100">
+															<input type="file" name="courses_image" value="" placeholder="Courses Image"  class="form-control w-100"  >
+															<br>
+
+															<label>Price</label>
+															<input type="number" name="courses_price" value="" placeholder="Courses Price"  class="form-control w-100" required >
+															<br>
+
+															<label>Number Of Hours</label>
+															<input type="number" name="courses_num_of_hours" value="" placeholder="Courses Hours" min = "1" class="form-control w-100" required >
 															<br>
 
 															<label>View</label>
-															<input type="number" name="item_view" value="" placeholder="Product View" min = "25" class="form-control w-100">
-															<br>
-
-															<label>Availability</label>
-															<input type="number" name="item_availability" value="" placeholder="Product Availability" min = "0" max ="1" class="form-control w-100">
+															<input type="number" name="courses_view" value="" placeholder="Courses View" min = "25" class="form-control w-100">
 															<br>
 
 
 															<div class="container-login100-form-btn">
-																	<input  type="submit" name="ADD_Item" value="ADD Product" class="login100-form-btn btn-primary"
+																	<input  type="submit" name="ADD_Courses" value="ADD Courses" class="login100-form-btn btn-primary"
 																							style="background:#00c3ed">
 															</div>
 
@@ -87,12 +88,10 @@
 
 						</div>
 					</div>
-						</div>
-					</div>
 				</div>
 			</div>
-			<!-- app-content -->
+			<!--app-content-->
 		</div>
 	</div>
 
-{% include  "/DashBoard/dashboardfooter.html" %}
+{% include  "DB_Footer.html" %}

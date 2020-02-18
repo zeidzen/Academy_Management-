@@ -11,35 +11,11 @@
 	<meta content="Start your development with a Dashboard for Bootstrap 4." name="description">
 	<meta content="Spruko" name="author">
 
-	<!-- Title -->
-	<title>Ansta - Responsive Multipurpose Admin Dashboard Template</title>
-
-	<!-- Favicon -->
-	<link href="../static/DashBoard/assets/img/brand/favicon.png" rel="icon" type="image/png">
-
-
-	<!-- Fonts -->
-	<link href="https://fonts.googleapis.com/css?family=Nunito:300,400,600,700,800" rel="stylesheet">
-
-	<!-- Icons -->
-	<link href="../static/DashBoard/assets/css/icons.css" rel="stylesheet">
-
-	<!--Bootstrap.min css-->
-	<link rel="stylesheet" href="../static/DashBoard/assets/plugins/bootstrap/css/bootstrap.min.css">
-
-
-	<!-- Ansta CSS -->
-	<link href="../static/DashBoard/assets/css/dashboard.css" rel="stylesheet" type="text/css">
-
-	<!-- Single-page CSS -->
-	<link href="../static/DashBoard/assets/plugins/single-page/css/main.css" rel="stylesheet" type="text/css">
-
-
     <!-- Title -->
-	<title>Ansta - Responsive Multipurpose Admin Dashboard Template</title>
+	<title>{{data ['title']}}</title>
 
 	<!-- Favicon -->
-	<link href="../static/DashBoard/assets/img/brand/favicon.png" rel="icon" type="image/png">
+	<link href="../static/ico/favicon.png" rel="icon" type="image/png">
 
 	<!-- Fonts -->
 	<link href="https://fonts.googleapis.com/css?family=Nunito:300,400,600,700,800" rel="stylesheet">
@@ -68,6 +44,9 @@
 	<!--Select2 css-->
 	<link rel="stylesheet" href="../static/DashBoard/assets/plugins/select2/select2.css">
 
+	<!-- Single-page CSS -->
+	<link href="../static/DashBoard/assets/plugins/single-page/css/main.css" rel="stylesheet" type="text/css">
+
 </head>
 
 <body class="app sidebar-mini rtl" >
@@ -78,7 +57,7 @@
 			<div class="app-sidebar__overlay" data-toggle="sidebar"></div>
 			<aside class="app-sidebar ">
 				<div class="sidebar-img">
-					<a class="navbar-brand" href="index-2.html"><img alt="..." class="navbar-brand-img main-logo" src="../static/DashBoard/assets/img/brand/logo-dark.png"> <img alt="..." class="navbar-brand-img logo" src="../static/DashBoard/assets/img/brand/logo.png"></a>
+					<a class="navbar-brand" href="/TTADB"><img alt="..." class="navbar-brand-img main-logo" src="../static/img/logo/logo.png"> <img alt="Tabasheer_logo." class="navbar-brand-img logo" src="../static/img/logo/logo2.png"></a>
 					<ul class="side-menu">
 						<li class="slide">
 							<a class="side-menu__item active" data-toggle="slide" href="#"><i class="side-menu__icon fe fe-home"></i><span class="side-menu__label">Dashboard</span><i class="angle fa fa-angle-right"></i></a>
@@ -524,23 +503,22 @@
 											<a href="#" class="dropdown-item text-center">View all Notification</a>
 										</div>
 									</li>
+									{% set User = data ['User'] %}
 									<li class="nav-item dropdown">
 										<a aria-expanded="false" aria-haspopup="true" class="nav-link pr-md-0" data-toggle="dropdown" href="#" role="button">
 										<div class="media align-items-center">
-											<span class="avatar avatar-sm rounded-circle"><img alt="Image placeholder" src="../static/DashBoard/assets/img/faces/female/32.jpg"></span>
+											<span class="avatar avatar-sm rounded-circle"><img alt="Image placeholder" src="{{ User ['Image'] }}"></span>
 											<div class="media-body ml-2 d-none d-lg-block">
-												<span class="mb-0 ">Cori Stover</span>
+												<span class="mb-0 ">{{ User ['FirstName'] }} {{ User ['LastName'] }}</span>
 											</div>
 										</div></a>
 										<div class="dropdown-menu dropdown-menu-arrow dropdown-menu-right">
 											<div class=" dropdown-header noti-title">
 												<h6 class="text-overflow m-0">Welcome!</h6>
 											</div>
-											<a class="dropdown-item" href="user-profile.html"><i class="ni ni-single-02"></i> <span>My profile</span></a>
-											<a class="dropdown-item" href="#"><i class="ni ni-settings-gear-65"></i> <span>Settings</span></a>
+											<a class="dropdown-item" href="/my_account"><i class="ni ni-single-02"></i> <span>My profile</span></a>
 											<a class="dropdown-item" href="#"><i class="ni ni-calendar-grid-58"></i> <span>Activity</span></a>
-											<a class="dropdown-item" href="#"><i class="ni ni-support-16"></i> <span>Support</span></a>
-											<div class="dropdown-divider"></div><a class="dropdown-item" href="login.html"><i class="ni ni-user-run"></i> <span>Logout</span></a>
+											<div class="dropdown-divider"></div><a class="dropdown-item" href="/logout"><i class="ni ni-user-run"></i> <span>Logout</span></a>
 										</div>
 									</li>
 								</ul>

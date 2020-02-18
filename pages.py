@@ -2,6 +2,10 @@
 
 import processes_DB
 import math
+from flask import Flask , request
+from werkzeug.utils import secure_filename
+import os
+
 #==============================================================================
 #==============================================================================
 #==============================================================================
@@ -14,17 +18,15 @@ class Header():
         self.register_user = processes_DB.Register_And_login()
         self.data['title'] = 'Tabasheer Training Academy'
         self.data['products_categories'] = self.show_data.get_all_categories_for_products()
-        self.data['courses_categories'] = self.show_data.get_all_categories_for_course()
         self.data['courses'] = self.show_data.get_all_courses()
-        self.data['courses_name'] = self.show_data.get_courses_name()
         self.data['categories'] = self.show_data.get_all_categories_for_products()
 
 
-    def Cheak_Image_Extension (self , filename):
+    def Check_Image_Extenstion (self , filename):
         ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'])
         return '.' in filename and \
                filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
-
+                             
 # -----------------------------------------------------------------------------
 
 # Footer class
@@ -50,6 +52,8 @@ class Home(Header):
 
 # -----------------------------------------------------------------------------
 # Courses class
+# -----------------------------------------------------------------------------
+
 class Courses(Header):
     def __init__(self, page=1):
         super().__init__()
@@ -58,25 +62,36 @@ class Courses(Header):
         self.data['page'] = int(page)
         self.data['Max_page'] = math.ceil(len(self.data['Courses']) / 5)
 
-    def add_courses(self, **info):
-        self.insert_data.add_course(**info)
+
+
 
 # -----------------------------------------------------------------------------
 # Category class
+# -----------------------------------------------------------------------------
+
 class Courses_Category(Header):
     def __init__(self, Id_Category: int, Page: int):
         super().__init__()
-        self.data['Most_Watched'] = self.show_data.get_top_viewed_courses()
         self.data['Category_Name'] = self.show_data.get_category_by_Id(Id_Category)[1]
-        self.data['Id_Category'] = Id_Category
-        self.data['Category_path'] = 'Categories    >    {}'.format(self.data['Category_Name'])
-        self.data['page'] = Page
-        self.data['Max_page'] = math.ceil(len(self.data['Courses']) / 9)
-        self.data['Link_Page'] = '/category={}/page='.format(Id_Category)
-        self.data['title'] = self.data['Category_Name']
+        self.data['Courses'] = self.show_data.get_all_courses_by_category(Id_Category)
+        self.data['page'] = int(Page)
+        self.data['Max_page'] = math.ceil(len(self.data['Courses']) / 5)
+        self.data['title'] = 'Courses : {}'.format(self.data['Category_Name'])      
+        
+        
+        # self.data['Most_Watched'] = self.show_data.get_top_viewed_courses()
+        # self.data['Category_Name'] = self.show_data.get_category_by_Id(Id_Category)[1]
+        # self.data['Id_Category'] = Id_Category
+        # self.data['Category_path'] = 'Categories    >    {}'.format(self.data['Category_Name'])
+        # self.data['page'] = Page
+        # self.data['Max_page'] = math.ceil(len(self.data['Courses']) / 9)
+        # self.data['Link_Page'] = '/category={}/page='.format(Id_Category)
+        # self.data['title'] = self.data['Category_Name']
         
 # -----------------------------------------------------------------------------        
 # Course class
+# -----------------------------------------------------------------------------
+
 class Course(Header):
     def __init__(self, Id_Course: int):
         super().__init__()
@@ -102,6 +117,7 @@ class Course(Header):
         
 # -----------------------------------------------------------------------------
 # Products class
+# -----------------------------------------------------------------------------
 class Products (Header):
     
     global Sort_List  
@@ -207,31 +223,7 @@ class Post(Header):
     def __init__(self, Id_Post: int):
         super().__init__()
         self.data['post'] = self.show_data.get_post_by_id(Id_Post)        
-# -----------------------------------------------------------------------------
-# Category class
-class Category_Products (Header):
-    global Sort_List  
-    Sort_List = { 0 :'Default'  , 1 : 'Name( A - Z )' , 2 : 'Name ( Z - A )' , 
-        3 :'Price (Low &gt; High)' , 4 : 'Price (High &gt; Low)' }
-    
-    Number_Of_Products_List = [ 9 ,12 , 15 ,18 , 21 , 24  , 48 , 100 ]
-            
-    def __init__ (self , Id_Category , page = 1 , sort = 0 , Number_Products_In_Page  = 9 ):
-        super().__init__()
-        self.data ['Id_Category'] = Id_Category
-        self.data ['all_products'] = self.show_data.get_all_products_by_category(Id_Category , sort )
-        self.data ['Most_Watched'] = self.show_data.get_top_viewed_item()
-        self.data ['page'] = int(page)
-        self.data ['Max_Page'] = math.ceil(len(self.data['all_products']) /Number_Products_In_Page )
-        self.data ['Number_Products_In_Page'] = Number_Products_In_Page
-        self.data ['Sort_List'] = Sort_List
-        self.data ['Selected_Sort'] = Sort_List[sort]
-        self.data ['Number_Of_Products'] = Products.Number_Of_Products_List
-        self.data ['Method_Sort'] = sort
-        if len (self.data['all_products']) <= 9 : 
-            self.data ['Number_Products_In_Page'] = len (self.data['all_products'])
-        self.data ['layer'] = int (math.ceil(self.data ['Number_Products_In_Page']/3))  
-        
+
 # -----------------------------------------------------------------------------
 
 # About class
@@ -249,16 +241,87 @@ class FAQ(Header):
 #==============================================================================
 #==============================================================================
 #==============================================================================
+#==============================================================================
+#==============================================================================
+#==============================================================================
+#==============================================================================
+#==============================================================================
+#==============================================================================
+# -----------------------------------------------------------------------------
+# Dashboard Header
+#------------------------------------------------------------------------------
+        
+class DB_Header():
+    def __init__(self , Id_User):
+        self.data = dict()
+        self.show_data = processes_DB.Show_Data()
+        self.insert_data = processes_DB.insert_data()
+        self.register_user = processes_DB.Register_And_login()
+        self.data['title'] = 'Dash Bowrd Tabasheer Training Academy'
+        self.data ['User'] = self.show_data.get_info_user_by_Id (Id_User)
+
+            
+    
+    def Check_Image_Extenstion (self , filename):
+        ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'])
+        return '.' in filename and \
+               filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+               
+    def Uploud_Image (self , folder , image ) : 
+        if image.filename == '' :
+            if 'course' in  folder :
+                return '../static/img/defult_image/course.png'
+            elif 'product' in folder : 
+                return '../static/img/defult_image/product.png'
+            elif '' in folder : 
+                return '../static/img/defult_image/Teachable-courses.png'
+            else : 
+                return 
+        else :
+            
+            app = Flask(__name__)
+            app.config['UPLOAD_FOLDER'] = folder
+            if image and self.Check_Image_Extenstion(image.filename):
+                filename = secure_filename(image.filename)
+                image.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+                
+            path = '../'+folder+image.filename.replace(' ','_')
+            return path
+    
 # ----------------------------------------------------------------------------
 # Dashboard class
-class Dashboard(Header):
-    def __init__(self):
-        super().__init__()
+#------------------------------------------------------------------------------
+
+class Dashboard(DB_Header):
+    def __init__(self , Id_User):
+        super().__init__(Id_User)
+        self.data['title'] = 'Dash Board'
+        self.data ['Today_Sales'] = self.show_data.get_value_payments_today ()
+        self.data ['Monthly_Payments'] = self.show_data.get_value_monthly_payments ()
+        self.data ['Number_Student'] = self.show_data.get_number_all_student ()
+        self.data ['Number_Courses'] = self.show_data.get_number_all_courses()
+        self.data ['Number_Classes'] = self.show_data.get_number_all_classes ()
+        self.data ['Number_Products'] = self.show_data.get_number_all_products()
+        self.data ['Number_Offers'] = self.show_data.get_number_all_offers()
+
+# ----------------------------------------------------------------------------
+# Account
+#------------------------------------------------------------------------------
+
+class Account (DB_Header):
+    def __init__(self , Id_User):
+        super().__init__(Id_User)
+        self.data['title'] = 'My Account'
+        self.data ['User'] = self.show_data.get_info_user_by_Id (Id_User)
+
+
         
 #------------------------------------------------------------------------------
 # Login class
+#------------------------------------------------------------------------------
+        
 class Login(Header):
-    def __init__(self):
+    def __init__(self ):
         super().__init__()
         self.data['title'] = 'Login'
 
@@ -267,9 +330,9 @@ class Login(Header):
     
 # -----------------------------------------------------------------------------
 # Signup class
-class Signup(Header):
-    def __init__(self):
-        super().__init__()
+class Signup(DB_Header):
+    def __init__(self ,Id_User):
+        super().__init__(Id_User)
         self.data['title'] = 'Sinup'
         self.data['Cities'] = self.show_data.get_all_cities()
 
@@ -278,9 +341,9 @@ class Signup(Header):
 
 # -----------------------------------------------------------------------------
 # Add category class
-class Add_Category(Header):
-    def __init__(self):
-        super().__init__()
+class Add_Category(DB_Header):
+    def __init__(self , Id_User):
+        super().__init__(Id_User)
         self.data['title'] = 'Add Category'
 
     def Add_category(self, **info):
@@ -288,20 +351,20 @@ class Add_Category(Header):
 
 # -----------------------------------------------------------------------------
 # Item class 
-class Add_Item(Header):
-    def __init__(self):
-        super().__init__()
+class Add_Item(DB_Header):
+    def __init__(self , Id_User):
+        super().__init__(Id_User)
         self.data['title'] = 'Add Items'
-        self.data['Category'] = self.show_data.get_items_categories()
+        self.data['Category'] = self.show_data.get_all_categories_for_products()
 
     def Add_items(self, **info):
-        self.insert_data.add_items(**info)
+        return self.insert_data.add_product(**info)
         
 # -----------------------------------------------------------------------------
 # Add Student class 
-class Add_Student(Header):
-    def __init__(self):
-        super().__init__()
+class Add_Student(DB_Header):
+    def __init__(self , Id_User):
+        super().__init__(Id_User)
         self.data['title'] = 'Add Student'
         self.data['Cities'] = self.show_data.get_all_cities()
         self.data['University'] = self.show_data.get_all_universities()
@@ -311,11 +374,11 @@ class Add_Student(Header):
         self.insert_data.add_student(**info)
 # -----------------------------------------------------------------------------
 # Classes class
-class Add_Classes(Header):
-    def __init__(self):
-        super().__init__()
+class Add_Classes(DB_Header):
+    def __init__(self , Id_User):
+        super().__init__(Id_User)
         self.data['title'] = 'Add Classes'
-        self.data['Courses_Class'] = self.show_data.get_all_courses_for_classes()
+        self.data['Courses_Class'] = self.show_data.get_all_courses()
 
     def Add_class(self, **info):
         self.insert_data.add_class(**info)
@@ -323,9 +386,9 @@ class Add_Classes(Header):
         
 # -----------------------------------------------------------------------------
 # Add Student To Class
-class Add_Student_Class(Header):
-    def __init__(self):
-        super().__init__()
+class Add_Student_Class(DB_Header):
+    def __init__(self , Id_User):
+        super().__init__(Id_User)
         self.data['title'] = 'Add Student to Class'
         self.data['class'] = self.show_data.get_classes_name()
         self.data['student'] = self.show_data.get_student_name()
@@ -333,6 +396,19 @@ class Add_Student_Class(Header):
     def Add_stu_class(self, **info):
         self.insert_data.add_student_to_class(**info)
 # -----------------------------------------------------------------------------
+        
+# Add Student To Class
+class Add_Course(DB_Header):
+    def __init__(self , Id_User):
+        super().__init__(Id_User)
+        self.data['title'] = 'Add Course'
+        self.data['Courses_Categories'] = self.show_data.get_all_categories_for_course()
+
+    def add_courses(self, **info):
+        self.insert_data.add_course(**info)
+# -----------------------------------------------------------------------------
+        
+        
 # ForgottenPassword class
 class ForgottenPassword(Header):
     def __init__(self):

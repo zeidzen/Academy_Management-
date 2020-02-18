@@ -1,5 +1,5 @@
 
-{% include  "/DashBoard/dashboardheader.html" %}
+{% include  "DB_Header.html" %}
 
 
 						<!-- Page content -->
@@ -36,8 +36,8 @@
 															<label  for="input-CategoryId">Courses</label>
 															<select name="Course_id" id="input-CategoryId" class="form-control">
 																<option value=""> --- Please Select --- </option>
-																{% for  Id , course in data ['Courses_Class'] :%}
-																<option value="{{ Id }}">{{course}}</option>
+																{% for  Course in data ['Courses_Class'] :%}
+																<option value="{{ Course ['Id'] }}">{{Course ['Name']}}</option>
 																{% endfor %}
 															</select>
 															<br>
@@ -94,4 +94,4 @@
 			<!--app-content-->
 		</div>
 	</div>
-{% include  "/DashBoard/dashboardfooter.html" %}
+	{% include  "DB_Footer.html" %}

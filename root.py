@@ -26,7 +26,7 @@ def Home_Page():
 # ----------------------------------------------------------------
 
 @app.route('/category_products=<Id_Category>/page=<page>')
-def Category_Page(Id_Category :int  , page = 1 , sort = 0 ):
+def category_products(Id_Category :int  , page = 1 , sort = 0 ):
     Category_Class = pages.Category_Products(  int (Id_Category) ,page =int (page)
                                     , sort = int (sort) )
     if Category_Class.data['Max_Page'] < int(page) : 
@@ -37,6 +37,12 @@ def Category_Page(Id_Category :int  , page = 1 , sort = 0 ):
 def Sort_Product_By_Category ( Id_Category :int  , Sort : str , MaxNumber : int , page ):
     Category_Class = pages.Category_Products(int (Id_Category) ,int (page) , int(Sort) , int (MaxNumber) )
     return render_template('products.html', data=Category_Class.data)    
+
+@app.route('/category_courses=<Id_Category>/page=<page>')
+def Category_Courses_Page(Id_Category ,  page):
+    Courses_Class = pages.Courses_Category ( Id_Category , page)
+    return render_template('courses.html', data=Courses_Class.data)
+
 
 # ----------------------------------------------------------------
     
@@ -115,20 +121,57 @@ def Faqs_Page():
 #==============================================================================
 #==============================================================================
 #==============================================================================
+#==============================================================================
+#==============================================================================
+#==============================================================================
+#==============================================================================
+#==============================================================================
+#==============================================================================
+    
 #Dashboard
-@app.route('/TTADP')
+@app.route('/TTADB')
 def Dashboard_Page():
-    return render_template('/Dashboard/login.html')
+    if 'Id_User'in session :
+        Id_User = session ['Id_User']
+        Dashboard_Class = pages.Dashboard(Id_User)
+        return render_template('/DashBoard.html', data=Dashboard_Class.data)
+    else : 
+        return redirect(url_for('Home_Page'))
+    
+# -----------------------------------------------------------------------------
+@app.route('/my_account')
+def Account_Page():
+
+    if 'Id_User'in session :
+        Id_User = session ['Id_User']
+        Account_Class = pages.Account(Id_User)
+        return render_template('DP_My_Account.html', data=Account_Class.data)
+    else : 
+        return redirect(url_for('Home_Page'))
 # -----------------------------------------------------------------------------
     
 @app.route('/login')
 def Login_Page():
-    Login_Class = pages.Login()
-    if 'Login_Error' in session:
-        Login_Class.data['Login_Error'] = session['Login_Error']
-        del session['Login_Error']
-    return render_template('/DashBoard/DashBoard_index.html', data=Login_Class.data)
 
+    if 'Id_User'in session :
+        return redirect(url_for('Dashboard_Page'))
+    else : 
+        Login_Class = pages.Login()
+        if 'Login_Error' in session:
+            Login_Class.data['Login_Error'] = session['Login_Error']
+            del session['Login_Error']
+        return render_template('DB_Login.html', data=Login_Class.data)
+
+
+@app.route('/logout')
+def Logout_Page():
+    if 'Id_User'in session :
+        del session['Id_User']
+        return redirect(url_for('Home_Page'))
+    else : 
+        return redirect(url_for('Home_Page'))
+    
+    
 @app.route('/login_check', methods=['POST'])
 def check_Login_Page():
     data = dict()
@@ -141,7 +184,7 @@ def check_Login_Page():
         status = Login_Class.get_login(**data)
         if status[0] == True:
             session['Id_User'] = status[1]
-            return redirect(url_for('Home_Page'))
+            return redirect(url_for('Login_Page'))
         elif status[0] == False:
             session['Login_Error'] = status[1]
             return redirect(url_for('Login_Page'))
@@ -152,7 +195,11 @@ def check_Login_Page():
         
 @app.route('/sinup')
 def Sinup_Page():
-    Sinup_Class = pages.Signup()
+    if 'Id_User' not in session :
+        return redirect(url_for('Home_Page'))
+    Id_User = session['Id_User']
+    
+    Sinup_Class = pages.Signup(Id_User)
     if 'Sinup_Error' in session : 
         Sinup_Class.data['Sinup_Error'] = session['Sinup_Error']
         del session['Sinup_Error']
@@ -178,7 +225,7 @@ def register_data():
         #Image 
         app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
         image = request.files['Image']
-        if image and Sinup_Class.Cheak_Image_Extension(image.filename):
+        if image and Sinup_Class.Check_Image_Extension(image.filename):
             filename = secure_filename(image.filename)
             image.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
         data['image'] = image.filename
@@ -196,122 +243,110 @@ def register_data():
 # ----------------------------------------------------------------------------
 @app.route('/add_courses')
 def Add_Courses_Page():
-    courses_Class = pages.Courses()
-    return render_template('/DashBoard/add_courses.html', data=courses_Class.data)
+    if 'Id_User' not in session :
+        return redirect(url_for('Home_Page'))
+    Id_User = session['Id_User']
+    
+    Courses_Class = pages.Add_Course(Id_User)
+    return render_template('DB_Add_Courses.html', data=Courses_Class.data)
 
 
 @app.route('/Add_courses_to_DB', methods=['POST'])
 def Add_Courses():
-    data = dict()
-    courses_Class = pages.Courses()
+    
+    Courses_Class = pages.Add_Course(session['Id_User'])
     if request.method == 'POST':
-        data['Id'] = 0
+        data = dict()
         data['Id_category'] = request.form['category_Id']
         data['Name'] = request.form['courses_name']
         data['Brief'] = request.form['courses_brief']
         data['Description'] = request.form['courses_description']
-
-        UPLOAD_FOLDER = 'static/img/course_image'
-        app = Flask(__name__)
-        app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
-
         image = request.files['courses_image']
-        # if user does not select file, browser also
-        # submit a empty part without filename
-
-        if image and courses_Class.Check_Image_Extenstion(image.filename):
-            filename = secure_filename(image.filename)
-            image.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-
-        data['Image'] = '../'+UPLOAD_FOLDER + image.filename
+        data['Image'] =  Courses_Class.Uploud_Image('static/img/course_image/' , image )
         data['Price'] = request.form['courses_price']
         data['Number_of_hours'] = request.form['courses_num_of_hours']
         data['Views'] = request.form['courses_view']
-
-        courses_Class.add_courses(**data)
-        return render_template('/DashBoard/add_courses.html', data=courses_Class.data)
+        Courses_Class.add_courses(**data)
+        return redirect(url_for('Add_Courses_Page'))
     else:
         return redirect(url_for('Add_Courses_Page'))
 
 # ----------------------------------------------------------------------------
 @app.route('/Add_category')
 def add_category_Page():
-    Add_Class = pages.Add_Category()
-    return render_template('/DashBoard/add_category.html', data=Add_Class.data)
+    if 'Id_User' not in session :
+        return redirect(url_for('Home_Page'))
+    
+    Id_User = session['Id_User']
+    
+    Add_Class = pages.Add_Category(Id_User)
+    return render_template('DB_Add_Category.html', data=Add_Class.data)
 
 
 @app.route('/Add_category_to_DB', methods=['POST'])
 def add_Category():
     data = dict()
-    Add_Class = pages.Add_Category()
+    Add_Class = pages.Add_Category(session['Id_User'])
     if request.method == 'POST':
-        data['ID'] = 0
         data['Name'] = request.form['category_name']
         data['Type'] = request.form['category_type']
         Add_Class.Add_category(**data)
 
-        return render_template('/DashBoard/add_category.html', data=Add_Class.data)
-    else:
-        return redirect(url_for('add_category_Page'))
+    return redirect(url_for('add_category_Page'))
+
  
 # ----------------------------------------------------------------------------
 @app.route('/Add_items')
 def add_item_Page():
-    Add_Class = pages.Add_Item()
-    return render_template('/DashBoard/add_items.html', data=Add_Class.data)
+    if 'Id_User' not in session :
+        return redirect(url_for('Home_Page'))
+    Id_User = session['Id_User']
+    
+    Add_Class = pages.Add_Item(Id_User)
+    return render_template('DB_Add_Items.html', data=Add_Class.data)
 
 
 @app.route('/Add_items_to_DB', methods=['POST'])
-def add_Items():
+def Add_Product():
     data = dict()
-    Add_Class = pages.Add_Item()
+    Add_Product = pages.Add_Item(session['Id_User'])
     if request.method == 'POST':
-
-        data['ID'] = 0
-        data['Id_category'] = request.form['category_Id']
+        data['Id_Category'] = request.form['category_Id']
         data['Name'] = request.form['item_name']
         data['Brief'] = request.form['item_brief']
         data['Description'] = request.form['item_description']
         data['Price'] = request.form['item_price']
-        UPLOAD_FOLDER = 'static/img/item_image'
-        reg_class = pages.Add_Item()
-        app = Flask(__name__)
-        app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
-        # check if the post request has the file part
-        # if 'file' not in request.files:
-        #     flash('No file part')
-        #     return redirect('Add_items.html')
         image = request.files['item_image']
-        # if user does not select file, browser also
-        # submit a empty part without filename
-        if image.filename == '':
-            flash('No selected file')
-            return redirect(url_for('add_item_Page'))
-        if image and Add_Class.Check_Image_Extenstion(image.filename):
-            filename = secure_filename(image.filename)
-            image.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-
-        data['Image'] = '../'+UPLOAD_FOLDER + image.filename
+        data['Image'] =  Add_Product.Uploud_Image('static/img/product_image/' , image )
         data['Views'] = request.form['item_view']
         data['Availability'] = request.form['item_availability']
-        Add_Class.Add_items(**data)
-
-        return render_template('/DashBoard/add_items.html', data=Add_Class.data)
-    else:
-        return redirect(url_for('add_item_Page'))
+        status = Add_Product.Add_items(**data)
+        
+        if status[0] == True : 
+            return redirect(url_for('add_item_Page'))
+        
+        elif  status[0] == False  : 
+            session['Add_Product_Error'] = status[1]
+            return redirect(url_for('add_item_Page'))   
+        
+    return redirect(url_for('add_item_Page'))
 
 # ----------------------------------------------------------------------------
 
 @app.route('/Add_student')
 def add_student_Page():
-    Add_Student = pages.Add_Student()
-    return render_template('/DashBoard/add_student.html', data=Add_Student.data)
+    if 'Id_User' not in session :
+        return redirect(url_for('Home_Page'))
+    Id_User = session['Id_User']
+
+    Add_Student = pages.Add_Student(Id_User)
+    return render_template('DB_Add_Student.html', data=Add_Student.data)
 
 
 @app.route('/Add_student_to_DB', methods=['POST'])
 def add_Student():
     data = dict()
-    Add_Student = pages.Add_Student()
+    Add_Student = pages.Add_Student(session['Id_User'])
     if request.method == 'POST':
         data['Id'] = 0
         data['FirstName'] = request.form['firstname']
@@ -324,25 +359,29 @@ def add_Student():
         data['Id_Address'] = request.form['country_id']
         data['Id_University'] = request.form['university_id']
         data['Id_Specialization'] = request.form['specialization_id']
-
         Add_Student.Add_students(**data)
-
-        return render_template('/DashBoard/add_student.html', data=Add_Student.data)
+        return redirect(url_for('add_student_Page'))
     else:
         return redirect(url_for('add_student_Page'))
+
 
 # ----------------------------------------------------------------------------
 
 @app.route('/Add_classes')
 def add_class_Page():
-    Add_Classes = pages.Add_Classes()
-    return render_template('/DashBoard/add_classes.html', data=Add_Classes.data)
+    
+    if 'Id_User' not in session :
+        return redirect(url_for('Home_Page'))
+    Id_User = session['Id_User']
+    
+    Add_Classes = pages.Add_Classes(Id_User)
+    return render_template('DB_Add_Classes.html', data=Add_Classes.data)
 
 
 @app.route('/Add_class_to_DB', methods=['POST'])
 def add_Class():
     data = dict()
-    Add_Classes = pages.Add_Classes()
+    Add_Classes = pages.Add_Classes(session['Id_User'])
     if request.method == 'POST':
 
         data['Id'] = 0
@@ -354,17 +393,21 @@ def add_Class():
         data['End_Date'] = data['End_Date'].replace('/', '-')
         data['Lecturer'] = request.form['lecturer_name']
         data['capacity'] = request.form['capacity']
-
         Add_Classes.Add_class(**data)
 
-        return render_template('/DashBoard/add_classes.html', data=Add_Classes.data)
+        return redirect(url_for('add_class_Page'))    
     else:
         return redirect(url_for('add_class_Page'))
 
 # ----------------------------------------------------------------------------
 @app.route('/Add_Student_Class')
 def add_Student_Class_Page():
-    Add_Stu_Classes = pages.Add_Student_Class()
+    
+    if 'Id_User' not in session :
+        return redirect(url_for('Home_Page'))
+    Id_User = session['Id_User']
+    
+    Add_Stu_Classes = pages.Add_Student_Class(Id_User)
     return render_template('/DashBoard/add_stu_class.html', data=Add_Stu_Classes.data)
 
 
