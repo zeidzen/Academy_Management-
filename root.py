@@ -408,13 +408,13 @@ def add_Student_Class_Page():
     Id_User = session['Id_User']
     
     Add_Stu_Classes = pages.Add_Student_Class(Id_User)
-    return render_template('/DashBoard/add_stu_class.html', data=Add_Stu_Classes.data)
+    return render_template('DB_Add_Stu_Class.html', data=Add_Stu_Classes.data)
 
 
 @app.route('/Add_student_class_to_DB', methods=['POST'])
 def add_student_class():
     data = dict()
-    Add_Stu_Classes = pages.Add_Student_Class()
+    Add_Stu_Classes = pages.Add_Student_Class(session['Id_User'])
     if request.method == 'POST':
 
         data['Id'] = 0
@@ -423,10 +423,8 @@ def add_student_class():
 
 
         Add_Stu_Classes.Add_stu_class(**data)
-
-        return render_template('/DashBoard/add_stu_class.html', data=Add_Stu_Classes.data)
-    else:
-        return redirect(url_for('add_Student_Class_Page'))
+        
+    return redirect(url_for('add_Student_Class_Page'))
     
 # ----------------------------------------------------------------------------
 #==============================================================================

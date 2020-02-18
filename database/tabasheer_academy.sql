@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Feb 18, 2020 at 12:45 PM
+-- Generation Time: Feb 18, 2020 at 02:43 PM
 -- Server version: 5.7.26
 -- PHP Version: 7.2.18
 
@@ -532,9 +532,9 @@ CREATE TABLE IF NOT EXISTS `stu_class` (
   `Id_Class` int(11) NOT NULL,
   `Date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`Id`),
-  KEY `FK_stu_class_student` (`Id_Student`),
+  UNIQUE KEY `UN_STD_CLS` (`Id_Student`,`Id_Class`),
   KEY `FK_stu_class_class` (`Id_Class`)
-) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `stu_class`
@@ -545,7 +545,8 @@ INSERT INTO `stu_class` (`Id`, `Id_Student`, `Id_Class`, `Date`) VALUES
 (2, 2, 1, '2020-02-08 22:01:51'),
 (3, 1, 2, '2020-02-08 22:02:04'),
 (4, 2, 2, '2020-02-08 22:02:04'),
-(6, 3, 3, '2020-02-09 02:53:12');
+(6, 3, 3, '2020-02-09 02:53:12'),
+(7, 1, 4, '2020-02-18 13:08:49');
 
 -- --------------------------------------------------------
 

@@ -542,7 +542,7 @@ class Show_Data():
             class_ = dict()
             class_['Id'] = item[0]
             class_['courses_Name'] = item[1]
-            class_['class_Name'] = item[2]
+            class_['Class_Name'] = item[2]
             class_['Start_Date'] = item[3]
             class_['End_Date'] = item[4]
             class_['capacity'] = item[5]
@@ -915,11 +915,12 @@ class insert_data():
             return False, 'A system error occurred, please try again later'
 
     def add_student_to_class(self, **info) -> bool:
-        try:
+       
             self.con.Insert_Data('stu_class', **info)
             return True
-        except:
-            return False, 'A system error occurred, please try again later'
+        #  try:
+        # except:
+        #     return False, 'A system error occurred, please try again later'
         
     
     # test

@@ -34,8 +34,8 @@
 															<label>Class</label>
 															<select name="class_id" id="input-class" class="form-control">
 																<option value=""> --- Please Select --- </option>
-																{% for  Id , class in data ['class'] :%}
-																<option value="{{ Id }}">{{class}}</option>
+																{% for  class in data ['all_classes'] :%}
+																<option value="{{ class['Id'] }}">{{class ['Class_Name'] }}</option>
 																{% endfor %}
 															</select>
 															<br>
@@ -43,8 +43,8 @@
 															<label>Student</label>
 															<select name="student_id" id="input-student" class="form-control">
 																<option value=""> --- Please Select --- </option>
-																{% for  Id , student in data ['student'] :%}
-																<option value="{{ Id }}">{{student}}</option>
+																{% for  student in data ['all_student'] :%}
+																<option value="{{ student ['Id'] }}">{{student ['FirstName']}}  {{student ['LastName']}}</option>
 																{% endfor %}
 															</select>
 															<br>

@@ -386,8 +386,8 @@ class Add_Student_Class(DB_Header):
     def __init__(self , Id_User):
         super().__init__(Id_User)
         self.data['title'] = 'Add Student to Class'
-        self.data['class'] = self.show_data.get_classes_name()
-        self.data['student'] = self.show_data.get_student_name()
+        self.data['all_classes'] = self.show_data.get_all_classes()
+        self.data['all_student'] = self.show_data.get_all_students()
 
     def Add_stu_class(self, **info):
         self.insert_data.add_student_to_class(**info)
