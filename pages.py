@@ -507,10 +507,48 @@ class ForgottenPassword(Header):
 class Display_Student(DB_Header):
     def __init__(self, Id_User):
         super().__init__(Id_User)
-        self.data['title'] = 'Add Student'
+        self.data['title'] = 'Student Table'
         self.data['student'] = self.show_data.get_all_students()
 
 
+# Item Data
+class Display_Item(DB_Header):
+    def __init__(self, Id_User):
+        super().__init__(Id_User)
+        self.data['title'] = 'Item Table'
+        self.data['items'] = self.show_data.get_all_product()
+
+
+# Class Data
+class Display_Class(DB_Header):
+    def __init__(self, Id_User):
+        super().__init__(Id_User)
+        self.data['title'] = 'Class Table'
+        self.data['classes'] = self.show_data.get_all_classes()
+
+
+# Course Data
+class Display_Course(DB_Header):
+    def __init__(self, Id_User):
+        super().__init__(Id_User)
+        self.data['title'] = 'Course Table'
+        self.data['courses'] = self.show_data.get_all_courses()
+
+
+# Post Data
+class Display_Post(DB_Header):
+    def __init__(self, Id_User):
+        super().__init__(Id_User)
+        self.data['title'] = 'Post Table'
+        self.data['posts'] = self.show_data.get_all_posts()
+
+
+# Payment Data
+class Display_Payment(DB_Header):
+    def __init__(self, Id_User):
+        super().__init__(Id_User)
+        self.data['title'] = 'Payment Table'
+        self.data['payment'] = self.show_data.get_payment()
 # -----------------------------------------------------------------------------
 # ==============================================================================
 # ==============================================================================

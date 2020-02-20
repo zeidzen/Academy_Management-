@@ -581,8 +581,73 @@ def Display_Student_Page():
 
     display_Student = pages.Display_Student(Id_User)
     return render_template('DB_Student_Table.html', data=display_Student.data)
+
+
+# ----------------------------------------------------------------------------
+
+@app.route('/display_Item')
+def Display_Item_Page():
+    if 'Id_User' not in session:
+        return redirect(url_for('Home_Page'))
+
+    Id_User = session['Id_User']
+
+    display_Item = pages.Display_Item(Id_User)
+    return render_template('DB_Item_Table.html', data=display_Item.data)
+
+
+# ----------------------------------------------------------------------------
+
+@app.route('/display_Class')
+def Display_Class_Page():
+    if 'Id_User' not in session:
+        return redirect(url_for('Home_Page'))
+
+    Id_User = session['Id_User']
+
+    display_Class = pages.Display_Class(Id_User)
+    return render_template('DB_Class_Table.html', data=display_Class.data)
+
+# ----------------------------------------------------------------------------
+
+@app.route('/display_Course')
+def Display_Course_Page():
+    if 'Id_User' not in session:
+        return redirect(url_for('Home_Page'))
+
+    Id_User = session['Id_User']
+
+    display_Course = pages.Display_Course(Id_User)
+    return render_template('DB_Course_Table.html', data=display_Course.data)
+
+
+# ----------------------------------------------------------------------------
+
+@app.route('/display_Post')
+def Display_Post_Page():
+    if 'Id_User' not in session:
+        return redirect(url_for('Home_Page'))
+
+    Id_User = session['Id_User']
+
+    display_Post = pages.Display_Post(Id_User)
+    return render_template('DB_Post_Table.html', data=display_Post.data)
+
+
+# ----------------------------------------------------------------------------
+
+@app.route('/display_Payment')
+def Display_Payment_Page():
+    if 'Id_User' not in session:
+        return redirect(url_for('Home_Page'))
+
+    Id_User = session['Id_User']
+
+    display_Payment = pages.Display_Payment(Id_User)
+    return render_template('DB_Payment_Table.html', data=display_Payment.data)
 # ==============================================================================
 # ==============================================================================
+
 
 @app.route('/ForgottenPassword')
 def ForgottenPassword_Page():

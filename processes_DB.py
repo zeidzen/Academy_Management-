@@ -213,7 +213,7 @@ class Show_Data():
 
     def get_all_courses(self) -> list:
         courses = list()
-        sql = """select Id , Name, Description, Image, Price, Number_of_hours, Date , Brief
+        sql = """select Id , Name, Description, Image, Price, Number_of_hours, Date , Brief, Views
         from Courses ORDER BY Id desc   ;"""
         data = self.con.Select_Data_More_Row(sql)
         for items in data:
@@ -226,6 +226,7 @@ class Show_Data():
             selected['Number_of_hours'] = items[5]
             selected['Date'] = items[6]
             selected['Brief'] = items[7]
+            selected['Views'] = items[8]
             courses.append(selected)
         return courses
 
@@ -785,7 +786,7 @@ class Show_Data():
     # product for offer page
     def get_all_product(self) -> list:
         item = list()
-        sql = """select Id , Name,Image, Description, Price, Date , Brief from items;"""
+        sql = """select Id , Name,Image, Description, Price, Date , Brief, Views from items;"""
         data = self.con.Select_Data_More_Row(sql)
         for items in data:
             selected = dict()
@@ -796,6 +797,7 @@ class Show_Data():
             selected['Price'] = items[4]
             selected['Date'] = items[5]
             selected['Brief'] = items[6]
+            selected['Views'] = items[7]
             item.append(selected)
         return item
 
