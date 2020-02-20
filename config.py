@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 debug=True
-port=80
+port=8080
 host='62.171.142.203'
 username='root'
 password=''
