@@ -238,7 +238,6 @@ class Post(Header):
 # About class
 class About():
     def __init__(self):
-        super().__init__()
         self.data = dict()
         self.data['title'] = 'About Us'
 
@@ -247,7 +246,6 @@ class About():
 # FAQ class
 class FAQ():
     def __init__(self):
-        super().__init__()
         self.data = dict()
         self.data['title'] = 'Frequent Asked Question'
 
@@ -556,7 +554,7 @@ class Display_Payment(DB_Header):
 # ==============================================================================
 # ==============================================================================
 # Error class
-class Error_page(Header):
+class Error_page():
     def __init__(self):
-        super().__init__()
+        self.data = dict ()
         self.data['title'] = 'The requested page does not exist'
