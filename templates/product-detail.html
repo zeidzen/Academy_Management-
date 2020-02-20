@@ -1,0 +1,280 @@
+{% include  "header2.html" %}
+		<!-- Main Container  -->
+		<div class="main-container container">
+			{% set product = data ['Product'] %}
+			<ul class="header-main type-1">
+				<li class="home"><a href="/home">Home<i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
+				<li class="home"><a href="/products/page=1">Products<i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
+				<li><a href="#">{{product['Name']}}</a></li>
+			</ul>
+			
+			<div class="row">
+				<!--Middle Part Start-->
+				<div id="content " class="col-md-12 col-sm-12 type-1">
+
+					<div class="product-view row">
+						<div class="left-content-product col-lg-9 col-xs-12">
+							<div class="row">
+								<div class="content-product-left class-honizol col-md-6 col-sm-12 col-xs-12 ">
+
+
+									<div class="large-image ">
+										<img itemprop="image" class="product-image-zoom" src="{{product['Image']}}" data-zoom-image="{{product['Image']}}" title="Bint Beef" alt="Bint Beef">
+									</div>
+									{% if data ['Media']|length >= 1 :   %}
+									<div id="thumb-slider" class="owl-theme owl-loaded owl-drag full_slider owl-carousel " data-nav='yes' data-loop="yes" data-margin="10" data-items_xs="2" data-items_sm="3" data-items_md="{{data ['Number_Medias']}}">
+										<a  class="img thumbnail " data-image="{{product['Image']}}" title="{{product['Name']}}">
+											<img src="{{product ['Image']}}" title="{{product['Name']}}" alt="{{product['Name']}}">
+										</a>
+										{% for Media  in   data ['Media'] : %}
+										<a  class="img thumbnail " data-image="{{Media ['Path'] }}" title="{{Media ['Path']}}">
+											<img src="{{Media['Path'] }}" title="{{Media ['Path']}}" alt="image">
+										</a>
+										{%endfor%}
+									</div>
+									{%endif%}
+					
+
+
+
+								</div>
+
+								<div class="content-product-right col-md-6 col-sm-12 col-xs-12">
+									<div class="title-product">
+										<h1>{{product['Name']}}</h1>
+									</div>
+									<h2>Features : </h2>
+									<div class="product-box-desc">
+										<ul>
+											{% for Feature  in  data ['Features'] : %}
+											<li>{{Feature}}</li>
+											{%endfor%}
+										</ul>
+									</div>
+									<div class="product-label form-group">
+										<div class="stock">
+											{% if  product ['Availability'] ==  1: %}
+											<span>Availability:</span> <span class="instock"> Yes </span>
+											{%endif%}
+											{% if  product ['Availability'] ==  0 : %}
+											<span>Availability:</span> <span class="instock" style="color:red ;"> No </span>
+											{%endif%}
+
+										</div>
+										<br>
+										<br>
+										{% if data ['check_offer_existe'] == True : %}
+										<div class="product_page_price price" itemprop="offerDetails" itemscope="" itemtype="http://data-vocabulary.org/Offer">
+											<span class="price-new" itemprop="price">JD {{product ['New_Price'] }}</span>
+											<span class="price-old">JD {{product ['Old_Price'] }}</span>
+										</div>
+
+										{% else :  %}
+										<div class="product_page_price price" itemprop="offerDetails" itemscope="" itemtype="http://data-vocabulary.org/Offer">
+											<span class="price-new" itemprop="price">JD {{product ['Price'] }}</span>
+										</div>
+										{%endif%}
+
+
+									</div>
+									
+									<div id="product">
+										<div class="form-group box-info-product">
+											<div class="option quantity">
+												<div class="input-group quantity-control" unselectable="on" style="-webkit-user-select: none;">
+													<!-- 
+													<label>Qty:  </label>
+													<input class="form-control" type="text" name="quantity" value="1">
+													<input type="hidden" name="product_id" value="50">
+													<span class="input-group-addon product_quantity_down"><i class="fa fa-angle-down" aria-hidden="true"></i></span>
+													<span class="input-group-addon product_quantity_up"><i class="fa fa-angle-up" aria-hidden="true"></i></span>
+													-->
+												</div>
+											</div>
+											<div class="info-product-right">
+												<!-- 
+												<div class="cart">
+													<input type="button" data-toggle="tooltip" title="" value="Add to Cart" data-loading-text="Loading..." id="button-cart" class="btn btn-mega btn-lg" onclick="cart.add('42', '1');" data-original-title="Add to Cart">
+												</div> >-->
+
+												<div class="add-to-links wish_comp">
+													<!--
+													<ul class="blank list-inline">
+														<li class="wishlist">
+															<a class="icon" data-toggle="tooltip" title="" onclick="wishlist.add('50');" data-original-title="Add to Wish List"><i class="fa fa-heart"></i>
+															</a>
+														</li>
+														<li class="compare">
+															<a class="icon" data-toggle="tooltip" title="" onclick="compare.add('50');" data-original-title="Compare this Product"><i class="fa fa-exchange"></i>
+															</a>
+														</li>
+													</ul>-->
+													
+
+												</div>
+											</div>
+
+
+										</div> 
+
+									</div>
+									<!-- end box info product -->
+									<div class="share">
+										<p>Share This:</p>
+										<div class="share-icon">
+											<ul>
+												<li class="facebook"><a href=""><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+												<li class="twitter"><a href=""><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+												<li class="google"><a href=""><i class="fa fa-google-plus" aria-hidden="true"></i></a></li>
+												<li class="skype"><a href=""><i class="fa fa-skype" aria-hidden="true"></i></a></li>
+											</ul>
+										</div>
+									</div>
+
+								</div>					</div>
+
+								
+								<div class="row">
+									<div class="col-sx-12">
+										<div class="producttab ">
+											<div class="tabsslider  col-xs-12">
+												<ul class="nav nav-tabs">
+													<li class="active"><a data-toggle="tab" href="#tab-1">Description</a></li>
+													<!-- <li class="item_nonactive "><a data-toggle="tab" href="#tab-review">Reviews (1)</a></li> -->
+													<!-- <li class="item_nonactive"><a data-toggle="tab" href="#tab-4">Tags</a></li> -->
+													<!-- <li class="item_nonactive"><a data-toggle="tab" href="#tab-5">Custom Tab</a></li> -->
+												</ul>
+												<div class="tab-content col-xs-12">
+													<div id="tab-1" class="tab-pane fade active in">
+														<p>{{product ['Description'] }}<br>
+														</p>
+													</div>
+													<div id="tab-review" class="tab-pane fade  in">
+														<form>
+															<div id="review">
+																<table class="table table-striped table-bordered">
+																	<tbody>
+																		<tr>
+																			<td style="width: 50%;"><strong>Super Administrator</strong></td>
+																			<td class="text-right">29/07/2015</td>
+																		</tr>
+																		<tr>
+																			<td colspan="2">
+																				<p>Best this product opencart</p>
+																				<div class="ratings">
+																					<div class="rating-box">
+																						<i class="fa fa-star"></i>
+																						<i class="fa fa-star"></i>
+																						<i class="fa fa-star"></i>
+																						<i class="fa fa-star"></i>
+																						<i class="fa fa-star gray"></i>
+																					</div>
+																				</div>
+																			</td>
+																		</tr>
+																	</tbody>
+																</table>
+																<div class="text-right"></div>
+															</div>
+														</form>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+
+										<section class="col-lg-3 hidden-sm hidden-md hidden-xs slider-products">
+											<div class="module latest-product titleLine">
+												<h3 class="modtitle">Latest Product</h3>
+												<hr>
+												<hr>
+												<hr>
+												<div class="modcontent ">
+
+													{% for product in  data ['Most_Watched'][ 0 : 4 ] : %}
+													<div class="product-latest-item">
+														<div class="media">
+															<div class="media-left">
+																<a href="/product/{{product ['Id']}}"><img  src="{{product ['Image']}}" alt="Cisi Chicken" title="Cisi Chicken" class="img-responsive" style="width: 78px; height: 104px;"></a>
+															</div>
+															
+															<div class="media-body">
+																<div class="caption">
+																	<h4><a href="/product/{{product ['Id']}}">{{product ['Name'] }}</a></h4>
+																	<div class="price">
+																		<span class="price-new">JD {{ product ['Price'] }} </span>
+																	</div>
+																</div>
+															</div>
+														</div>
+													</div>
+													{% endfor %}
+
+
+
+												</div>
+
+											</div>
+											<div class="module">
+												<div class="modcontent clearfix">
+													<div class="banners">
+														<div>
+															<a href="#"><img src="../static/img/demo/cms/left-image-static.png" alt="left-image"></a>
+														</div>
+													</div>
+
+												</div>
+											</div>
+										</section>
+									</div>
+									<!-- Related Products -->
+									<div class="related-product ">
+										<h3 class="modtitle">Related Products  </h3>
+										<hr>
+										<hr>
+										<hr>
+										<div class="related-product-owl">
+											<div class=" owl-carousel related-owl " data-nav="yes" data-loop="yes" data-margin="30" data-items_xs="1" data-items_sm="4" data-items_md="5">
+
+												{% for product in  data ['Related_Product'] : %}
+												<div class="product-layout">
+													<div class="product-item-container">
+														<div class="left-block">
+															<div class="product-image-container  second_img ">
+																<a href="/product/{{product ['Id']}}" class="product-img"><img  src="{{product ['Image']}}" alt=""></a>
+																<!--Sale Label-->
+															</div>
+														</div>
+														<div class="right-block">
+															<div class="caption">
+																<h4><a href="/product/{{product ['Id']}}">{{product ['Name']}}</a></h4>		
+																<div class="price">
+																	<span class="price-new">JD {{product ['Price']}}</span> 	
+																</div>
+															</div>
+														</div><!-- right block -->
+													</div>
+												</div>
+												{% endfor %}
+
+
+											</div>
+										</div>
+									</div>
+
+									<!-- end Related  Products-->
+
+
+								</div>
+
+
+							</div>
+							<!--Middle Part End-->
+						</div>
+						<!-- //Main Container -->
+						
+
+						<!-- Footer Container -->
+						{% include  "footer.html" %}

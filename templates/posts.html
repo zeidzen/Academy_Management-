@@ -1,0 +1,116 @@
+{% include  "header2.html" %}
+
+
+		<!-- Main Container  -->
+		<div class="main-container container">
+			<ul class="header-main">
+				<li class="home"><a href="#">Home</a><i class="fa fa-angle-right" aria-hidden="true"></i></li>
+
+				<li><a href="#">Achievements</a></li>
+
+			</ul>
+
+			<div class="row">
+				
+				<!--Left Part End -->
+
+				<!--Middle Part Start-->
+				<div id="content" class="col-lg-9 col-md-8 col-sm-12 col-xs-12">
+					<div class="blog-header">
+						<h3 class="modtitle">Achievements</h3>
+					</div>
+					<div class="blog-listitem">
+						{% set page  =  data ['page'] %}
+						{% for post in data ['posts'][5 * (page-1) : page * 5 ] :  %}
+						<div class="blog-item ">
+							<div class="itemBlogImg ">
+								<div class="article-image ">
+									<div>
+										<a class="popup-gallery" href="{{post['Media']}}"><img src="{{post['Media']}}" alt="Kire tuma demonstraverunt lector"></a>
+									</div>
+								</div>
+							</div>
+							<div class="itemBlogContent ">
+								<div class="article-title">
+									<h4>
+										<a href="/post/{{post ['Id']}}">{{post['Title']}}</a>
+									</h4>
+
+								</div>
+								<div class="article-description">{{post['Brief']}} ... </div>
+									<div class="blog-meta">
+										<span class="author">
+											<a href="/post/{{post ['Id']}}">View more
+												<i class="fa fa-angle-double-right" aria-hidden="true"></i>
+											</a>
+										</span>
+									</div>
+									<div class="share">
+										<p>Share This:</p>
+										<div class="share-icon">
+											<ul>
+												<li class="facebook"><a href="https://web.facebook.com/TTA.IRBED/?epa=SEARCH_BOX"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+												<li class="twitter"><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+												<li class="google"><a href="#"><i class="fa fa-google-plus" aria-hidden="true"></i></a></li>
+												<li class="skype"><a href="#"><i class="fa fa-skype" aria-hidden="true"></i></a></li>
+
+											</ul>
+										</div>
+									</div>
+							</div>
+						</div>
+						{%endfor%}
+
+						
+						{% if  data ['posts']|length > 5 :  %}
+						{% block pages  %}
+						<div class="blog-listitem-bottom">
+							<p>item {{5 * (page-1)  }} - 05 of {{data ['posts'] |length}}  total</p>
+							<ul class="pagination">
+								{% if page > 1 :  %}
+								{% block previous_page  %}
+								<li><a href="/achievements/page={{page-1}}">&lt;</a></li>
+								<li><a href="/achievements/page={{page-1}}">{{page-1}}</a></li>
+								{% endblock  previous_page %}
+								{% endif %}
+								<li class="active"><span>{{page}}</span></li>
+								{% if page != data ['Max_page'] :  %}
+								<li><a href="/achievements/page={{page+1}}">{{page+1}}</a></li>
+								<li><a href="/achievements/page={{page+1}}">&gt;</a></li>
+								{% endif %}
+							</ul>
+						</div>
+						{% endblock  pages %}
+						{% endif %}
+					</div>
+				</div>
+
+
+					<!--Left Part Start -->
+					<aside class="col-xs-12 col-sm-12 col-md-4 col-lg-3" id="column-left">
+
+						<div class="module blog-category titleLine">
+
+
+							<h3 class="modtitle"> Courses Categories</h3>
+							<div class="modcontent">
+								<ul class="list-group ">
+									{% for category in data['courses_categories'] :  %}
+									<li class="list-group-item"> <a href="/category={{category['Id']}}/page=1"class="group-item active">{{category['Name']}}</a></li>
+									{%endfor%}
+								</ul>
+
+							</div>
+						</div>
+
+						<div class="banners">
+							<div>
+								<a href="#"><img src="../static/img/demo/cms/left-image-static.png" alt="Latest Product"></a>
+							</div>
+						</div>
+					</aside>
+				</div>
+				<!--Middle Part End-->
+			</div>
+			<!-- //Main Container -->
+			{% include  "footer.html" %}

@@ -1,0 +1,101 @@
+{% include  "DB_Header.html" %}
+						<!-- Page content -->
+						<div class="container-fluid pt-8">
+							<div class="page-header mt-0 shadow p-3">
+								<ol class="breadcrumb mb-sm-0">
+									<li class="breadcrumb-item"><a href="#">Forms</a></li>
+									<li class="breadcrumb-item active" aria-current="page">Product</li>
+								</ol>
+								<div class="btn-group mb-0">
+									<button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Actions</button>
+									<div class="dropdown-menu">
+										<a class="dropdown-item" href="#"><i class="fas fa-plus mr-2"></i>Add new Page</a>
+										<a class="dropdown-item" href="#"><i class="fas fa-eye mr-2"></i>View the page Details</a>
+										<a class="dropdown-item" href="#"><i class="fas fa-edit mr-2"></i>Edit Page</a>
+										<div class="dropdown-divider"></div>
+										<a class="dropdown-item" href="#"><i class="fas fa-cog mr-2"></i> Settings</a>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-12">
+									<div class="card shadow">
+										<div class="card-header">
+											<h2 class="mb-0">Add Product</h2>
+										</div>
+										<div class="card-body">
+											<div class="row">
+
+												<div class="col-md-12">
+													<div class="form-group">
+														<form action="/Add_items_to_DB" method="post" enctype="multipart/form-data" >
+
+															<label  for="input-CategoryId">Category</label>
+															<select name="category_Id" id="input-CategoryId" class="form-control" required >
+																<option value=""> --- Please Select --- </option>
+																{% for  Category in data ['Category'] :%}
+																<option value="{{ Category ['Id'] }}">{{ Category ['Name'] }} </option>
+																{% endfor %}
+															</select>
+															<br>
+
+															<label>Name</label>
+															<input type="text" name="item_name" value="" placeholder="Product Name"  class="form-control w-100" required  >
+															<br>
+
+															<label>Brief</label>
+															<input type="text" name="item_brief" value="" placeholder="Product Brief"  class="form-control w-100" required >
+															<br>
+
+															<label>Description</label>
+															<input type="text" name="item_description" value="" placeholder="Product Description"  class="form-control w-100">
+															<br>
+
+															<label>Price</label>
+															<input type="number" name="item_price" value="" placeholder="Product Price" min = "0" class="form-control w-100" required >
+															<br>
+
+															<label>Image</label>
+															<input type="file" name="item_image" value="" placeholder="Product Image"  class="form-control w-100">
+															<br>
+
+															<label>View</label>
+															<input type="number" name="item_view" value="" placeholder="Product View" min = "25" class="form-control w-100" required >
+															<br>
+
+															<label>Availability</label>
+															<select name="item_availability" id="item_availability" class="form-control" required >
+																<option value=""> --- Please Select --- </option>
+																<option value="0">Unavailable</option>
+																<option value="0">Available</option>
+															</select>
+															<br>
+
+															<div class="container-login100-form-btn">
+																	<input  type="submit" name="ADD_Item" value="ADD Product" class="login100-form-btn btn-primary"
+																							style="background:#00c3ed">
+															</div>
+
+														</form>
+
+
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+
+
+
+
+						</div>
+					</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- app-content -->
+		</div>
+	</div>
+
+	{% include  "DB_Footer.html" %}
