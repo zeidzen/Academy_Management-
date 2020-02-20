@@ -236,17 +236,19 @@ class Post(Header):
 
 
 # About class
-class About(Header):
+class About():
     def __init__(self):
         super().__init__()
+        self.data = dict()
         self.data['title'] = 'About Us'
 
 
 # -----------------------------------------------------------------------------
 # FAQ class
-class FAQ(Header):
+class FAQ():
     def __init__(self):
         super().__init__()
+        self.data = dict()
         self.data['title'] = 'Frequent Asked Question'
 
 
