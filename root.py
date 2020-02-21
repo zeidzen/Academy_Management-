@@ -645,6 +645,30 @@ def Display_Payment_Page():
 
     display_Payment = pages.Display_Payment(Id_User)
     return render_template('DB_Payment_Table.html', data=display_Payment.data)
+
+
+# ----------------------------------------------------------------------------
+
+@app.route('/display_Offer')
+def Display_Offer_Page():
+    if 'Id_User' not in session:
+        return redirect(url_for('Home_Page'))
+
+    Id_User = session['Id_User']
+
+    display_Offer = pages.Display_Offer(Id_User)
+    return render_template('DB_Offer_Table.html', data=display_Offer.data)
+# ----------------------------------------------------------------------------
+
+@app.route('/display_User_info')
+def Display_User_Page():
+    if 'Id_User' not in session:
+        return redirect(url_for('Home_Page'))
+
+    Id_User = session['Id_User']
+
+    display_user = pages.Account(Id_User)
+    return render_template('DB_User_Profile.html', data=display_user.data)
 # ==============================================================================
 # ==============================================================================
 
@@ -661,4 +685,4 @@ def page_not_found(error):
 
 
 if __name__ == '__main__':
-    app.run(debug=con.debug, port=con.port, host=con.host)
+    app.run(debug=con.debug, port=con.port, host=con.host_app)
