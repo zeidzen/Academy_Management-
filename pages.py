@@ -549,6 +549,15 @@ class Display_Payment(DB_Header):
         super().__init__(Id_User)
         self.data['title'] = 'Payment Table'
         self.data['payment'] = self.show_data.get_payment()
+
+# Offers Data
+class Display_Offer(DB_Header):
+    def __init__(self, Id_User):
+        super().__init__(Id_User)
+        self.data['title'] = 'Offer Table'
+        self.data['product_offer'] = self.show_data.get_offer_by_produts()
+        self.data['course_offer'] = self.show_data.get_offer_by_courses()
+
 # -----------------------------------------------------------------------------
 # ==============================================================================
 # ==============================================================================
