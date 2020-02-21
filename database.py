@@ -7,7 +7,7 @@ import config as con
 
 
 class DataBase () :
-    def __init__ (self, host=con.host, username=con.username, password=con.password, database=con.database):
+    def __init__ (self, host=con.host_DB, username=con.username, password=con.password, database=con.database):
         try:
             # Connect to the DataBase Dashpord
             self.connection = pymysql.connect(host=host,# Server
