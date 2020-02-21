@@ -426,7 +426,7 @@ class Show_Data():
     # ------------------------------------------------------------------------------
     def get_all_categories_for_course(self) -> list:
         category = list()
-        sql = """select Id , Name  from 'categories' where Type = 2 ;"""
+        sql = """select Id , Name  from categories where Type = 2 ;"""
         data = self.con.Select_Data_More_Row(sql)
         for cat in data:
             select = dict()
@@ -437,7 +437,7 @@ class Show_Data():
 
     def get_all_categories_for_products(self) -> list:
         category = list()
-        sql = """select Id , Name  from 'categories' where Type = 1;"""
+        sql = """select Id , Name  from categories where Type = 1;"""
         data = self.con.Select_Data_More_Row(sql)
         for cat in data:
             select = dict()
