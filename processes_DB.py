@@ -1033,7 +1033,7 @@ class delete_data():
     # student
     # ------------------------------------------------------------------------------
 
-    def check_student_exists(self, column, value):
+    def check_student_exists(self, column, value) :
         sql = """SELECT count(*) FROM students WHERE {} ='{}' ;""".format(column, value)
         data = self.con.Select_Data_One_Row(sql)
         print(data)
