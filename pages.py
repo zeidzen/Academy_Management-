@@ -64,7 +64,7 @@ class Courses(Header):
         self.data['page'] = int(page)
         self.data['Max_page'] = math.ceil(len(self.data['Courses']) / 5)
         self.data['Courses_Categories'] = self.show_data.get_all_categories_for_course()
-
+        self.data['Most_Watched'] = self.show_data.get_top_viewed_courses()
 
 # -----------------------------------------------------------------------------
 # Category class
@@ -79,15 +79,14 @@ class Courses_Category(Header):
         self.data['Max_page'] = math.ceil(len(self.data['Courses']) / 5)
         self.data['title'] = 'Courses : {}'.format(self.data['Category_Name'])
         self.data['Courses_Categories'] = self.show_data.get_all_categories_for_course()
-
-        # self.data['Most_Watched'] = self.show_data.get_top_viewed_courses()
+        self.data['Id_Category'] = Id_Category
+        self.data['Most_Watched'] = self.show_data.get_top_viewed_courses()
+        
+        
+        
         # self.data['Category_Name'] = self.show_data.get_category_by_Id(Id_Category)[1]
-        # self.data['Id_Category'] = Id_Category
         # self.data['Category_path'] = 'Categories    >    {}'.format(self.data['Category_Name'])
-        # self.data['page'] = Page
-        # self.data['Max_page'] = math.ceil(len(self.data['Courses']) / 9)
         # self.data['Link_Page'] = '/category={}/page='.format(Id_Category)
-        # self.data['title'] = self.data['Category_Name']
 
 
 # -----------------------------------------------------------------------------
@@ -210,10 +209,11 @@ class Search(Header):
         self.data['all_Items'] = self.show_data.search_items(Name_Search)
         self.data['Most_Watched'] = self.show_data.get_top_viewed_item()
         self.data['page'] = int(page)
-        self.data['Max_page'] = math.ceil(len(self.data['all_Items']) / 9)
+        self.data['Max_page'] = math.ceil(len(self.data['all_Items']) / 5)
         self.data['title'] = 'Search : {} '.format(Name_Search)
         self.data['Name_Search'] = Name_Search
-
+        self.data['Courses_Categories'] = self.show_data.get_all_categories_for_course()
+        self.data['Most_Watched'] = self.show_data.get_top_viewed_courses()
 
 # -----------------------------------------------------------------------------
 # Achievements class
@@ -224,6 +224,8 @@ class Achievements(Header):
         self.data['posts'] = self.show_data.get_all_posts()
         self.data['page'] = int(page)
         self.data['Max_page'] = math.ceil(len(self.data['posts']) / 5)
+        self.data['Courses_Categories'] = self.show_data.get_all_categories_for_course()
+        self.data['Most_Watched'] = self.show_data.get_top_viewed_item()
 
 
 # -----------------------------------------------------------------------------

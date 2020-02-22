@@ -69,14 +69,14 @@
 							<ul class="pagination">
 								{% if page > 1 :  %}
 								{% block previous_page  %}
-								<li><a href="/courses/page={{page-1}}">&lt;</a></li>
-								<li><a href="/courses/page={{page-1}}">{{page-1}}</a></li>
+								<li><a href="/category_courses={{data['Id_Category']}}/page={{page-1}}">&lt;</a></li>
+								<li><a href="/category_courses={{data['Id_Category']}}/page={{page-1}}">{{page-1}}</a></li>
 								{% endblock  previous_page %}
 								{% endif %}
 								<li class="active"><span>{{page}}</span></li>
 								{% if page != data ['Max_page'] :  %}
-								<li><a href="/courses/page={{page+1}}">{{page+1}}</a></li>
-								<li><a href="/courses/page={{page+1}}">&gt;</a></li>
+								<li><a href="/category_courses={{data['Id_Category']}}/page={{page+1}}">{{page+1}}</a></li>
+								<li><a href="/category_courses={{data['Id_Category']}}/page={{page+1}}">&gt;</a></li>
 								{% endif %}
 							</ul>
 						</div>
@@ -101,10 +101,8 @@
 								</ul>
 
 							</div>
+
 							
-						</div>
-
-
 						<div class="module latest-product titleLine">
 							<h3 class="modtitle">Most Watched</h3>
 							<div class="modcontent ">
@@ -129,19 +127,14 @@
 							</div>
 						</div>
 
-
-
-
+						
+							
+						</div>
 						<div class="banners">
 							<div>
 								<a href="#"><img src="../static/img/demo/cms/left-image-static.png" alt="Latest Product"></a>
 							</div>
 						</div>
-
-
-
-
-
 					</aside>
 
 				</div>

@@ -44,7 +44,7 @@ def Sort_Product_By_Category(Id_Category: int, Sort: str, MaxNumber: int, page):
 @app.route('/category_courses=<Id_Category>/page=<page>')
 def Category_Courses_Page(Id_Category, page):
     Courses_Class = pages.Courses_Category(Id_Category, page)
-    return render_template('courses.html', data=Courses_Class.data)
+    return render_template('courses_by_Category.html', data=Courses_Class.data)
 
 
 # ----------------------------------------------------------------
@@ -111,7 +111,7 @@ def Search():
 @app.route('/search=<search>/page=<page>')
 def Search_Page(search, page=1):
     Search_Class = pages.Search(search, int(page))
-    return render_template('search.html', data=Search_Class.data)
+    return render_template('search2.html', data=Search_Class.data)
 
 
 # -----------------------------------------------------------------------------

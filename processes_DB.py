@@ -183,8 +183,8 @@ class Show_Data():
     # ------------------------------------------------------------------------------
 
     def get_media_by_id_product(self, Id_Product: int):
-        sql = '''SELECT m.Id , m.Type , m.Path  FROM media_products  as m, Items
-        WHERE m.Id_Item = Items.Id  and m.Id_Item = {}  ; '''.format(Id_Product)
+        sql = '''SELECT m.Id , m.Type , m.Path  FROM media_products  as m, items
+        WHERE m.Id_item = items.Id  and m.Id_item = {}  ; '''.format(Id_Product)
         medias = self.con.Select_Data_More_Row(sql)
         data = list()
         for media in medias:
@@ -199,8 +199,8 @@ class Show_Data():
     # Features Products
     # ------------------------------------------------------------------------------
     def get_features_by_id_product(self, Id_Product: int):
-        sql = '''SELECT  f.Feature  FROM features_products as f  ,Items
-        WHERE Id_Item = Items.Id  and Id_Item = {}  ; '''.format(Id_Product)
+        sql = '''SELECT  f.Feature  FROM features_products as f  ,items
+        WHERE Id_item = items.Id  and Id_item = {}  ; '''.format(Id_Product)
         Features = self.con.Select_Data_More_Row(sql)
         data = list()
         for Feature in Features:
@@ -208,7 +208,7 @@ class Show_Data():
         return data
 
     # ------------------------------------------------------------------------------
-    # Courses
+    # courses
     # ------------------------------------------------------------------------------
 
     def get_all_courses(self) -> list:
@@ -393,12 +393,12 @@ class Show_Data():
         return data
 
     # ------------------------------------------------------------------------------
-    # Media Courses
+    # Media courses
     # ------------------------------------------------------------------------------
 
     def get_media_by_id_course(self, Id_Course: int):
-        sql = '''SELECT m.Type , m.Path  FROM media_courses as m , Items
-        WHERE m.Id_course = Items.Id  and Id_course = {}  ; '''.format(Id_Course)
+        sql = '''SELECT m.Type , m.Path  FROM media_courses as m , items
+        WHERE m.Id_course = items.Id  and Id_course = {}  ; '''.format(Id_Course)
         medias = self.con.Select_Data_More_Row(sql)
         data = list()
         for media in medias:
@@ -413,8 +413,8 @@ class Show_Data():
     # ------------------------------------------------------------------------------
 
     def get_features_by_id_course(self, Id_Course: int):
-        sql = '''SELECT  f.Feature  FROM features_courses as f  ,Items
-        WHERE f.Id_course = Items.Id  and Id_course = {}  ; '''.format(Id_Course)
+        sql = '''SELECT  f.Feature  FROM features_courses as f  ,items
+        WHERE f.Id_course = items.Id  and Id_course = {}  ; '''.format(Id_Course)
         Features = self.con.Select_Data_More_Row(sql)
         data = list()
         for Feature in Features:
@@ -666,9 +666,9 @@ class Show_Data():
     # ------------------------------------------------------------------------------
 
     def get_offer_by_produts(self):
-        sql = '''SELECT o.Id_Item , i.Name ,i.Description , i.Image , i.price , o.New_Price , o.End_Date 
+        sql = '''SELECT o.Id_item , i.Name ,i.Description , i.Image , i.price , o.New_Price , o.End_Date 
                 FROM offers as o , items as i 
-                WHERE o.Id_Item = i.Id and o.Type = 1   ; '''
+                WHERE o.Id_item = i.Id and o.Type = 1   ; '''
 
         offers = self.con.Select_Data_More_Row(sql)
         Products = list()
@@ -686,10 +686,10 @@ class Show_Data():
         return Products
 
     def get_offer_by_courses(self):
-        sql = '''SELECT o.Id_Item , c.Name ,c.Description , c.Image , c.Price , o.New_Price , o.End_Date
+        sql = '''SELECT o.Id_item , c.Name ,c.Description , c.Image , c.Price , o.New_Price , o.End_Date
                 , c.Number_of_hours , c.Views 
                 FROM offers as o , courses as c 
-                WHERE o.Id_Item = c.Id and o.Type = 2   ;  '''
+                WHERE o.Id_item = c.Id and o.Type = 2   ;  '''
 
         offers = self.con.Select_Data_More_Row(sql)
         Products = list()
@@ -711,7 +711,7 @@ class Show_Data():
     def check_offer_existe(self, Id_Product: int, Type=1):
         # Type 1 as a Product  and Type 2 as a Course
         try:
-            sql = 'Select Id from offers where Type = {} and  Id_Item = {} ; '.format(Type, Id_Product)
+            sql = 'Select Id from offers where Type = {} and  Id_item = {} ; '.format(Type, Id_Product)
             data = self.con.Select_Data_One_Row(sql)
             if len(data) == 1:
                 return True
@@ -721,9 +721,9 @@ class Show_Data():
             return False
 
     def get_offer_by_id_produt(self, Id_Product: int) -> dict:
-        sql = '''SELECT o.Id_Item , i.Name ,i.Description , i.Image , i.price , o.New_Price , o.End_Date , i.Availability
+        sql = '''SELECT o.Id_item , i.Name ,i.Description , i.Image , i.price , o.New_Price , o.End_Date , i.Availability
                 FROM offers as o , items as i 
-                WHERE o.Id_Item = i.Id and o.Type = 1  and o.Id_Item = {} ;'''.format(Id_Product)
+                WHERE o.Id_item = i.Id and o.Type = 1  and o.Id_item = {} ;'''.format(Id_Product)
         offer = self.con.Select_Data_One_Row(sql)
         data = dict()
         data['Id'] = offer[0]
@@ -738,10 +738,10 @@ class Show_Data():
         return data
 
     def get_offer_by_id_course(self, Id_courses: int):
-        sql = '''SELECT o.Id_Item , c.Name ,c.Description , c.Image , c.Price , o.New_Price , o.End_Date
+        sql = '''SELECT o.Id_item , c.Name ,c.Description , c.Image , c.Price , o.New_Price , o.End_Date
         , c.Number_of_hours , c.Views 
         FROM offers as o , courses as c 
-        WHERE o.Id_Item = c.Id and o.Type = 2  and o.Id_Item = {} ;'''.format(Id_courses)
+        WHERE o.Id_item = c.Id and o.Type = 2  and o.Id_item = {} ;'''.format(Id_courses)
         offer = self.con.Select_Data_One_Row(sql)
         data = dict()
         data['Id'] = offer[0]
@@ -967,7 +967,7 @@ class insert_data():
             return False, 'A system error occurred, please try again later'
 
     # ------------------------------------------------------------------------------
-    # Post # Offers # Payment
+    # Post # offers # Payment
     # ------------------------------------------------------------------------------
 
     def add_post(self, **info) -> bool:
