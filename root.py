@@ -52,7 +52,7 @@ def Category_Courses_Page(Id_Category, page):
 @app.route('/products/page=<page>')
 def products_Page(page=1, sort=0):
     Products_Class = pages.Products(int(page), int(sort))
-    if Products_Class.data['Max_Page'] < int(page):
+    if Products_Class.data['Max_Page'] < int(page) :
         Products_Class.data['page'] = 1
     return render_template('products.html', data=Products_Class.data)
 
