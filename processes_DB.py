@@ -1049,6 +1049,7 @@ class delete_data():
 
             self.con.Delete_Data('students', 'Id', Id_Student)
             return True
+        
         except:
             return False, 'Something went wrong please try again later'
 
@@ -1198,5 +1199,4 @@ class Register_And_login():
                 return False, 'Please enter a valid password'
         except:
             return False, 'Please enter a valid password'
-
 
