@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Feb 18, 2020 at 02:43 PM
+-- Generation Time: Feb 22, 2020 at 04:31 AM
 -- Server version: 5.7.26
 -- PHP Version: 7.2.18
 
@@ -134,7 +134,7 @@ CREATE TABLE IF NOT EXISTS `courses` (
   `Date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`Id`),
   KEY `FK_courses_category` (`Id_Category`)
-) ENGINE=MyISAM AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `courses`
@@ -151,7 +151,9 @@ INSERT INTO `courses` (`Id`, `Id_Category`, `Name`, `Brief`, `Description`, `Ima
 (9, 13, 'Machine Learning', 'Machine learning is an application of artificial intelligence (AI) that provides systems the ability to automatically learn and improve from experience without being explicitly programmed. Machine learning focuses on the development of computer programs that can access data and use it learn for themselves.', 'Machine learning is an application of artificial intelligence (AI) that provides systems the ability to automatically learn and improve from experience without being explicitly programmed. Machine learning focuses on the development of computer programs that can access data and use it learn for themselves.', '../static/img/course_image/research_paper_introduction.jpg', 300, 90, 25, '2020-02-18 00:56:27'),
 (10, 14, 'Testing', 'Software testing is an investigation conducted to provide stakeholders with information about the quality of the software product or service under test.', 'Software testing is an investigation conducted to provide stakeholders with information about the quality of the software product or service under test.', '../static/img/course_image/t_a_s_t_i_n_g.png', 100, 20, 25, '2020-02-18 01:11:28'),
 (11, 17, 'Arduino  With Python', 'Learn Arduino Online At Your Own Pace. Start Today and Become an Expert in Days. Join Over 40 Million People Learning Online with Udemy. 30-Day Money-Back Guarantee! Pandas Tutorials. 30-Day Money Guarantee. Lifetime Access. REST APIs With Flask.', 'Learn Arduino Online At Your Own Pace. Start Today and Become an Expert in Days. Join Over 40 Million People Learning Online with Udemy. 30-Day Money-Back Guarantee! Pandas Tutorials. 30-Day Money Guarantee. Lifetime Access. REST APIs With Flask.', '../static/img/course_image/Arduino-With-Python-How-to-Get-Started_Watermarked.67d3c045231b.jpg', 300, 60, 25, '2020-02-18 06:34:54'),
-(12, 13, 'Deep Learning', 'Deep learning is a subset of machine learning in artificial intelligence (AI) that has networks capable of learning unsupervised from data that is unstructured or unlabeled. Also known as deep neural learning or deep neural network.', 'Deep learning is a subset of machine learning in artificial intelligence (AI) that has networks capable of learning unsupervised from data that is unstructured or unlabeled. Also known as deep neural learning or deep neural network.', '../static/img/course_image/iStock-1181216327-750x422.jpg', 500, 50, 25, '2020-02-18 08:01:31');
+(12, 13, 'Deep Learning', 'Deep learning is a subset of machine learning in artificial intelligence (AI) that has networks capable of learning unsupervised from data that is unstructured or unlabeled. Also known as deep neural learning or deep neural network.', 'Deep learning is a subset of machine learning in artificial intelligence (AI) that has networks capable of learning unsupervised from data that is unstructured or unlabeled. Also known as deep neural learning or deep neural network.', '../static/img/course_image/iStock-1181216327-750x422.jpg', 500, 50, 25, '2020-02-18 08:01:31'),
+(13, 13, 'Data Analysis', 'Data analysis is a process of inspecting, cleansing, transforming and modeling data with the goal of discovering useful information, informing conclusion and supporting decision-making.', 'Data analysis is a process of inspecting, cleansing, transforming and modeling data with the goal of discovering useful information, informing conclusion and supporting decision-making.', '../static/img/course_image/Business_Data_and_Graph_Analysis.png', 500, 100, 25, '2020-02-22 03:05:20'),
+(14, 13, 'Data Mining Techniques', 'Data mining is highly effective, so long as it draws upon one or more of these techniques:', 'Data mining is highly effective, so long as it draws upon one or more of these techniques:', '../static/img/course_image/1__FmxiAaS1Or1Wpo6-Gf1hw.jpeg', 300, 100, 25, '2020-02-22 03:07:41');
 
 -- --------------------------------------------------------
 
@@ -308,9 +310,7 @@ INSERT INTO `items` (`Id`, `Id_Category`, `Name`, `Brief`, `Description`, `Price
 (43, 8, 'SD CARD READER MODULE', 'SD Card module can make your SD application more easier and simple.\r\nIt is easily interfaced as a peripheral to your arduino sensor shield module.\r\nThrough programmingyou can read and write to the SD card using your arduino.', 'Description:\r\n\r\nSD Card module can make your SD application more easier and simple.\r\nIt is easily interfaced as a peripheral to your arduino sensor shield module.\r\nThrough programmingyou can read and write to the SD card using your arduino.\r\nCan be used for SD Card more eaislysuch as for MP3 PlayerMCU/ARM system control.\r\nAll SD SPI pins outputMOSISCKMISO and CS.\r\nSupport 5V/3.3V input.\r\nSize:5.1cm x 3.1cm - 2.01inch x 1.22inch.', 5, 'https://mikroelectron.com/ProImg/X4/fbe95053-58f5-4a76-af00-0defdd97bd8e.jpg', 25, 1, '2020-02-17 01:31:56'),
 (44, 2, 'www', 'www', 'www', 22, '../static/img/defult_image/product.png', 29, 0, '2020-02-18 11:11:26'),
 (45, 18, 'qqq', 'qqq', 'qqq', 26, '../static/img/defult_image/product.png', 26, 0, '2020-02-18 11:15:28'),
-(46, 18, 'qqq2', 'qqq2', 'qqq2', 26, '../static/img/defult_image/product.png', 26, 0, '2020-02-18 11:15:56'),
-(47, 18, 'test3 ', 'test3 ', 'test3', 50, '../static/img/product_image/CV_ZEID-Recovered.jpg', 150, 0, '2020-02-18 11:22:17'),
-(48, 1, 'sss', 'sss', 'sss', 222, '../static/img/product_image/Build-a-Web-Scraper-With-Requests-and-Beautiful-Soup_Watermarked.37918fb3906c.jpg', 50, 0, '2020-02-18 11:42:35');
+(46, 18, 'qqq2', 'qqq2', 'qqq2', 26, '../static/img/defult_image/product.png', 26, 0, '2020-02-18 11:15:56');
 
 -- --------------------------------------------------------
 
@@ -380,7 +380,7 @@ CREATE TABLE IF NOT EXISTS `offers` (
   `Date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`Id`),
   KEY `FK_Offers_Items` (`Id_Item`)
-) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `offers`
@@ -390,7 +390,11 @@ INSERT INTO `offers` (`Id`, `Id_Item`, `New_Price`, `End_Date`, `Type`, `Date`) 
 (1, 5, 30, '2020-02-20', 1, '2020-02-08 21:54:01'),
 (2, 11, 13, '2020-02-29', 1, '2020-02-08 21:54:01'),
 (3, 1, 150, '2020-02-19', 2, '2020-02-12 18:55:41'),
-(4, 2, 100, '2020-02-19', 2, '2020-02-12 18:55:41');
+(4, 2, 100, '2020-02-19', 2, '2020-02-12 18:55:41'),
+(5, 37, 10, '2020-04-04', 1, '2020-02-22 01:09:13'),
+(6, 38, 6, '2020-04-04', 1, '2020-02-22 01:09:13'),
+(7, 31, 300, '2020-04-04', 1, '2020-02-22 01:11:51'),
+(8, 14, 60, '2020-04-04', 1, '2020-02-22 01:11:51');
 
 -- --------------------------------------------------------
 
