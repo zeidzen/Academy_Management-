@@ -658,6 +658,8 @@ def Display_Offer_Page():
 
     display_Offer = pages.Display_Offer(Id_User)
     return render_template('DB_Offer_Table.html', data=display_Offer.data)
+
+
 # ----------------------------------------------------------------------------
 
 @app.route('/display_User_info')
@@ -669,6 +671,46 @@ def Display_User_Page():
 
     display_user = pages.Account(Id_User)
     return render_template('DB_User_Profile.html', data=display_user.data)
+
+
+# ----------------------------------------------------------------------------
+
+@app.route('/display_Tables')
+def Display_Table_Page():
+    if 'Id_User' not in session:
+        return redirect(url_for('Home_Page'))
+
+    Id_User = session['Id_User']
+
+    display_user = pages.Account(Id_User)
+    return render_template('DB_Tables.html', data=display_user.data)
+
+# ==============================================================================
+# =============================================================================
+
+
+@app.route('/delete_student/<id_student>')
+def Delete_Student_Page(id_student):
+    if 'Id_User' not in session:
+        return redirect(url_for('Home_Page'))
+
+    Id_User = session['Id_User']
+    delete_user = pages.Delete_Student(Id_User)
+
+    delete_user.Del_student(int(id_student))
+    return redirect(url_for('Display_Student_Page'))
+
+
+
+
+
+
+
+
+
+
+
+
 # ==============================================================================
 # ==============================================================================
 
@@ -685,4 +727,4 @@ def page_not_found(error):
 
 
 if __name__ == '__main__':
-    app.run(debug=con.debug, port=con.port, host=con.host_app)
+    app.run(debug=con.debug, port=con.port, host=con.host)

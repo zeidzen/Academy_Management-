@@ -214,7 +214,7 @@ class Show_Data():
     def get_all_courses(self) -> list:
         courses = list()
         sql = """select Id , Name, Description, Image, Price, Number_of_hours, Date , Brief, Views
-        from courses ORDER BY Id desc   ;"""
+        from Courses ORDER BY Id desc   ;"""
         data = self.con.Select_Data_More_Row(sql)
         for items in data:
             selected = dict()
@@ -233,7 +233,7 @@ class Show_Data():
     def get_all_courses_by_category(self, Id_category) -> list:
         courses = list()
         sql = """select Id , Name, Description, Image, Price, Number_of_hours, Date , Brief 
-                 from courses Where Id_category = {} ;""".format(Id_category)
+                 from Courses Where Id_category = {} ;""".format(Id_category)
         data = self.con.Select_Data_More_Row(sql)
         for items in data:
             selected = dict()
@@ -250,7 +250,7 @@ class Show_Data():
 
     def get_course_by_Id(self, Id_Course: int) -> list:
         sql = """select Id , Name, Description, Image, Price, Number_of_hours, Date , Brief
-        from courses Where Id = {} ;""".format(Id_Course)
+        from Courses Where Id = {} ;""".format(Id_Course)
         data = self.con.Select_Data_One_Row(sql)
         course = dict()
         course['Id'] = data[0]
@@ -334,7 +334,7 @@ class Show_Data():
 
     def search_course(self, name: str) -> list:
         courses = list()
-        sql = """select Name, Description, Image, Price, Number_of_hours, Date  from courses where Name Like '%{}%';""".format(
+        sql = """select Name, Description, Image, Price, Number_of_hours, Date  from Courses where Name Like '%{}%';""".format(
             name)
         data = self.con.Select_Data_More_Row(sql)
         for items in data:
@@ -426,7 +426,7 @@ class Show_Data():
     # ------------------------------------------------------------------------------
     def get_all_categories_for_course(self) -> list:
         category = list()
-        sql = """select Id , Name  from categories where Type = 2 ;"""
+        sql = """select Id , Name  from Categories where Type = 2 ;"""
         data = self.con.Select_Data_More_Row(sql)
         for cat in data:
             select = dict()
@@ -437,7 +437,7 @@ class Show_Data():
 
     def get_all_categories_for_products(self) -> list:
         category = list()
-        sql = """select Id , Name  from categories where Type = 1;"""
+        sql = """select Id , Name  from Categories where Type = 1;"""
         data = self.con.Select_Data_More_Row(sql)
         for cat in data:
             select = dict()
@@ -657,7 +657,7 @@ class Show_Data():
     # ------------------------------------------------------------------------------
 
     def get_all_cities(self):
-        sql = """select Id , Name from city ; """
+        sql = """select Id , Name from City ; """
         data = self.con.Select_Data_More_Row(sql)
         return data
 
@@ -1049,6 +1049,7 @@ class delete_data():
 
             self.con.Delete_Data('students', 'Id', Id_Student)
             return True
+
         except:
             return False, 'Something went wrong please try again later'
 
