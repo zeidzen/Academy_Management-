@@ -95,7 +95,7 @@
 							<h3 class="modtitle"> Courses Categories</h3> 
 							<div class="modcontent">
 								<ul class="list-group ">
-									{% for category in data['Courses_Categories'] :  %}
+									{% for category in data['courses_categories'] :  %}
 									<li class="list-group-item"  > <a href="/category_courses={{category['Id']}}/page=1"class="group-item active">{{category['Name']}}</a></li>
 									{%endfor%}
 								</ul>

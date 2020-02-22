@@ -7,7 +7,7 @@ import config as con
 
 
 class DataBase () :
-    def __init__ (self, host=con.host, username=con.username, password=con.password, database=con.database):
+    def __init__ (self, host=con.host_DB, username=con.username, password=con.password, database=con.database):
         try:
             # Connect to the DataBase Dashpord
             self.connection = pymysql.connect(host=host,# Server
@@ -100,7 +100,7 @@ class DataBase () :
         self.connection.commit()
 
     def Delete_Data (self,table,name,value) : 
-        sql ="DELETE FROM {} WHERE {}='{}' ;".format(table,name,value)
+        sql ="DELETE FROM {} WHERE {}='{}' CASCADE;".format(table,name,value)
         mycursor = self.connection.cursor()
         mycursor.execute(sql)  
         self.connection.commit()

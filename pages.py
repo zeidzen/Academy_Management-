@@ -269,7 +269,6 @@ class DB_Header():
         self.show_data = processes_DB.Show_Data()
         self.insert_data = processes_DB.insert_data()
         self.register_user = processes_DB.Register_And_login()
-        self.delete_data = processes_DB.delete_data()
         self.data['title'] = 'Dash Bowrd Tabasheer Training Academy'
         self.data['User'] = self.show_data.get_info_user_by_Id(Id_User)
 
@@ -429,11 +428,8 @@ class Add_Course(DB_Header):
 
     def add_courses(self, **info):
         self.insert_data.add_course(**info)
-
-
 # -----------------------------------------------------------------------------
 # Add Post
-
 class Add_Post(DB_Header):
     def __init__(self, Id_User):
         super().__init__(Id_User)
@@ -554,7 +550,6 @@ class Display_Payment(DB_Header):
         self.data['title'] = 'Payment Table'
         self.data['payment'] = self.show_data.get_payment()
 
-
 # Offers Data
 class Display_Offer(DB_Header):
     def __init__(self, Id_User):
@@ -562,20 +557,6 @@ class Display_Offer(DB_Header):
         self.data['title'] = 'Offer Table'
         self.data['product_offer'] = self.show_data.get_offer_by_produts()
         self.data['course_offer'] = self.show_data.get_offer_by_courses()
-
-
-# -----------------------------------------------------------------------------
-# delete Data
-# -----------------------------------------------------------------------------
-class Delete_Student(DB_Header):
-    def __init__(self, Id_User):
-        super().__init__(Id_User)
-        self.data['title'] = 'Student Table'
-        self.data['student'] = self.show_data.get_all_students()
-
-    def Del_student(self, Id_Student: int):
-        return self.delete_data.delete_Student_by_Id(Id_Student)
-
 
 # -----------------------------------------------------------------------------
 # ==============================================================================
