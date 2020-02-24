@@ -28,7 +28,7 @@
 
 												<div class="col-md-12">
 													<div class="form-group">
-														<form action="/Add_post_to_DB" method="post" enctype="multipart/form-data" >
+														<form action="/add_post_to_db" method="post" enctype="multipart/form-data" >
 
 
 															<label>Title</label>
@@ -48,11 +48,19 @@
 															<input type="file" name="post_media" value="" placeholder="Post Media"  class="form-control w-100">
 															<br>
 
+															
+															<label>Type</label>
+															<select class="form-control select2 w-100" name="post_type" required >
+																<option selected="selected" value="1">Achievements</option>
+																<option value="2">Post</option>
+															</select>
+															<br>
 
 															<div class="container-login100-form-btn">
 																	<input  type="submit" name="ADD_Post" value="ADD Post" class="login100-form-btn btn-primary"
 																							style="background:#00c3ed">
 															</div>
+
 
 														</form>
 

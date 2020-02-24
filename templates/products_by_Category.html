@@ -17,7 +17,7 @@
 							<div class="box-category">
 
 								<ul id="cat_accordion" class="list-group">
-									{% for category  in data ['products_categories'] : %}
+									{% for category  in data ['Products_Categories'] : %}
 									<li class=""><a href="/category_products={{category ['Id'] }}/page=1" class="cutom-parent">{{category ['Name'] }}</a>  <span class="dcjq-icon"></span></li>
 									{%endfor%}
 								</ul>

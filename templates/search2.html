@@ -6,7 +6,7 @@
 			<ul class="header-main">
 				<li class="home"><a href="#">Home</a><i class="fa fa-angle-right" aria-hidden="true"></i></li>
 
-				<li><a>Courses</a></li>
+				<li><a>{{ data ['title'] }}</a></li>
 
 			</ul>
 
@@ -17,30 +17,30 @@
 				<!--Middle Part Start-->
 				<div id="content" class="col-lg-9 col-md-8 col-sm-12 col-xs-12">
 					<div class="blog-header">
-						<h3 class="modtitle">Courses</h3>
+						<h3 class="modtitle">{{ data ['title'] }}</h3>
 					</div>
 					<div class="blog-listitem">
 						{% set page  =  data ['page'] %}
-						{% for course in data ['Courses'][5 * (page-1) : page * 5 ] :  %}
+						{% for Item in data ['all_Items'][5 * (page-1) : page * 5 ] :  %}
 						<div class="blog-item ">
 							<div class="itemBlogImg ">
 								<div class="article-image ">
 									<div>
-										<a class="popup-gallery" href="{{course['Image']}}"><img src="{{course['Image']}}" alt="Kire tuma demonstraverunt lector"></a>
+										<a class="popup-gallery" href="{{Item['Image']}}"><img src="{{Item['Image']}}" alt="Kire tuma demonstraverunt lector"></a>
 									</div>
 								</div>
 							</div>
 							<div class="itemBlogContent ">
 								<div class="article-title">
 									<h4>
-										<a href="/course/{{course['Id']}}">{{course['Name']}}</a>
+										<a href="/Item/{{Item['Id']}}">{{Item['Name']}}</a>
 									</h4>
 
 								</div>
-								<div class="article-description">{{course['Brief']}} ... </div>
+								<div class="article-description">{{Item['Brief']}} ... </div>
 									<div class="blog-meta">
 										<span class="author">
-											<a href="/course/{{course ['Id']}}">View more
+											<a href="/Item/{{Item ['Id']}}">View more
 												<i class="fa fa-angle-double-right" aria-hidden="true"></i>
 											</a>
 										</span>
@@ -60,28 +60,29 @@
 							</div>
 						</div>
 						{%endfor%}
-
 						
-						{% if  data ['Courses']|length > 5 :  %}
+						
+						{% if  data ['all_Items']|length > 5 :  %}
 						{% block pages  %}
 						<div class="blog-listitem-bottom">
-							<p>item {{5 * (page-1)  }} - 05 of {{data ['Courses'] |length}}  total</p>
+							<p>item {{5 * (page-1)  }} - 05 of {{data ['all_Items'] |length}}  total</p>
 							<ul class="pagination">
 								{% if page > 1 :  %}
 								{% block previous_page  %}
-								<li><a href="/courses/page={{page-1}}">&lt;</a></li>
-								<li><a href="/courses/page={{page-1}}">{{page-1}}</a></li>
+								<li><a href="/search={{ data['Name_Search'] }}/page={{page-1}}">&lt;</a></li>
+								<li><a href="/search={{ data['Name_Search'] }}/page={{page-1}}">{{page-1}}</a></li>
 								{% endblock  previous_page %}
 								{% endif %}
 								<li class="active"><span>{{page}}</span></li>
 								{% if page != data ['Max_page'] :  %}
-								<li><a href="/courses/page={{page+1}}">{{page+1}}</a></li>
-								<li><a href="/courses/page={{page+1}}">&gt;</a></li>
+								<li><a href="/search={{ data['Name_Search'] }}/page={{page+1}}">{{page+1}}</a></li>
+								<li><a href="/search={{ data['Name_Search'] }}/page={{page+1}}">&gt;</a></li>
 								{% endif %}
 							</ul>
 						</div>
 						{% endblock  pages %}
 						{% endif %}
+
 					</div>
 				</div>
 
@@ -103,8 +104,7 @@
 							</div>
 							
 						</div>
-
-
+							
 						<div class="module latest-product titleLine">
 							<h3 class="modtitle">Most Watched</h3>
 							<div class="modcontent ">
@@ -118,7 +118,7 @@
 											<div class="caption">
 												<h4><a href="/course/{{course['Id']}}" class="course-img">{{course['Name']}}</a></h4>
 												<div class="price">
-													<span class="price-new">$ {{course['Price']}}</span>
+													<span class="price-new">JD {{course['Price']}}</span>
 												</div>
 											</div>
 	
@@ -129,19 +129,11 @@
 							</div>
 						</div>
 
-
-
-
 						<div class="banners">
 							<div>
 								<a href="#"><img src="../static/img/demo/cms/left-image-static.png" alt="Latest Product"></a>
 							</div>
 						</div>
-
-
-
-
-
 					</aside>
 
 				</div>

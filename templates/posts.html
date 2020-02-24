@@ -69,14 +69,14 @@
 							<ul class="pagination">
 								{% if page > 1 :  %}
 								{% block previous_page  %}
-								<li><a href="/achievements/page={{page-1}}">&lt;</a></li>
-								<li><a href="/achievements/page={{page-1}}">{{page-1}}</a></li>
+								<li><a href="/posts/page={{page-1}}">&lt;</a></li>
+								<li><a href="/posts/page={{page-1}}">{{page-1}}</a></li>
 								{% endblock  previous_page %}
 								{% endif %}
 								<li class="active"><span>{{page}}</span></li>
 								{% if page != data ['Max_page'] :  %}
-								<li><a href="/achievements/page={{page+1}}">{{page+1}}</a></li>
-								<li><a href="/achievements/page={{page+1}}">&gt;</a></li>
+								<li><a href="/posts/page={{page+1}}">{{page+1}}</a></li>
+								<li><a href="/posts/page={{page+1}}">&gt;</a></li>
 								{% endif %}
 							</ul>
 						</div>
@@ -95,13 +95,38 @@
 							<h3 class="modtitle"> Courses Categories</h3>
 							<div class="modcontent">
 								<ul class="list-group ">
-									{% for category in data['courses_categories'] :  %}
+									{% for category in data['Courses_Categories'] :  %}
 									<li class="list-group-item"> <a href="/category={{category['Id']}}/page=1"class="group-item active">{{category['Name']}}</a></li>
 									{%endfor%}
 								</ul>
 
 							</div>
 						</div>
+						
+						<div class="module latest-product titleLine">
+							<h3 class="modtitle">Most Watched</h3>
+							<div class="modcontent ">
+								{% for product in data ['Most_Watched'][0:5] %}
+								<div class="product-latest-item transition">
+									<div class="media">
+										<div class="media-left">
+											<a href="/product/{{product['Id']}}" class="product-img"><img src="{{product['Image']}}" alt="{{product['Image']}}" title="{{product['Image']}}" class="img-responsive" style="width: 100px; height:82px;"></a>
+										</div>
+										<div class="media-body">
+											<div class="caption">
+												<h4><a href="/product/{{product['Id']}}" class="product-img">{{product['Name']}}</a></h4>
+												<div class="price">
+													<span class="price-new">$ {{product['Price']}}</span>
+												</div>
+											</div>
+	
+										</div>
+									</div>
+								</div>
+								{%endfor%}
+							</div>
+						</div>
+
 
 						<div class="banners">
 							<div>

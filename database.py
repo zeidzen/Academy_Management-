@@ -54,7 +54,10 @@ class DataBase () :
         """
         name=str(tuple(value.keys()))
         name=name.replace('\'',' ')
-        sql="INSERT INTO "+table+" "+name+" VALUES "+str(tuple(value.values()))
+        if len (value.values()) == 1 :
+           sql="INSERT INTO "+table+" "+name+" VALUES "+str(value.values()[0]) 
+        else : 
+            sql="INSERT INTO "+table+" "+name+" VALUES "+str(tuple(value.values()))
         mycursor = self.connection.cursor()
         mycursor.execute(sql)  
         self.connection.commit()

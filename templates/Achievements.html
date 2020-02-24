@@ -6,7 +6,7 @@
 			<ul class="header-main">
 				<li class="home"><a href="#">Home</a><i class="fa fa-angle-right" aria-hidden="true"></i></li>
 
-				<li><a>Courses</a></li>
+				<li><a href="#">Achievements</a></li>
 
 			</ul>
 
@@ -17,30 +17,30 @@
 				<!--Middle Part Start-->
 				<div id="content" class="col-lg-9 col-md-8 col-sm-12 col-xs-12">
 					<div class="blog-header">
-						<h3 class="modtitle">Courses</h3>
+						<h3 class="modtitle">Achievements</h3>
 					</div>
 					<div class="blog-listitem">
 						{% set page  =  data ['page'] %}
-						{% for course in data ['Courses'][5 * (page-1) : page * 5 ] :  %}
+						{% for post in data ['posts'][5 * (page-1) : page * 5 ] :  %}
 						<div class="blog-item ">
 							<div class="itemBlogImg ">
 								<div class="article-image ">
 									<div>
-										<a class="popup-gallery" href="{{course['Image']}}"><img src="{{course['Image']}}" alt="Kire tuma demonstraverunt lector"></a>
+										<a class="popup-gallery" href="{{post['Media']}}"><img src="{{post['Media']}}" alt="Kire tuma demonstraverunt lector"></a>
 									</div>
 								</div>
 							</div>
 							<div class="itemBlogContent ">
 								<div class="article-title">
 									<h4>
-										<a href="/course/{{course['Id']}}">{{course['Name']}}</a>
+										<a href="/post/{{post ['Id']}}">{{post['Title']}}</a>
 									</h4>
 
 								</div>
-								<div class="article-description">{{course['Brief']}} ... </div>
+								<div class="article-description">{{post['Brief']}} ... </div>
 									<div class="blog-meta">
 										<span class="author">
-											<a href="/course/{{course ['Id']}}">View more
+											<a href="/post/{{post ['Id']}}">View more
 												<i class="fa fa-angle-double-right" aria-hidden="true"></i>
 											</a>
 										</span>
@@ -62,21 +62,21 @@
 						{%endfor%}
 
 						
-						{% if  data ['Courses']|length > 5 :  %}
+						{% if  data ['posts']|length > 5 :  %}
 						{% block pages  %}
 						<div class="blog-listitem-bottom">
-							<p>item {{5 * (page-1)  }} - 05 of {{data ['Courses'] |length}}  total</p>
+							<p>item {{5 * (page-1)  }} - 05 of {{data ['posts'] |length}}  total</p>
 							<ul class="pagination">
 								{% if page > 1 :  %}
 								{% block previous_page  %}
-								<li><a href="/courses/page={{page-1}}">&lt;</a></li>
-								<li><a href="/courses/page={{page-1}}">{{page-1}}</a></li>
+								<li><a href="/achievements/page={{page-1}}">&lt;</a></li>
+								<li><a href="/achievements/page={{page-1}}">{{page-1}}</a></li>
 								{% endblock  previous_page %}
 								{% endif %}
 								<li class="active"><span>{{page}}</span></li>
 								{% if page != data ['Max_page'] :  %}
-								<li><a href="/courses/page={{page+1}}">{{page+1}}</a></li>
-								<li><a href="/courses/page={{page+1}}">&gt;</a></li>
+								<li><a href="/achievements/page={{page+1}}">{{page+1}}</a></li>
+								<li><a href="/achievements/page={{page+1}}">&gt;</a></li>
 								{% endif %}
 							</ul>
 						</div>
@@ -92,33 +92,31 @@
 						<div class="module blog-category titleLine">
 
 
-							<h3 class="modtitle"> Courses Categories</h3> 
+							<h3 class="modtitle"> Courses Categories</h3>
 							<div class="modcontent">
 								<ul class="list-group ">
 									{% for category in data['Courses_Categories'] :  %}
-									<li class="list-group-item"  > <a href="/category_courses={{category['Id']}}/page=1"class="group-item active">{{category['Name']}}</a></li>
+									<li class="list-group-item"> <a href="/category={{category['Id']}}/page=1"class="group-item active">{{category['Name']}}</a></li>
 									{%endfor%}
 								</ul>
 
 							</div>
-							
 						</div>
-
-
+						
 						<div class="module latest-product titleLine">
 							<h3 class="modtitle">Most Watched</h3>
 							<div class="modcontent ">
-								{% for course in data ['Most_Watched'][0:4] %}
+								{% for product in data ['Most_Watched'][0:5] %}
 								<div class="product-latest-item transition">
 									<div class="media">
 										<div class="media-left">
-											<a href="/course/{{course['Id']}}" class="product-img"><img src="{{course['Image']}}" alt="{{course['Image']}}" title="{{course['Image']}}" class="img-responsive" style="width: 100px; height:82px;"></a>
+											<a href="/product/{{product['Id']}}" class="product-img"><img src="{{product['Image']}}" alt="{{product['Image']}}" title="{{product['Image']}}" class="img-responsive" style="width: 100px; height:82px;"></a>
 										</div>
 										<div class="media-body">
 											<div class="caption">
-												<h4><a href="/course/{{course['Id']}}" class="course-img">{{course['Name']}}</a></h4>
+												<h4><a href="/product/{{product['Id']}}" class="product-img">{{product['Name']}}</a></h4>
 												<div class="price">
-													<span class="price-new">$ {{course['Price']}}</span>
+													<span class="price-new">$ {{product['Price']}}</span>
 												</div>
 											</div>
 	
@@ -130,20 +128,12 @@
 						</div>
 
 
-
-
 						<div class="banners">
 							<div>
 								<a href="#"><img src="../static/img/demo/cms/left-image-static.png" alt="Latest Product"></a>
 							</div>
 						</div>
-
-
-
-
-
 					</aside>
-
 				</div>
 				<!--Middle Part End-->
 			</div>

@@ -17,7 +17,7 @@
 							<div class="box-category">
 
 								<ul id="cat_accordion" class="list-group">
-									{% for category  in data ['products_categories'] : %}
+									{% for category  in data ['Products_Categories'] : %}
 									<li class=""><a href="/category_products={{category ['Id'] }}/page=1" class="cutom-parent">{{category ['Name'] }}</a>  <span class="dcjq-icon"></span></li>
 									{%endfor%}
 								</ul>
@@ -39,7 +39,7 @@
 										<div class="caption">
 											<h4><a href="/product/{{product['Id']}}" class="product-img">{{product['Name']}}</a></h4>
 											<div class="price">
-												<span class="price-new">JD {{product['Price']}}</span>
+												<span class="price-new">$ {{product['Price']}}</span>
 											</div>
 										</div>
 
@@ -141,7 +141,7 @@
 													<h4><a href="/product/{{product ['Id'] }}">{{product ['Name'] }}</a></h4>	
 
 													<div class="price">
-														<span class="price-new">JD {{product ['Price']}} </span>
+														<span class="price-new">$ {{product ['Price']}} </span>
 													</div>
 													<div class="description item-desc hidden">
 														<p>{{product ['Brief'] }} </p>

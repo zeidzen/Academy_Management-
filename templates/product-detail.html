@@ -65,13 +65,13 @@
 										<br>
 										{% if data ['check_offer_existe'] == True : %}
 										<div class="product_page_price price" itemprop="offerDetails" itemscope="" itemtype="http://data-vocabulary.org/Offer">
-											<span class="price-new" itemprop="price">JD {{product ['New_Price'] }}</span>
-											<span class="price-old">JD {{product ['Old_Price'] }}</span>
+											<span class="price-new" itemprop="price">$ {{product ['New_Price'] }}</span>
+											<span class="price-old">$ {{product ['Old_Price'] }}</span>
 										</div>
 
 										{% else :  %}
 										<div class="product_page_price price" itemprop="offerDetails" itemscope="" itemtype="http://data-vocabulary.org/Offer">
-											<span class="price-new" itemprop="price">JD {{product ['Price'] }}</span>
+											<span class="price-new" itemprop="price">$ {{product ['Price'] }}</span>
 										</div>
 										{%endif%}
 
@@ -204,7 +204,7 @@
 																<div class="caption">
 																	<h4><a href="/product/{{product ['Id']}}">{{product ['Name'] }}</a></h4>
 																	<div class="price">
-																		<span class="price-new">JD {{ product ['Price'] }} </span>
+																		<span class="price-new">$ {{ product ['Price'] }} </span>
 																	</div>
 																</div>
 															</div>
@@ -251,7 +251,7 @@
 															<div class="caption">
 																<h4><a href="/product/{{product ['Id']}}">{{product ['Name']}}</a></h4>		
 																<div class="price">
-																	<span class="price-new">JD {{product ['Price']}}</span> 	
+																	<span class="price-new">$ {{product ['Price']}}</span> 	
 																</div>
 															</div>
 														</div><!-- right block -->

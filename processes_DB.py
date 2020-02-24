@@ -45,6 +45,26 @@ class Show_Data():
             sql = """select Id , Name,Image, Description, Price, Date , Brief from items;"""
 
         data = self.con.Select_Data_More_Row(sql)
+        
+        for items in data:
+            selected = dict()
+            selected['Id'] = items[0]
+            selected['Name'] = items[1]
+            selected['Image'] = items[2]
+            selected['Description'] = items[3]
+            selected['Price'] = items[4]
+            selected['Date'] = items[5]
+            selected['Brief'] = items[6]
+            item.append(selected)
+        return item
+
+
+    def get_all_products_without_offers (self) : 
+        sql = """select Id , Name,Image, Description, Price, Date , Brief
+            from items WHERE Id NOT IN (SELECT Id_Item FROM offers WHERE Type = 1 ) ;"""
+            
+        data = self.con.Select_Data_More_Row(sql)
+        item = list()
         for items in data:
             selected = dict()
             selected['Id'] = items[0]
@@ -233,7 +253,7 @@ class Show_Data():
     def get_all_courses_by_category(self, Id_category) -> list:
         courses = list()
         sql = """select Id , Name, Description, Image, Price, Number_of_hours, Date , Brief 
-                 from courses Where Id_category = {} ;""".format(Id_category)
+                 from courses Where Id_category = {} ORDER BY Id desc ;""".format(Id_category)
         data = self.con.Select_Data_More_Row(sql)
         for items in data:
             selected = dict()
@@ -553,9 +573,12 @@ class Show_Data():
         date = date.strftime("%A,%d %B, %Y")
         return date
 
-    def get_all_posts(self) -> list:
+
+    def get_all_posts(self , Type = 1 ) -> list:
+        #Type ==1 ==> Achievements  , Type ==2 ==> Posts
         post = list()
-        sql = """select Id , Title, Content, Media, Date , Brief  from post;"""
+        sql = """select Id , Title, Content, Media, Date , Brief  
+                from post  WHERE Type = {} ;""".format(Type)
         data = self.con.Select_Data_More_Row(sql)
         for items in data:
             selected = dict()
@@ -784,22 +807,22 @@ class Show_Data():
         return data
 
     # product for offer page
-    def get_all_product(self) -> list:
-        item = list()
-        sql = """select Id , Name,Image, Description, Price, Date , Brief, Views from items;"""
-        data = self.con.Select_Data_More_Row(sql)
-        for items in data:
-            selected = dict()
-            selected['Id'] = items[0]
-            selected['Name'] = items[1]
-            selected['Image'] = items[2]
-            selected['Description'] = items[3]
-            selected['Price'] = items[4]
-            selected['Date'] = items[5]
-            selected['Brief'] = items[6]
-            selected['Views'] = items[7]
-            item.append(selected)
-        return item
+    # def get_all_products(self) -> list:
+    #     item = list()
+    #     sql = """select Id , Name,Image, Description, Price, Date , Brief, Views from items;"""
+    #     data = self.con.Select_Data_More_Row(sql)
+    #     for items in data:
+    #         selected = dict()
+    #         selected['Id'] = items[0]
+    #         selected['Name'] = items[1]
+    #         selected['Image'] = items[2]
+    #         selected['Description'] = items[3]
+    #         selected['Price'] = items[4]
+    #         selected['Date'] = items[5]
+    #         selected['Brief'] = items[6]
+    #         selected['Views'] = items[7]
+    #         item.append(selected)
+    #     return item
 
 
 # ------------------------------------------------------------------------------
@@ -819,9 +842,9 @@ class insert_data():
     def __init__(self):
         self.con = db.DataBase()
 
-    # ------------------------------------------------------------------------------
-    #  Student
-    # ------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
+#  Student
+# ------------------------------------------------------------------------------
 
     def check_Student_exists(self, column: str, value) -> bool:
         sql = """SELECT count(*) FROM students WHERE {} ='{}' ;""".format(column, value)
@@ -830,6 +853,7 @@ class insert_data():
             return False
         else:
             return True
+
 
     def add_student(self, **info) -> bool:
         try:
@@ -852,6 +876,8 @@ class insert_data():
         except:
             return False, 'A system error occurred, please try again later'
 
+
+
     def Update_info_Student(self, **info) -> bool:
 
         if self.check_Student_exists('Email', info['Email']) == False:
@@ -872,9 +898,10 @@ class insert_data():
         self.con.Update_Data_All_Coulmn_String('students', Id, **info)
         return True
 
-    # ------------------------------------------------------------------------------
-    # Course
-    # ------------------------------------------------------------------------------
+
+# -----------------------------------------------------------------------------
+# Course
+# -----------------------------------------------------------------------------
 
     def add_course(self, **info) -> bool:
         try:
@@ -892,6 +919,14 @@ class insert_data():
             return False, 'A system error occurred, please try again later'
 
     # Feautre
+    def add_feautre_courses(self, **info) -> bool:
+        try:
+            self.con.Insert_Data('features_courses', **info)
+            return True
+        except:
+            return False, 'A system error occurred, please try again later'
+        
+    # Media
     def add_feautre(self, **info) -> bool:
         try:
             self.con.Insert_Data('features_courses', **info)
@@ -899,9 +934,9 @@ class insert_data():
         except:
             return False, 'A system error occurred, please try again later'
 
-    # ------------------------------------------------------------------------------
-    # Class
-    # ------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
+# Class
+# -----------------------------------------------------------------------------
 
     def add_class(self, **info) -> bool:
         try:
@@ -925,9 +960,9 @@ class insert_data():
         except:
             return False, 'A system error occurred, please try again later'
 
-    # ------------------------------------------------------------------------------
-    # Category
-    # ------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
+# Category
+# -----------------------------------------------------------------------------
 
     # test
     def add_category(self, **info) -> bool:
@@ -936,17 +971,8 @@ class insert_data():
             return True
         except:
             return False, 'A system error occurred, please try again later'
-
-    # test ??????????
-    def add_product(self, **info) -> bool:
-
-        self.con.Insert_Data('items', **info)
-        return True, 'successfully added the product'
-
-    # try:
-    # except:
-    #     return False, 'A system error occurred, please try again later'
-
+        
+        
     # test
     def Update_info_category(self, **info) -> bool:
         try:
@@ -957,6 +983,19 @@ class insert_data():
         except:
             return False, 'A system error occurred, please try again later'
 
+# -----------------------------------------------------------------------------
+# Product
+# -----------------------------------------------------------------------------
+
+
+    def add_product(self, **info) -> bool:
+        try:
+            self.con.Insert_Data('items', **info)
+            return True, 'successfully added the product'    
+        except:
+            return False, 'A system error occurred, please try again later'
+
+
     def Update_info_item(self, **info) -> bool:
         try:
             id = info['Id']
@@ -965,10 +1004,11 @@ class insert_data():
             return True
         except:
             return False, 'A system error occurred, please try again later'
+        
 
-    # ------------------------------------------------------------------------------
-    # Post # Offers # Payment
-    # ------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
+# Post # Offers # Payment
+# -----------------------------------------------------------------------------
 
     def add_post(self, **info) -> bool:
         try:
@@ -992,11 +1032,11 @@ class insert_data():
             return False, 'A system error occurred, please try again later'
 
     def add_city(self, **info) -> bool:
-        try:
             self.con.Insert_Data('city', **info)
             return True
-        except:
-            return False, 'A system error occurred, please try again later'
+#        try:
+#        except:
+#            return False, 'A system error occurred, please try again later'
 
     def add_university(self, **info) -> bool:
         try:
