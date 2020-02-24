@@ -1239,4 +1239,3 @@ class Register_And_login():
         except:
             return False, 'Please enter a valid password'
 
-

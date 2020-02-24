@@ -552,27 +552,17 @@ def add_city_uni_spe_func():
     if request.method == 'POST':
         Type = request.form['Type' ]
         data['Name'] = request.form['Name' ]
-        
         if Type == '1' : 
              City_Uni_Spel_Class.add_city(**data)
         elif Type == '2' : 
              City_Uni_Spel_Class.add_university (**data)
         elif Type == '3' : 
             City_Uni_Spel_Class.add_specializaton (**data)    
-    City_Uni_Spel_Class.add_city(**data)
+            
     return redirect(url_for('add_city_uni_spe_Page'))
 
 
 
-# ----------------------------------------------------------------------------
-
-
-
-# ----------------------------------------------------------------------------
-
-
-
-# ----------------------------------------------------------------------------
 
 @app.route('/display_class')
 def Display_Class_Page():
@@ -603,8 +593,6 @@ def Display_Course_Page():
 def Display_Post_Page():
     if 'Id_User' not in session:
         return redirect(url_for('Home_Page'))
-
-
     Achievements_Class = pages.Achievements()
     Achievements_Class.data ['title'] = 'Displat Achievements'
     Achievements_Class.Show_Data_Achievements()

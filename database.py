@@ -54,10 +54,14 @@ class DataBase () :
         """
         name=str(tuple(value.keys()))
         name=name.replace('\'',' ')
-        if len (value.values()) == 1 :
-           sql="INSERT INTO "+table+" "+name+" VALUES "+str(value.values()[0]) 
-        else : 
+        if len(value.values()) == 1 : 
+            column = tuple(value.keys())[0]
+            data = tuple(value.values())[0]
+            sql="INSERT INTO {} ({}) VALUES ('{}') ".format(table ,column , data )
+        else :
             sql="INSERT INTO "+table+" "+name+" VALUES "+str(tuple(value.values()))
+        print ('**'*50)
+        print (sql)
         mycursor = self.connection.cursor()
         mycursor.execute(sql)  
         self.connection.commit()
