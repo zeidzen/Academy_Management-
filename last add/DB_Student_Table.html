@@ -26,7 +26,7 @@
 										</div>
 										<div class="card-body">
 											<div class="table-responsive">
-												<table id="example" class="table table-striped table-bordered w-100 text-nowrap">
+												<table id="example" class="table table-striped table-bordered w-100 text-nowrap" width="100px" >
 													<thead>
 														<tr>
 															<th class="wd-15p">FirstName</th>
@@ -44,19 +44,47 @@
 													<tbody>
 														{% for  student in data ['student'] :%}
 														<tr>
-															<td class="wd-15p">{{student['FirstName']}}</td>
-															<td class="wd-15p">{{student['LastName']}}</td>
-															<td class="wd-15p">{{student['Phone']}}</td>
-															<td class="wd-10p">{{student['Email']}}</td>
-															<td class="wd-20p">{{student['Address']}}</td>
-															<td class="wd-25p">{{student['University']}}</td>
-															<td class="wd-25p">{{student['Specialization']}}</td>
-															<td  class="wd-25p">
-																	<input  type="button" name="ADD_Student" value="Edit" onClick="delete_me({{student['Id']}})"
-																				class="login100-form-btn btn-primary">
+															<form action="/update_student" method="post" enctype="multipart/form-data">
+																<input type="hidden" name="student_Id" value="{{student['Id']}}">
+																<td class="wd-15p" contenteditable="true"><input type="text" name="FirstName" value=" {{student['FirstName']}}"></td>
+																<td class="wd-15p" contenteditable="true"><input type="text" name="LastName" value=" {{student['LastName']}} "></td>
+																<td class="wd-15p" contenteditable="true"><input type="Phone" name="Phone"  value=" {{student['Phone']}} "></td>
+																<td class="wd-10p" contenteditable="true"><input type="email" name="Email" value=" {{student['Email']}} "></td>
 
-															</td>
 
+																<td class="wd-20p">
+																	<select name="city_id"  class="form-control"  required >
+																	<option value="{{student['Address_Id']}}"> {{student['Address']}}</option>
+																	{% for Id, city in data ['city'] :%}
+																	<option value="{{ Id }}">{{city}}</option>
+																	{% endfor %}
+																	</select>
+																</td>
+
+																<td class="wd-25p">
+																	<select name="university_id"  class="form-control"  required >
+																	<option value="{{student['University_Id']}}"> {{student['University']}}</option>
+																	{% for Id, University in data ['university'] :%}
+																	<option value="{{ Id }}">{{University}}</option>
+																	{% endfor %}
+																	</select>
+																</td>
+																<td class="wd-25p">
+																	<select name="specialization_id"  class="form-control"  required >
+																	<option value="{{student['Specialization_Id']}}"> {{student['Specialization']}}</option>
+																	{% for Id, Specialization in data ['specialization'] :%}
+																	<option value="{{ Id }}">{{Specialization}}</option>
+																	{% endfor %}
+																	</select>
+																</td>
+
+
+																<td  class="wd-25p">
+																		<input  type="submit" name="ADD_Student" value="Save Edit"
+																					class="login100-form-btn btn-primary">
+
+																</td>
+															</form>
 															<td class="wd-25p">
 																	<input  type="button" name="ADD_Student" value="x" onClick="delete_me({{student['Id']}})"
 																				class="login100-form-btn btn-primary" style="background: red;">

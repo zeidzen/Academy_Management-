@@ -698,6 +698,16 @@ def Display_Table_Page():
     display_user = pages.Account(Id_User)
     return render_template('DB_Tables.html', data=display_user.data)
 
+@app.route('/display_help')
+def Display_Help_Page():
+    if 'Id_User' not in session:
+        return redirect(url_for('Home_Page'))
+
+    Id_User = session['Id_User']
+
+    display_user = pages.Account(Id_User)
+    return render_template('help_support.html',data=display_user.data)
+
 # ==============================================================================
 # =============================================================================
 
@@ -846,6 +856,25 @@ def update_course():
         return redirect(url_for('Display_Course_Page'))
     else:
         return redirect(url_for('Display_Course_Page'))
+
+
+@app.route('/update_student', methods=['POST'])
+def update_student():
+    update_student = pages.Update_Data(session['Id_User'])
+    if request.method == 'POST':
+        data = dict()
+        data['Id'] = request.form['student_Id']
+        data['FirstName'] = request.form['FirstName']
+        data['LastName'] = request.form['LastName']
+        data['Phone'] = request.form['Phone']
+        data['Email'] = request.form['Email']
+        data['Id_Address'] = request.form['city_id']
+        data['Id_University'] = request.form['university_id']
+        data['Id_Specialization'] = request.form['specialization_id']
+        update_student.update_student(**data)
+        return redirect(url_for('Display_Student_Page'))
+    else:
+        return redirect(url_for('Display_Student_Page'))
 # ==============================================================================
 # ==============================================================================
 

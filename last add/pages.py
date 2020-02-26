@@ -512,6 +512,10 @@ class Display_Student(DB_Header):
         super().__init__(Id_User)
         self.data['title'] = 'Student Table'
         self.data['student'] = self.show_data.get_all_students()
+        self.data['city'] = self.show_data.get_all_cities()
+        self.data['university'] = self.show_data.get_all_universities()
+        self.data['specialization'] = self.show_data.get_all_specialization()
+
 
 
 # Item Data
@@ -595,10 +599,13 @@ class Delete_Data(DB_Header):
         return self.delete_data.delete_post_by_Id(Id_post)
 
 
-
+# -----------------------------------------------------------------------------
+# update Data
+# -----------------------------------------------------------------------------
 class Update_Data(DB_Header):
     def __init__(self, Id_User):
         super().__init__(Id_User)
+
 
     def update_product(self, **info):
         return self.update_data.Update_info_item(**info)
@@ -611,6 +618,9 @@ class Update_Data(DB_Header):
 
     def update_course(self, **info):
         return self.update_data.Update_info_course(**info)
+
+    def update_student(self, **info):
+        return self.update_data.Update_info_Student(**info)
 
 
 
