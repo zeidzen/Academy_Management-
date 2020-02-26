@@ -35,6 +35,8 @@
 															<th class="wd-10p">End Date </th>
 															<th class="wd-25p">Lecturer</th>
 															<th class="wd-20p">Capacity</th>
+															<th class="wd-20p">Option</th>
+															<th class="wd-20p">Option</th>
 
 
 														</tr>
@@ -42,12 +44,36 @@
 													<tbody>
 														{% for  class in data ['classes'] :%}
 														<tr>
-															<td class="wd-15p">{{class['courses_Name']}}</td>
-															<td class="wd-15p">{{class['class_Name']}}</td>
-															<td class="wd-15p">{{class['Start_Date']}}</td>
-															<td class="wd-10p">{{class['End_Date']}}</td>
-															<td class="wd-20p">{{class['Lecturer']}}</td>
-															<td class="wd-25p">{{class['capacity']}}</td>
+															<form action="/update_class" method="post" enctype="multipart/form-data">
+
+																<input type="hidden" name="class_Id" value="{{class['Id']}}">
+																<td class="wd-15p"contenteditable='true'>{{class['courses_Name']}}"</td>
+																<td class="wd-15p"contenteditable='true'><input type="text" name="class_Name" value="{{class['class_Name']}}"></td>
+																<td class="wd-15p"contenteditable='true'><input type="date" name="start_date" value="{{class['Start_Date']}}"></td>
+																<td class="wd-10p"contenteditable='true'><input type="date" name="end_date" value="{{class['End_Date']}}"></td>
+																<td class="wd-20p"contenteditable='true'><input type="text" name="Lecturer" value="{{class['Lecturer']}}"></td>
+																<td class="wd-25p"contenteditable='true'><input type="number" name="capacity" min="1" value="{{class['capacity']}}"></td>
+																 <td  class="wd-25p">
+																		<input  type="submit" name="ADD_Student" value="Save Edit"
+																					class="login100-form-btn btn-primary">
+
+																</td>
+															</form>
+
+															<td class="wd-25p">
+																	<input  type="button" name="ADD_Student" value="Delete" onClick="delete_me({{class['Id']}})"
+																				class="login100-form-btn btn-primary" style="background: red;">
+															</td>
+															<script>
+																function delete_me(id_class)
+																{
+																 	if(confirm("Are You Want to delete Class")){
+																 		window.location.href='/delete_class/' + id_class +'';
+																 		return true;
+																 	}
+																}
+															</script>
+
 
 														</tr>
 														{% endfor %}

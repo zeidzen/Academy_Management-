@@ -29,20 +29,20 @@ class Show_Data():
     def get_all_products(self, sort=0) -> list:
         item = list()
         if sort == 1:
-            sql = """select Id , Name ,Image, Description, Price, Date , Brief
+            sql = """select Id , Name ,Image, Description, Price, Date , Brief ,Availability , Views
                     from items  ORDER BY Name  ;"""
         elif sort == 2:
-            sql = """select Id , Name ,Image, Description, Price, Date , Brief
+            sql = """select Id , Name ,Image, Description, Price, Date , Brief ,Availability ,Views
                     from items  ORDER BY Name desc ;"""
         elif sort == 3:
-            sql = """select Id , Name ,Image, Description, Price, Date , Brief
+            sql = """select Id , Name ,Image, Description, Price, Date , Brief ,Availability ,Views
                     from items  ORDER BY Price  ;"""
 
         elif sort == 4:
-            sql = """select Id , Name ,Image, Description, Price, Date , Brief
+            sql = """select Id , Name ,Image, Description, Price, Date , Brief , Availability ,Views
                     from items  ORDER BY Price desc ;"""
         else:
-            sql = """select Id , Name,Image, Description, Price, Date , Brief from items;"""
+            sql = """select Id , Name,Image, Description, Price, Date , Brief , Availability ,Views  from items;"""
 
         data = self.con.Select_Data_More_Row(sql)
         
@@ -55,6 +55,8 @@ class Show_Data():
             selected['Price'] = items[4]
             selected['Date'] = items[5]
             selected['Brief'] = items[6]
+            selected['Availability'] = items[7]
+            selected['Views'] = items[8]
             item.append(selected)
         return item
 
@@ -322,7 +324,24 @@ class Show_Data():
         sql = "SELECT COUNT(Id) AS total FROM courses"
         total = self.con.Select_Data_One_Row(sql)
         return total[0]
-
+    
+    def Number_students_per_course (self) : 
+        sql = """select courses.Id , courses.Name  , COUNT(sc.Id_Student) from courses , classes , stu_class as sc 
+                WHERE courses.Id = classes.Id_course and classes.Id =sc.Id_Class  
+                GROUP BY sc.Id_Class ;  """
+        courses = self.con.Select_Data_More_Row(sql)
+        data = list()
+        for items in courses:
+            selected = dict()
+            selected['Id'] = items[0]
+            selected['Name'] = items[1]
+            selected['Number_Of_Students'] = items[2]
+            data.append(selected)
+        return data 
+        
+        
+        
+        
     # ------------------------------------------------------------------------------
     # Search
     # ------------------------------------------------------------------------------
@@ -564,6 +583,22 @@ class Show_Data():
         total = self.con.Select_Data_One_Row(sql)
         return total[0]
 
+
+    def number_students_per_class (self) : 
+        sql = """select classes.Id , classes.Name  , COUNT(sc.Id_Student) from  classes , stu_class as sc 
+                WHERE  classes.Id =sc.Id_Class  
+                GROUP BY sc.Id_Class ;    """
+        courses = self.con.Select_Data_More_Row(sql)
+        data = list()
+        for items in courses:
+            selected = dict()
+            selected['Id'] = items[0]
+            selected['Name'] = items[1]
+            selected['Number_Of_Students'] = items[2]
+            data.append(selected)
+        return data 
+    
+    
     # ------------------------------------------------------------------------------
     # Posts
     # ------------------------------------------------------------------------------

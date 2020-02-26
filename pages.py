@@ -15,6 +15,7 @@ class Header():
         self.show_data = processes_DB.Show_Data()
         self.insert_data = processes_DB.insert_data()
         self.register_user = processes_DB.Register_And_login()
+        self.delete_data = processes_DB.delete_data ()
         self.data['title'] = 'Tabasheer Training Academy'        
         self.data['Products_Categories'] = self.show_data.get_all_categories_for_products()
 
@@ -27,6 +28,9 @@ class Header():
         
     def Del_category(self, Id_category: int):
         return self.delete_data.delete_category_by_Id(Id_category)
+    
+    def update_category(self, **info):
+        return self.update_data.Update_info_category(**info)
         
     def Check_Image_Extenstion(self, filename):
         ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'])
@@ -143,6 +147,9 @@ class Courses(Header):
         return self.delete_data.delete_course_by_Id(Id_Course)
     
     
+    def update_course(self, **info):
+        return self.update_data.Update_info_course(**info)
+    
 # -----------------------------------------------------------------------------
 # Products class
 # -----------------------------------------------------------------------------
@@ -218,6 +225,9 @@ class Products(Header):
     def Del_product(self, Id_Product: int):
         return self.delete_data.delete_product_by_Id(Id_Product)
     
+    def update_product(self, **info):
+        return self.update_data.Update_info_item(**info)
+    
 # -----------------------------------------------------------------------------
 # Search class
 # ----------------------------------------------------------------------------
@@ -258,6 +268,10 @@ class Achievements(Header):
         
     def Add_Achievement (self, **info):
         self.insert_data.add_post(**info)        
+        
+    def Del_post(self, Id_post: int):
+        return self.delete_data.delete_post_by_Id(Id_post)
+
 
 # ----------------------------------------------------------------------------
 # About 
@@ -282,6 +296,8 @@ class Dashboard(Header):
         self.data['Number_Products'] = self.show_data.get_number_all_products()
         self.data['Number_Offers'] = self.show_data.get_number_all_offers()
         self.data['User'] = self.show_data.get_info_user_by_Id(Id_User)
+        self.data['Number_Students_Per_Course'] = self.show_data.Number_students_per_course()
+        self. data ['Number_Students_Per_Class'] = self.show_data.number_students_per_class ()
 # ----------------------------------------------------------------------------
 # Users
 # ------------------------------------------------------------------------------
@@ -344,6 +360,9 @@ class Classes (Header):
     def Del_class(self, Id_Class: int):
         return self.delete_data.delete_classes_by_Id(Id_Class)
 
+    def Update_classes(self, **info):
+        return self.update_data.Update_info_classes(**info)
+    
 # -----------------------------------------------------------------------------
 #  OFFERS
 # -----------------------------------------------------------------------------

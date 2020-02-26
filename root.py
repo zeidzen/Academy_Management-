@@ -68,6 +68,19 @@ def add_Category():
     return redirect(url_for('add_category_Page'))
 
 
+
+@app.route('/update_category', methods=['POST'])
+def update_category():
+    data = dict()
+    if request.method == 'POST':
+        data['Id'] = request.form['category_Id']
+        data['Name'] = request.form['category_name']
+        
+        Courses_Class = pages.Courses()
+        Courses_Class.update_category(**data)
+
+    return redirect(url_for('Display_Category_Page'))
+
 #==============================================================================
 #==============================================================================
 @app.route('/products/page=<page>')
@@ -131,14 +144,51 @@ def Add_Product():
 
     return redirect(url_for('add_item_Page'))
 
-@app.route('/display_product')
+@app.route('/display_products')
 def Display_Products_Page():
     if 'Id_User' not in session:
         return redirect(url_for('Home_Page'))
     Products_Class = pages.Products ()
     Products_Class.data['title'] = 'Display Product'
     Products_Class.Show_Data_User ( session ['Id_User'] )
-    return render_template('DB_Item_Table.html', data=Products_Class.data)
+    Products_Class.Show_Data_Products()
+    return render_template('DB_Products_Table.html', data=Products_Class.data)
+
+
+@app.route('/update_product', methods=['POST'])
+def update_product():
+    data = dict()
+    update_product = pages.Update_Data(session['Id_User'])
+    if request.method == 'POST':
+        data['Id'] = request.form['product_Id']
+        data['Name'] = request.form['product_name']
+        data['Brief'] = request.form['product_brief']
+        data['Description'] = request.form['product_description']
+        data['Price'] = request.form['product_price']
+        image = request.files['product_image']
+        data['Image'] = update_product.Uploud_Image('static/img/product_image/', image)
+        data['Views'] = request.form['product_views']
+        data['Availability'] = request.form['product_availability']
+        status = update_product.update_product(**data)
+
+        if status == True:
+            return redirect(url_for('Display_Item_Page'))
+
+        elif status[0] == False:
+            session['Add_Product_Error'] = status[1]
+            return redirect(url_for('Display_Item_Page'))
+
+    return redirect(url_for('Display_Item_Page'))
+
+
+
+@app.route('/delete_product/<id_product>')
+def Delete_Product_Page(id_product):
+    Products_Class = pages.Products()
+    Products_Class.Del_product(int(id_product))
+    return redirect(url_for('Display_Products_Page'))
+
+
 
 #==============================================================================
 #==============================================================================
@@ -188,7 +238,36 @@ def Add_Courses():
         return redirect(url_for('Add_Courses_Page'))
 
 
+@app.route('/update_course', methods=['POST'])
+def update_course():
+    update_course = pages.Update_Data(session['Id_User'])
+    if request.method == 'POST':
+        data = dict()
+        data['Id'] = request.form['course_Id']
+        data['Name'] = request.form['course_Name']
+        data['Brief'] = request.form['course_brief']
+        data['Description'] = request.form['course_description']
+        image = request.files['course_image']
+        data['Image'] = update_course.Uploud_Image('static/img/course_image/', image)
+        data['Price'] = request.form['course_Price']
+        data['Number_of_hours'] = request.form['course_Number_of_hours']
+        data['Views'] = request.form['course_Views']
+        update_course.update_course(**data)
+        return redirect(url_for('Display_Course_Page'))
+    else:
+        return redirect(url_for('Display_Course_Page'))
 
+
+@app.route('/display_course')
+def Display_Course_Page():
+    if 'Id_User' not in session:
+        return redirect(url_for('Home_Page'))
+
+    Courses_Class =pages.Courses ()
+    Courses_Class.data ['title'] = 'Dispaly Courses'
+    Courses_Class.Show_Data_Courses()
+    Courses_Class.Show_Data_User(session['Id_User'])
+    return render_template('DB_Course_Table.html', data=Courses_Class.data)
 
 #==============================================================================
 #==============================================================================
@@ -479,6 +558,36 @@ def add_Class():
         return redirect(url_for('add_class_Page'))
     else:
         return redirect(url_for('add_class_Page'))
+    
+@app.route('/display_class')
+def Display_Class_Page():
+    if 'Id_User' not in session:
+        return redirect(url_for('Home_Page'))
+
+    Classes_Class = pages.Classes ()
+    Classes_Class.data['title'] = 'Display Classes'
+    Classes_Class.Show_Data_Classes()
+    Classes_Class.Show_Data_User ( session ['Id_User']) 
+    return render_template('DB_Tables.html', data=Classes_Class.data)    
+    
+@app.route('/update_class', methods=['POST'])
+def update_class():
+    data = dict()
+    Classes_Class = pages.Classes()
+    if request.method == 'POST':
+        data['Id'] = request.form['class_Id']
+        data['Name'] = request.form['class_Name']
+        data['Start_Date'] = request.form['start_date']
+        data['Start_Date'] = data['Start_Date'].replace('/', '-')
+        data['End_Date'] = request.form['end_date']
+        data['End_Date'] = data['End_Date'].replace('/', '-')
+        data['Lecturer'] = request.form['Lecturer']
+        data['capacity'] = request.form['capacity']
+        Classes_Class.Update_classes(**data)
+        return redirect(url_for('Display_Class_Page'))
+
+
+
 #==============================================================================
 #==============================================================================
 
@@ -564,38 +673,23 @@ def add_city_uni_spe_func():
 
 
 
-@app.route('/display_class')
-def Display_Class_Page():
-    if 'Id_User' not in session:
-        return redirect(url_for('Home_Page'))
-
-    Classes_Class = pages.Classes ()
-    Classes_Class.data['title'] = 'Display Classes'
-    Classes_Class.Show_Data_Classes()
-    return render_template('DB_Class_Table.html', data=Classes_Class.data)
-
-# ----------------------------------------------------------------------------
-
-@app.route('/display_course')
-def Display_Course_Page():
-    if 'Id_User' not in session:
-        return redirect(url_for('Home_Page'))
-
-    Courses_Class =pages.Courses ()
-    Courses_Class.data ['title'] = 'Dispaly Courses'
-    Courses_Class.Show_Data_Courses()
-    return render_template('DB_Course_Table.html', data=Courses_Class.data)
 
 
 # ----------------------------------------------------------------------------
 
-@app.route('/display_Post')
+
+
+
+# ----------------------------------------------------------------------------
+
+@app.route('/display_post')
 def Display_Post_Page():
     if 'Id_User' not in session:
         return redirect(url_for('Home_Page'))
     Achievements_Class = pages.Achievements()
     Achievements_Class.data ['title'] = 'Displat Achievements'
     Achievements_Class.Show_Data_Achievements()
+    Achievements_Class.Show_Data_User (session ['Id_User'])
     return render_template('DB_Post_Table.html', data=Achievements_Class.data)
 
 
@@ -609,12 +703,13 @@ def Display_Payment_Page():
     Payments_Class = pages.Payments()
     Payments_Class.data ['title'] = 'Display Payments'
     Payments_Class.Show_Data_Payments()
+    Payments_Class.Show_Data_User ( session ['Id_User'])
     return render_template('DB_Payment_Table.html', data=Payments_Class.data)
 
 
 # ----------------------------------------------------------------------------
 
-@app.route('/display_Offer')
+@app.route('/display_offer')
 def Display_Offer_Page():
     if 'Id_User' not in session:
         return redirect(url_for('Home_Page'))
@@ -623,6 +718,7 @@ def Display_Offer_Page():
     Offers_Class.data ['title'] = 'Display Offers'
     Offers_Class.Show_Offers_Curses()
     Offers_Class.Show_Offers_Products()
+    Offers_Class.Show_Data_User (session ['Id_User'])
     return render_template('DB_Offer_Table.html', data=Offers_Class.data)
 # ----------------------------------------------------------------------------
 
@@ -645,13 +741,6 @@ def Delete_Student_Page(id_student):
     Students_Class = pages.Students()
     Students_Class.Del_student(int(id_student))
     return redirect(url_for('Display_Student_Page'))
-
-
-@app.route('/delete_product/<id_product>')
-def Delete_Product_Page(id_product):
-    Products_Class = pages.Products()
-    Products_Class.Del_product(int(id_product))
-    return redirect(url_for('Display_Item_Page'))
 
 
 @app.route('/delete_course/<id_course>')
