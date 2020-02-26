@@ -493,7 +493,7 @@ class Show_Data():
 
     def get_all_students(self) -> list:
         sql = """select st.Id, st.FirstName , st.LastName , st.Gender , st.Phone , st.Email , st.Birthday ,
-           c.Name, u.Name , sp.Name
+           c.Id,c.Name, u.Id,u.Name ,sp.Id, sp.Name
            From students st , city c, university u , specialization sp
            Where st.Id_Address = c.Id and st.Id_University = u.Id and st.Id_Specialization = sp.Id ;"""
         students = self.con.Select_Data_More_Row(sql)
@@ -508,9 +508,12 @@ class Show_Data():
             student['Phone'] = item[4]
             student['Email'] = item[5]
             student['Birthday'] = item[6]
-            student['Address'] = item[7]
-            student['University'] = item[8]
-            student['Specialization'] = item[9]
+            student['Address_Id'] = item[7]
+            student['Address'] = item[8]
+            student['University_Id'] = item[9]
+            student['University'] = item[10]
+            student['Specialization_Id'] = item[11]
+            student['Specialization'] = item[12]
             data.append(student)
         return data
 
@@ -1221,13 +1224,9 @@ class Register_And_login():
 
 
 
-data ={'Name':'Darrrarara'}
-
-da = insert_data().add_city(**data)
-da1 = insert_data().add_specialization(**data)
-da2 = insert_data().add_university(**data)
 
 
-print(da)
-print(da1)
-print(da2)
+
+
+
+
