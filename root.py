@@ -158,7 +158,7 @@ def Display_Products_Page():
 @app.route('/update_product', methods=['POST'])
 def update_product():
     data = dict()
-    update_product = pages.Update_Data(session['Id_User'])
+    Products_Class = pages.Products ()
     if request.method == 'POST':
         data['Id'] = request.form['product_Id']
         data['Name'] = request.form['product_name']
@@ -166,19 +166,17 @@ def update_product():
         data['Description'] = request.form['product_description']
         data['Price'] = request.form['product_price']
         image = request.files['product_image']
-        data['Image'] = update_product.Uploud_Image('static/img/product_image/', image)
+        data['Image'] = Products_Class.Uploud_Image('static/img/product_image/', image)
         data['Views'] = request.form['product_views']
         data['Availability'] = request.form['product_availability']
-        status = update_product.update_product(**data)
-
+        
+        status = Products_Class.update_product(**data)
         if status == True:
-            return redirect(url_for('Display_Item_Page'))
-
+            return redirect(url_for('display_products'))
         elif status[0] == False:
             session['Add_Product_Error'] = status[1]
-            return redirect(url_for('Display_Item_Page'))
-
-    return redirect(url_for('Display_Item_Page'))
+            return redirect(url_for('display_products'))        
+    return redirect(url_for('display_products'))
 
 
 
@@ -268,6 +266,12 @@ def Display_Course_Page():
     Courses_Class.Show_Data_Courses()
     Courses_Class.Show_Data_User(session['Id_User'])
     return render_template('DB_Course_Table.html', data=Courses_Class.data)
+
+@app.route('/delete_course/<id_course>')
+def Delete_Course_Page(id_course):
+    Courses_Class = pages.Courses()
+    Courses_Class.Del_course(int(id_course))
+    return redirect(url_for('Display_Course_Page'))
 
 #==============================================================================
 #==============================================================================
@@ -443,10 +447,10 @@ def register_data():
         # birthday
         birthday = request.form['birthday']
         data['birthday'] = birthday.replace('/', '-')
-        # Image
-        image = request.files['user_image']
-        data['Image'] = Add_Product.Uploud_Image('static/img/user_image/', image)
-
+        # Image        
+#        Media = request.files['user_image']
+#        data['Image'] = Users_Class.Uploud_Image('static/img/user_image/', Media)    
+        
         # Insert Data
         status = Users_Class.Add_User(**data)
         if status[0] == True:
@@ -526,6 +530,25 @@ def Display_Student_Page():
     Student_Class.Show_Data_User ( session ['Id_User']) 
     return render_template('DB_Student_Table.html', data=Student_Class.data)
 
+
+@app.route('/update_student', methods=['POST'])
+def update_student():
+    update_student = pages.Update_Data(session['Id_User'])
+    if request.method == 'POST':
+        data = dict()
+        data['Id'] = request.form['student_Id']
+        data['FirstName'] = request.form['FirstName']
+        data['LastName'] = request.form['LastName']
+        data['Phone'] = request.form['Phone']
+        data['Email'] = request.form['Email']
+        data['Id_Address'] = request.form['city_id']
+        data['Id_University'] = request.form['university_id']
+        data['Id_Specialization'] = request.form['specialization_id']
+        update_student.update_student(**data)
+        return redirect(url_for('Display_Student_Page'))
+    else:
+        return redirect(url_for('Display_Student_Page'))
+    
 #==============================================================================
 #==============================================================================
     
@@ -736,18 +759,10 @@ def Display_User_Page():
     
 
 
-@app.route('/delete_student/<id_student>')
-def Delete_Student_Page(id_student):
-    Students_Class = pages.Students()
-    Students_Class.Del_student(int(id_student))
-    return redirect(url_for('Display_Student_Page'))
 
 
-@app.route('/delete_course/<id_course>')
-def Delete_Course_Page(id_course):
-    Courses_Class = pages.Courses()
-    Courses_Class.Del_course(int(id_course))
-    return redirect(url_for('Display_Course_Page'))
+
+
 
 
 @app.route('/delete_class/<id_class>')
@@ -769,7 +784,16 @@ def Delete_Category_Page(id_category):
 def ForgottenPassword_Page():
     pass
 
-
+@app.route('/support')
+def support():
+    if 'Id_User' not in session:
+        return redirect(url_for('Home_Page'))
+    
+    Header_Class = pages.Header()
+    Header_Class.Show_Data_User(session['Id_User'])
+    return render_template('help_support.html' , data = Header_Class.data ) 
+ 
+    
 @app.errorhandler(404)
 def page_not_found(error):
     Error404_class = pages.Error_page()

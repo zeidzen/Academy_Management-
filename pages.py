@@ -43,10 +43,10 @@ class Header():
                 return '../static/img/defult_image/course.png'
             elif 'product' in folder:
                 return '../static/img/defult_image/product.png'
-            elif '' in folder:
-                return '../static/img/defult_image/Teachable-courses.png'
+            elif 'user' in folder:
+                return '../static/img/defult_image/User_Circle.png'
             else:
-                return
+                return "../static/img/defult_image/User_Circle.png"
         else:
             app = Flask(__name__)
             app.config['UPLOAD_FOLDER'] = folder
@@ -226,7 +226,7 @@ class Products(Header):
         return self.delete_data.delete_product_by_Id(Id_Product)
     
     def update_product(self, **info):
-        return self.update_data.Update_info_item(**info)
+        return self.insert_data.Update_info_item(**info)
     
 # -----------------------------------------------------------------------------
 # Search class

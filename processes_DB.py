@@ -915,7 +915,7 @@ class insert_data():
 
     def Update_info_Student(self, **info) -> bool:
 
-        if self.check_Student_exists('Email', info['Email']) == False:
+        if self.check_Student_exists('Email', info['Email']) == True :
             return False, 'An email already exists Please enter a new email'
 
         Email_Pattern = "[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
@@ -1032,13 +1032,14 @@ class insert_data():
 
 
     def Update_info_item(self, **info) -> bool:
-        try:
             id = info['Id']
             del info['Id']
             self.con.Update_Data_All_Coulmn_String('items', id, **info)
             return True
-        except:
-            return False, 'A system error occurred, please try again later'
+        #         try:
+
+        # except:
+        #     return False, 'A system error occurred, please try again later'
         
 
 # -----------------------------------------------------------------------------
