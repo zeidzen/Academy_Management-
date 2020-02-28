@@ -4,7 +4,8 @@ import processes_DB
 import math
 from werkzeug.utils import secure_filename
 import os
-from flask import Flask, request, url_for, redirect, session, jsonify, flash
+from flask import Flask, request, url_for, redirect, session, jsonify, flash 
+
 # -----------------------------------------------------------------------------
 # Header class
 # -----------------------------------------------------------------------------
@@ -327,6 +328,7 @@ class Students (Header):
         self.data['Cities'] = self.show_data.get_all_cities()
         self.data['University'] = self.show_data.get_all_universities()
         self.data['Specialization'] = self.show_data.get_all_specialization()
+        
 
     def Add_students(self, **info):
         self.insert_data.add_student(**info)

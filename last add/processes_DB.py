@@ -860,7 +860,7 @@ class insert_data():
 
     def Update_info_Student(self, **info) -> bool:
 
-        if self.check_Student_exists('Email', info['Email']) == False:
+        if self.check_Student_exists('Email', info['Email']) == True :
             return False, 'An email already exists Please enter a new email'
 
         Email_Pattern = "[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"

@@ -1,16 +1,14 @@
 #$# -*- coding: utf-8 -*-
 import config as con
-from flask import Flask, request, url_for, redirect, session, jsonify, flash
-from flask import render_template
-import pages
+from flask import Flask, request, url_for, redirect, session, jsonify, flash , render_template
+from flask_uploads import UploadSet, configure_uploads, IMAGES, patch_request_class
 import os
-from werkzeug.utils import secure_filename
-import time
+import pages
+
 
 app = Flask(__name__)
 # for session
 app.secret_key = 'Ýy:þCr0qIPüÈø~~E-^pP>·ê¨ç¥MB|aXÁ'
-
 
 @app.route('/')
 def index():
@@ -130,11 +128,17 @@ def Add_Product():
         data['Description'] = request.form['item_description']
         data['Price'] = request.form['item_price']
         image = request.files['item_image']
-        data['Image'] = Products_Class.Uploud_Image('static/img/product_image/', image)
+        data['Image'] = Products_Class.Uploud_Image('static/img/product_image/', image)  
+        
+        Media_Image = request.files.getlist['Media_Image']
+          
         data['Views'] = request.form['item_view']
         data['Availability'] = request.form['item_availability']
         status = Products_Class.Add_Product(**data)
-
+        
+        if len (Media_Image) > 0 : 
+            pass
+            
         if status[0] == True:
             return redirect(url_for('add_item_Page'))
 
