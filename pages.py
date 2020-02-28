@@ -227,7 +227,7 @@ class Products(Header):
         return self.delete_data.delete_product_by_Id(Id_Product)
     
     def update_product(self, **info):
-        return self.insert_data.Update_info_item(**info)
+        return self.insert_data.update_info_product(**info)
     
 # -----------------------------------------------------------------------------
 # Search class

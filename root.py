@@ -129,15 +129,16 @@ def Add_Product():
         data['Price'] = request.form['item_price']
         image = request.files['item_image']
         data['Image'] = Products_Class.Uploud_Image('static/img/product_image/', image)  
-        
         Media_Image = request.files.getlist['Media_Image']
-          
         data['Views'] = request.form['item_view']
         data['Availability'] = request.form['item_availability']
         status = Products_Class.Add_Product(**data)
         
         if len (Media_Image) > 0 : 
-            pass
+            list_image = []
+            for image  in Media_Image : 
+                list_image.append(Products_Class.Uploud_Image('static/img/product_image/', image))
+            
             
         if status[0] == True:
             return redirect(url_for('add_item_Page'))
@@ -388,11 +389,11 @@ def Login_Page():
     if 'Id_User' in session:
         return redirect(url_for('Dashboard_Page'))
     else:
-        
         Users_Class = pages.Users()
         if 'Login_Error' in session:
             Users_Class.data['Login_Error'] = session['Login_Error']
             del session['Login_Error']
+        Users_Class.data ['title'] = 'Login'
         return render_template('DB_Login.html', data=Users_Class.data)
 
 

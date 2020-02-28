@@ -900,13 +900,21 @@ class insert_data():
             return False, 'A system error occurred, please try again later'
 
     # Feautre
-    def add_feautre(self, **info) -> bool:
+    def add_features_courses(self, **info) -> bool:
         try:
             self.con.Insert_Data('features_courses', **info)
             return True
         except:
             return False, 'A system error occurred, please try again later'
 
+    # Media
+    def add_media_courses(self, **info) -> bool:
+        try:
+            self.con.Insert_Data('media_courses', **info)
+            return True
+        except:
+            return False, 'A system error occurred, please try again later'
+        
     # ------------------------------------------------------------------------------
     # Class
     # ------------------------------------------------------------------------------
@@ -939,25 +947,14 @@ class insert_data():
     # Category
     # ------------------------------------------------------------------------------
 
-    # test
     def add_category(self, **info) -> bool:
         try:
             self.con.Insert_Data('categories', **info)
             return True
         except:
             return False, 'A system error occurred, please try again later'
-
-    # test ??????????
-    def add_product(self, **info) -> bool:
-
-        self.con.Insert_Data('items', **info)
-        return True, 'successfully added the product'
-
-    # try:
-    # except:
-    #     return False, 'A system error occurred, please try again later'
-
-    # test
+        
+        
     def Update_info_category(self, **info) -> bool:
         try:
             id = info['Id']
@@ -967,7 +964,18 @@ class insert_data():
         except:
             return False, 'A system error occurred, please try again later'
 
-    def Update_info_item(self, **info) -> bool:
+    # ------------------------------------------------------------------------------
+    # Products
+    # ------------------------------------------------------------------------------    
+    def add_product(self, **info) -> bool:
+        try:
+            self.con.Insert_Data('items', **info)
+            return True, 'successfully added the product'
+        except:
+            return False, 'A system error occurred, please try again later'
+
+
+    def update_info_product(self, **info) -> bool:
         try:
             id = info['Id']
             del info['Id']
@@ -975,6 +983,23 @@ class insert_data():
             return True
         except:
             return False, 'A system error occurred, please try again later'
+        
+    # Feautre
+    def add_features_product(self, **info) -> bool:
+        try:
+            self.con.Insert_Data('features_products', **info)
+            return True
+        except:
+            return False, 'A system error occurred, please try again later'
+
+    # Media
+    def add_media_product(self, **info) -> bool:
+        try:
+            self.con.Insert_Data('features_courses', **info)
+            return True
+        except:
+            return False, 'A system error occurred, please try again later'
+        
 
     # ------------------------------------------------------------------------------
     # Post # offers # Payment
