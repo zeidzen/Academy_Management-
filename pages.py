@@ -54,7 +54,6 @@ class Header():
             if image and self.Check_Image_Extenstion(image.filename):
                 filename = secure_filename(image.filename)
                 image.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-
             path = '../' + folder + image.filename.replace(' ', '_')
             return path
 
@@ -138,11 +137,11 @@ class Courses(Header):
         self.insert_data.add_course(**info)
         
 
-    def add_feautre(self, **info):
+    def add_feautre_courses (self, **info):
         self.insert_data.add_feautre_courses(**info)
         
-    def add_media (self  ) : 
-           pass
+    def add_media_courses (self ,**info) : 
+           self.insert_data.add_media_courses(**info)
        
     def Del_course(self, Id_Course: int):
         return self.delete_data.delete_course_by_Id(Id_Course)
@@ -150,6 +149,9 @@ class Courses(Header):
     
     def update_course(self, **info):
         return self.update_data.Update_info_course(**info)
+    
+    def get_last_id_course (self) : 
+        return self.show_data.get_last_id_course()
     
 # -----------------------------------------------------------------------------
 # Products class
@@ -223,11 +225,22 @@ class Products(Header):
     def Add_Product (self, **info):
         return self.insert_data.add_product(**info)
     
+    def Add_Features_Product (self, **info):
+        return self.insert_data.add_features_product(**info)    
+    
+
+    
+    def Add_Media_Product (self, **info):
+        return self.insert_data.add_media_product(**info)  
+    
     def Del_product(self, Id_Product: int):
         return self.delete_data.delete_product_by_Id(Id_Product)
     
     def update_product(self, **info):
         return self.insert_data.update_info_product(**info)
+    
+    def get_last_id_product (self) : 
+        return self.show_data.get_last_id_product()
     
 # -----------------------------------------------------------------------------
 # Search class

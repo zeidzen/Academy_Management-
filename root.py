@@ -1,10 +1,8 @@
 #$# -*- coding: utf-8 -*-
 import config as con
 from flask import Flask, request, url_for, redirect, session, jsonify, flash , render_template
-from flask_uploads import UploadSet, configure_uploads, IMAGES, patch_request_class
-import os
 import pages
-
+from werkzeug import secure_filename
 
 app = Flask(__name__)
 # for session
@@ -116,7 +114,7 @@ def add_product_Page():
     return render_template('DB_Add_Items.html', data=Products_Class.data)
 
 
-@app.route('/add_product_to_db', methods=['POST'])
+@app.route('/add_product_to_db', methods=['GET','POST'])
 def Add_Product():
     
     Products_Class =pages.Products ()
@@ -129,25 +127,47 @@ def Add_Product():
         data['Price'] = request.form['item_price']
         image = request.files['item_image']
         data['Image'] = Products_Class.Uploud_Image('static/img/product_image/', image)  
-        Media_Image = request.files.getlist['Media_Image']
-        data['Views'] = request.form['item_view']
+        data['Views'] = request.form ['item_view']
         data['Availability'] = request.form['item_availability']
         status = Products_Class.Add_Product(**data)
-        
-        if len (Media_Image) > 0 : 
-            list_image = []
-            for image  in Media_Image : 
-                list_image.append(Products_Class.Uploud_Image('static/img/product_image/', image))
-            
-            
-        if status[0] == True:
-            return redirect(url_for('add_item_Page'))
+        Id_product = Products_Class.get_last_id_product()
 
+        UPLOAD_FOLDER = './uploads'
+        app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER 
+             
+        Media_Image1 = request.files['Midea_Image1']
+        Media_Image2 = request.files['Midea_Image2']
+        Media_data = dict()
+        if Media_Image1.filename != '' : 
+            Media_data ['Id_Item'] =Id_product
+            Media_data ['Type'] = 1
+            Media_data ['Path'] = Products_Class.Uploud_Image('static/img/product_image/', Media_Image1)
+            Products_Class.Add_Media_Product(**Media_data)
+            
+        Media_data = dict()
+        if Media_Image2.filename != '' :
+            Media_data ['Id_Item'] =Id_product
+            Media_data ['Type'] = 1
+            Media_data ['Path'] = Products_Class.Uploud_Image('static/img/product_image/', Media_Image2)
+            Products_Class.Add_Media_Product(**Media_data)
+                
+        Features = request.form['Features']
+        Features = Features.split(',')  
+        if len (Features) > 0 : 
+            Features_data = dict()
+            for feature  in Features : 
+                Features_data['Id_Item'] = Id_product
+                Features_data ['Feature'] = feature
+                Products_Class.Add_Features_Product(**Features_data)
+                
+        if status[0] == True:
+            return redirect(url_for('add_product_Page'))
         elif status[0] == False:
             session['Add_Product_Error'] = status[1]
-            return redirect(url_for('add_item_Page'))
+            return redirect(url_for('add_product_Page'))
 
-    return redirect(url_for('add_item_Page'))
+    return redirect(url_for('add_product_Page'))
+
 
 @app.route('/display_products')
 def Display_Products_Page():
@@ -221,7 +241,7 @@ def Add_Courses_Page():
     return render_template('DB_Add_Courses.html', data=Courses_Class.data)
 
 
-@app.route('/Add_courses_to_DB', methods=['POST'])
+@app.route('/add_courses_to_db', methods=['POST'])
 def Add_Courses():
     Courses_Class = pages.Courses()
     if request.method == 'POST':
@@ -236,6 +256,33 @@ def Add_Courses():
         data['Number_of_hours'] = request.form['courses_num_of_hours']
         data['Views'] = request.form['courses_view']
         Courses_Class.add_courses(**data)
+        Id_Course = Courses_Class.get_last_id_course()
+             
+        Media_Image1 = request.files['Midea_Image1']
+        Media_Image2 = request.files['Midea_Image2']
+        Media_data = dict()
+        if Media_Image1.filename != '' : 
+            Media_data ['Id_course'] =Id_Course
+            Media_data ['Type'] = 1
+            Media_data ['Path'] = Courses_Class.Uploud_Image('static/img/product_image/', Media_Image1)
+            Courses_Class.add_media_courses(**Media_data)
+            
+        Media_data = dict()
+        if Media_Image2.filename != '' :
+            Media_data ['Id_course'] =Id_Course
+            Media_data ['Type'] = 1
+            Media_data ['Path'] = Courses_Class.Uploud_Image('static/img/product_image/', Media_Image2)
+            Courses_Class.add_media_courses(**Media_data)
+                
+        Features = request.form['Features']
+        Features = Features.split(',')  
+        if len (Features) > 0 : 
+            Features_data = dict()
+            for feature  in Features : 
+                Features_data['Id_course'] = Id_Course
+                Features_data ['Feature'] = feature
+                Courses_Class.add_feautre_courses(**Features_data)
+                
         return redirect(url_for('Add_Courses_Page'))
     else:
         return redirect(url_for('Add_Courses_Page'))

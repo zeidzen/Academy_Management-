@@ -200,6 +200,10 @@ class Show_Data():
         total = self.con.Select_Data_One_Row(sql)
         return total[0]
 
+    def get_last_id_product (self) : 
+        sql = "SELECT id FROM items ORDER BY id DESC LIMIT 1"
+        Id = self.con.Select_Data_One_Row(sql)
+        return Id[0]
     # ------------------------------------------------------------------------------
     # Media Products
     # ------------------------------------------------------------------------------
@@ -340,7 +344,10 @@ class Show_Data():
         return data 
         
         
-        
+    def get_last_id_course (self) : 
+        sql = "SELECT id FROM courses ORDER BY id DESC LIMIT 1"
+        Id = self.con.Select_Data_One_Row(sql)
+        return Id[0]     
         
     # ------------------------------------------------------------------------------
     # Search
@@ -955,19 +962,21 @@ class insert_data():
 
     # Feautre
     def add_feautre_courses(self, **info) -> bool:
-        try:
+        
             self.con.Insert_Data('features_courses', **info)
             return True
-        except:
-            return False, 'A system error occurred, please try again later'
+        # try:
+        # except:
+        #     return False, 'A system error occurred, please try again later'
         
     # Media
-    def add_feautre(self, **info) -> bool:
-        try:
-            self.con.Insert_Data('features_courses', **info)
+    def add_media_courses(self, **info) -> bool:
+       
+            self.con.Insert_Data('media_courses', **info)
             return True
-        except:
-            return False, 'A system error occurred, please try again later'
+        # try:
+        # except:
+        #     return False, 'A system error occurred, please try again later'
 
 # -----------------------------------------------------------------------------
 # Class
@@ -987,7 +996,6 @@ class insert_data():
         except:
             return False, 'A system error occurred, please try again later'
 
-    # test
     def Update_info_classes(self, **info) -> bool:
         try:
             # self.con.Update_Data_All_Coulmn_String('classes',info['Id'] , **info)
@@ -999,7 +1007,6 @@ class insert_data():
 # Category
 # -----------------------------------------------------------------------------
 
-    # test
     def add_category(self, **info) -> bool:
         try:
             self.con.Insert_Data('categories', **info)
@@ -1008,7 +1015,6 @@ class insert_data():
             return False, 'A system error occurred, please try again later'
         
         
-    # test
     def Update_info_category(self, **info) -> bool:
         try:
             id = info['Id']
@@ -1017,6 +1023,8 @@ class insert_data():
             return True
         except:
             return False, 'A system error occurred, please try again later'
+        
+        
 
 # -----------------------------------------------------------------------------
 # Product
@@ -1031,15 +1039,34 @@ class insert_data():
             return False, 'A system error occurred, please try again later'
 
 
-    def Update_info_item(self, **info) -> bool:
+    def update_info_product(self, **info) -> bool:
+        try:
             id = info['Id']
             del info['Id']
             self.con.Update_Data_All_Coulmn_String('items', id, **info)
             return True
-        #         try:
+        except:
+            return False, 'A system error occurred, please try again later'
+        
+        
+    # Feautre
+    def add_features_product(self, **info) -> bool:
+        try:
+            self.con.Insert_Data('features_products', **info)
+            return True
+        except:
+            return False, 'A system error occurred, please try again later'
 
+    # Media
+    def add_media_product(self, **info) -> bool:
+            self.con.Insert_Data('media_products', **info)
+            return True
+        # try:
         # except:
         #     return False, 'A system error occurred, please try again later'
+        
+
+        
         
 
 # -----------------------------------------------------------------------------
