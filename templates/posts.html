@@ -69,14 +69,14 @@
 							<ul class="pagination">
 								{% if page > 1 :  %}
 								{% block previous_page  %}
-								<li><a href="/achievements/page={{page-1}}">&lt;</a></li>
-								<li><a href="/achievements/page={{page-1}}">{{page-1}}</a></li>
+								<li><a href="/posts/page={{page-1}}">&lt;</a></li>
+								<li><a href="/posts/page={{page-1}}">{{page-1}}</a></li>
 								{% endblock  previous_page %}
 								{% endif %}
 								<li class="active"><span>{{page}}</span></li>
 								{% if page != data ['Max_page'] :  %}
-								<li><a href="/achievements/page={{page+1}}">{{page+1}}</a></li>
-								<li><a href="/achievements/page={{page+1}}">&gt;</a></li>
+								<li><a href="/posts/page={{page+1}}">{{page+1}}</a></li>
+								<li><a href="/posts/page={{page+1}}">&gt;</a></li>
 								{% endif %}
 							</ul>
 						</div>

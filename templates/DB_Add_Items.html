@@ -28,12 +28,12 @@
 
 												<div class="col-md-12">
 													<div class="form-group">
-														<form action="/Add_items_to_DB" method="post" enctype="multipart/form-data" >
+														<form action="/add_product_to_db" method="post" enctype="multipart/form-data" >
 
 															<label  for="input-CategoryId">Category</label>
 															<select name="category_Id" id="input-CategoryId" class="form-control" required >
 																<option value=""> --- Please Select --- </option>
-																{% for  Category in data ['Category'] :%}
+																{% for  Category in data ['Products_Categories'] :%}
 																<option value="{{ Category ['Id'] }}">{{ Category ['Name'] }} </option>
 																{% endfor %}
 															</select>
@@ -44,19 +44,31 @@
 															<br>
 
 															<label>Brief</label>
-															<input type="text" name="item_brief" value="" placeholder="Product Brief"  class="form-control w-100" required >
+															<textarea rows="3" cols="500" name="item_brief" placeholder="Product Brief" class="form-control w-100"   required > </textarea>
+															<br>
+
+															<label>Features</label>
+															<textarea rows="3" cols="500" name="Features" placeholder="Feature , Feature , Feature " class="form-control w-100"   required > </textarea>
 															<br>
 
 															<label>Description</label>
-															<input type="text" name="item_description" value="" placeholder="Product Description"  class="form-control w-100">
+															<textarea rows="6"  name="item_description" placeholder="Product Description" class="form-control w-100"   required > </textarea>
 															<br>
 
 															<label>Price</label>
 															<input type="number" name="item_price" value="" placeholder="Product Price" min = "0" class="form-control w-100" required >
 															<br>
 
-															<label>Image</label>
-															<input type="file" name="item_image" value="" placeholder="Product Image"  class="form-control w-100">
+															<label>Main Image</label>
+															<input type="file" name="item_image" value="" placeholder="Product Image"  class="form-control w-100"  required >
+															<br>
+
+															<label>More Image</label>
+															<input type="file" name="Midea_Image1" value="" placeholder="Product Image"  class="form-control w-100" >
+															<br>
+
+															<label>More Image</label>
+															<input type="file" name="Midea_Image2" value="" placeholder="Product Image"  class="form-control w-100" >
 															<br>
 
 															<label>View</label>

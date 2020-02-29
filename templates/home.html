@@ -78,10 +78,7 @@
 													</div>
 												</div>
 												<div class="right-block">
-													<div class="time-sale">
-														<p class="time-day">30 days</p>
-														<p class="time-hour">11  :  25  :  53</p>
-													</div>
+													
 													<div class="caption">
 														<h4><a href="/course/{{course['Id']}}"> {{course ['Name']}} </a></h4>		
 														<div class="price">
@@ -123,6 +120,8 @@
 							   			<div class="job"><p>Communication Engineer</p></div>
 									</div>
 
+<<<<<<< HEAD
+=======
 									<div class="owl-testimonials">
 										<div class="content">
 											<p>Lorem ipsum dolor sit amet, conmetur asdipiscing elit,sed doeius tempo lorem ipsum raLorem ipsum dolor sit amet, consec tetur adipiscing elit, sed do eiusmod.</p>
@@ -132,6 +131,7 @@
 							   			<div class="job"><p>Communication Engineer</p></div>
 									</div>
 
+>>>>>>> Branch-V1
 									<div class="owl-testimonials">
 										<div class="content">
 											<p>Lorem ipsum dolor sit amet, conmetur asdipiscing elit,sed doeius tempo lorem ipsum raLorem ipsum dolor sit amet, consec tetur adipiscing elit, sed do eiusmod.</p>
@@ -141,60 +141,51 @@
 							   			<div class="job"><p>Communication Engineer</p></div>
 									</div>
 
+<<<<<<< HEAD
+									<div class="owl-testimonials">
+										<div class="content">
+											<p>Lorem ipsum dolor sit amet, conmetur asdipiscing elit,sed doeius tempo lorem ipsum raLorem ipsum dolor sit amet, consec tetur adipiscing elit, sed do eiusmod.</p>
+										</div>
+										<div class="avata"><img  src="../static/img/Trainer/maen.jpg" alt=""></div>
+										<div class="name"><p>Ma'en w.dherat </p></div>
+							   			<div class="job"><p>Communication Engineer</p></div>
+									</div>
+
+=======
+>>>>>>> Branch-V1
 
 
 								</div>
 							</div>
-
-							<div class="latest-blog">
-								<h3 class="modtitle">Achievements</h3>
+								<h3 class="modtitle">New Products</h3>
 								<hr><hr><hr>
-								<div class="owl-carousel owl-blog" data-margin="0" data-nav="yes" data-loop="yes" data-items_xs="1" data-items_sm="1" data-items_md="1">
-									{% for post in data ['last_five_posts'] : %}
-									<div class="owl-latest-blog">
-										<div class="blog-item item">
+								<div class="owl-carousel owl-special" data-margin="0" data-loop="yes" data-nav="yes" data-dots="no" data-items_xs="1" data-items_sm="1" data-items_md="1">
+									{% for product in  data ['last_ten_Products'] : %}
+										<div class="product-layout">
+											<div class="product-item-container">
+												<div class="left-block">
+													<div class="product-image-container  second_img ">
+														<a href="/product/{{product['Id']}}" class="product-img"><img  src="{{ product['Image'] }}" alt=""></a>
 
-											<div class="itemBlogImg">
-												<div class="article-image ">
-													<div>
-														<a class="popup-gallery" href="/post/{{post ['Id']}}"><img  src="{{post ['Media']}}" alt="Kire tuma demonstraverunt lector"></a>
+														<!--Sale Label-->
+														<span class="sale">{{product ['Sale'] }}%</span>
 													</div>
 												</div>
-											</div>
-											<div class="itemBlogContent1">
-												<div class="article-title1">
-													<h4>
-														<a href="/post/{{post ['Id']}}"}>{{post ['Title']}} </a>
-													</h4>
-												</div>
-												<div class="article-description1">
-													{{post ['brief']}}... </div>
-													<div class="blog-meta1">
-														<span class="author">
-															<a href="/post/{{post ['Id']}}">View more
-																<i class="fa fa-angle-double-right" aria-hidden="true"></i>
-															</a>
-														</span>
+												<div class="right-block">
+													
+													<div class="caption">
+														<h4><a href="/product/{{product['Id']}}"> {{product ['Name']}} </a></h4>		
+														<div class="price">
+															<span class="price">$  {{product ['Price']}} </span>		   
+														</div>
 													</div>
-												</div>
+												</div><!-- right block -->
+												
+												
 											</div>
 										</div>
-										{%endfor%}
-
-									</div>
+										{% endfor %}
 								</div>
-
-								<!-- 
-								<div class="module banner-left hidden-xs">
-									<div class="modcontent clearfix">
-										<div class="banners">
-											<div>
-												<a href="#"><img  src="../static/img/demo/banner/home-2/banner-3.jpg" alt="left-image"></a>
-											</div>
-										</div>
-
-									</div>
-								</div> -->
 
 
 						</aside>
@@ -247,6 +238,7 @@
 											</div>
 										</div>
 
+<<<<<<< HEAD
 										<div class=" fashion-jewerly">
 											<div class="row">
 												<div class=" col-sm-12">
@@ -285,6 +277,8 @@
 												</div>
 											</div>
 										</div>
+=======
+>>>>>>> Branch-V1
 
 										<div class=" fashion-jewerly">
 											<div class="row">

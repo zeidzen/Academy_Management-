@@ -53,26 +53,26 @@
 
 
 																<td class="wd-20p">
-																	<select name="city_id"  class="form-control"   >
-																	<option value="{{student['Address_Id']}}" selected> {{student['Address']}}</option>
-																	{% for Id, city in data ['Cities'] :%}
+																	<select name="city_id"  class="form-control"  required >
+																	<option value="{{student['Address_Id']}}"> {{student['Address']}}</option>
+																	{% for Id, city in data ['city'] :%}
 																	<option value="{{ Id }}">{{city}}</option>
 																	{% endfor %}
 																	</select>
 																</td>
 
 																<td class="wd-25p">
-																	<select name="university_id"  class="form-control"  >
-																	<option value="{{student['University_Id']}}" selected> {{student['University']}}</option>
-																	{% for Id, University in data ['University'] :%}
+																	<select name="university_id"  class="form-control"  required >
+																	<option value="{{student['University_Id']}}"> {{student['University']}}</option>
+																	{% for Id, University in data ['university'] :%}
 																	<option value="{{ Id }}">{{University}}</option>
 																	{% endfor %}
 																	</select>
 																</td>
 																<td class="wd-25p">
-																	<select name="specialization_id"  class="form-control"  >
-																	<option value="{{student['Specialization_Id']}}" selected>  {{student['Specialization']}}</option>
-																	{% for Id, Specialization in data ['Specialization'] :%}
+																	<select name="specialization_id"  class="form-control"  required >
+																	<option value="{{student['Specialization_Id']}}"> {{student['Specialization']}}</option>
+																	{% for Id, Specialization in data ['specialization'] :%}
 																	<option value="{{ Id }}">{{Specialization}}</option>
 																	{% endfor %}
 																	</select>

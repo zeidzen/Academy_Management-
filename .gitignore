@@ -127,3 +127,8 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+*.py
+*.py
+database/tabasheer_academy.sql
+database.py
+processes_DB.py

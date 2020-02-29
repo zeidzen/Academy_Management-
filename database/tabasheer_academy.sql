@@ -3,7 +3,11 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
+<<<<<<< HEAD
 -- Generation Time: Feb 22, 2020 at 04:31 AM
+=======
+-- Generation Time: Feb 28, 2020 at 02:47 PM
+>>>>>>> Branch-V1
 -- Server version: 5.7.26
 -- PHP Version: 7.2.18
 
@@ -34,7 +38,7 @@ CREATE TABLE IF NOT EXISTS `categories` (
   `Name` varchar(255) NOT NULL,
   `Type` int(1) NOT NULL,
   PRIMARY KEY (`Id`)
-) ENGINE=MyISAM AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=23 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `categories`
@@ -59,8 +63,7 @@ INSERT INTO `categories` (`Id`, `Name`, `Type`) VALUES
 (16, 'Languages', 2),
 (17, 'IOT', 2),
 (18, 'IOT', 1),
-(19, 'test2', 1),
-(20, 'test3', 2);
+(22, 'EEG', 1);
 
 -- --------------------------------------------------------
 
@@ -73,7 +76,7 @@ CREATE TABLE IF NOT EXISTS `city` (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
   `Name` varchar(255) NOT NULL,
   PRIMARY KEY (`Id`)
-) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `city`
@@ -83,7 +86,9 @@ INSERT INTO `city` (`Id`, `Name`) VALUES
 (1, 'Amman'),
 (2, 'zarqa'),
 (3, 'Irbid'),
-(4, 'mafraq');
+(4, 'mafraq'),
+(5, 'zzz'),
+(6, 'الحسكة');
 
 -- --------------------------------------------------------
 
@@ -103,7 +108,7 @@ CREATE TABLE IF NOT EXISTS `classes` (
   `Date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`Id`),
   KEY `FK_classes_course` (`Id_course`)
-) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `classes`
@@ -112,7 +117,8 @@ CREATE TABLE IF NOT EXISTS `classes` (
 INSERT INTO `classes` (`Id`, `Id_course`, `Name`, `Start_Date`, `End_Date`, `Lecturer`, `capacity`, `Date`) VALUES
 (1, 1, 'A1', '2020-02-08', '2020-04-04', 'Osama Yousef', 8, '2020-02-08 21:53:08'),
 (2, 2, 'A2', '2020-02-08', '2020-02-29', 'zeid zein alabdeen', 8, '2020-02-08 21:53:08'),
-(4, 12, 'توم و جيري ', '2020-02-13', '2020-02-20', 'علي', 20, '2020-02-18 11:58:56');
+(4, 12, 'توم و جيري ', '2020-02-13', '2020-02-20', 'علي', 20, '2020-02-18 11:58:56'),
+(5, 16, 'Level1', '2020-02-12', '2020-02-22', 'علي', 5, '2020-02-23 18:08:04');
 
 -- --------------------------------------------------------
 
@@ -134,7 +140,11 @@ CREATE TABLE IF NOT EXISTS `courses` (
   `Date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`Id`),
   KEY `FK_courses_category` (`Id_Category`)
+<<<<<<< HEAD
 ) ENGINE=MyISAM AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
+=======
+) ENGINE=MyISAM AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
+>>>>>>> Branch-V1
 
 --
 -- Dumping data for table `courses`
@@ -153,7 +163,13 @@ INSERT INTO `courses` (`Id`, `Id_Category`, `Name`, `Brief`, `Description`, `Ima
 (11, 17, 'Arduino  With Python', 'Learn Arduino Online At Your Own Pace. Start Today and Become an Expert in Days. Join Over 40 Million People Learning Online with Udemy. 30-Day Money-Back Guarantee! Pandas Tutorials. 30-Day Money Guarantee. Lifetime Access. REST APIs With Flask.', 'Learn Arduino Online At Your Own Pace. Start Today and Become an Expert in Days. Join Over 40 Million People Learning Online with Udemy. 30-Day Money-Back Guarantee! Pandas Tutorials. 30-Day Money Guarantee. Lifetime Access. REST APIs With Flask.', '../static/img/course_image/Arduino-With-Python-How-to-Get-Started_Watermarked.67d3c045231b.jpg', 300, 60, 25, '2020-02-18 06:34:54'),
 (12, 13, 'Deep Learning', 'Deep learning is a subset of machine learning in artificial intelligence (AI) that has networks capable of learning unsupervised from data that is unstructured or unlabeled. Also known as deep neural learning or deep neural network.', 'Deep learning is a subset of machine learning in artificial intelligence (AI) that has networks capable of learning unsupervised from data that is unstructured or unlabeled. Also known as deep neural learning or deep neural network.', '../static/img/course_image/iStock-1181216327-750x422.jpg', 500, 50, 25, '2020-02-18 08:01:31'),
 (13, 13, 'Data Analysis', 'Data analysis is a process of inspecting, cleansing, transforming and modeling data with the goal of discovering useful information, informing conclusion and supporting decision-making.', 'Data analysis is a process of inspecting, cleansing, transforming and modeling data with the goal of discovering useful information, informing conclusion and supporting decision-making.', '../static/img/course_image/Business_Data_and_Graph_Analysis.png', 500, 100, 25, '2020-02-22 03:05:20'),
+<<<<<<< HEAD
 (14, 13, 'Data Mining Techniques', 'Data mining is highly effective, so long as it draws upon one or more of these techniques:', 'Data mining is highly effective, so long as it draws upon one or more of these techniques:', '../static/img/course_image/1__FmxiAaS1Or1Wpo6-Gf1hw.jpeg', 300, 100, 25, '2020-02-22 03:07:41');
+=======
+(14, 13, 'Data Mining Techniques', 'Data mining is highly effective, so long as it draws upon one or more of these techniques:', 'Data mining is highly effective, so long as it draws upon one or more of these techniques:', '../static/img/course_image/1 _FmxiAaS1Or1Wpo6-Gf1hw.jpeg', 300, 100, 25, '2020-02-22 03:07:41'),
+(15, 17, 'Arduino  3 ', 'Open-source electronic prototyping platform enabling users to create interactive electronic objects.', 'Open-source electronic prototyping platform enabling users to create interactive electronic objects.', '../static/img/course_image/ap550x55016x121transparentt.u1.png', 50, 10, 26, '2020-02-23 09:46:57'),
+(16, 13, 'Machine Learning 2 ', 'Machine learning is an application of artificial intelligence (AI) that provides systems the ability to automatically learn and improve from experience without being explicitly programmed. Machine learning focuses on the development of computer programs that can access data and use it learn for themselves.', 'Machine learning is an application of artificial intelligence (AI) that provides systems the ability to automatically learn and improve from experience without being explicitly programmed. Machine learning focuses on the development of computer programs that can access data and use it learn for themselves.', '../static/img/course_image/bigstock-D-Rendering-Of-Human-Brain-O-180772720-1024x683.jpg', 600, 100, 90, '2020-02-23 09:51:46');
+>>>>>>> Branch-V1
 
 -- --------------------------------------------------------
 
@@ -290,7 +306,6 @@ INSERT INTO `items` (`Id`, `Id_Category`, `Name`, `Brief`, `Description`, `Price
 (24, 5, '3D PRINTER PLA 3.0MM 1KG/SPOOL\r\n', 'Instrument cultivated alteration any favourable expression law far nor. Both new like tore but year. An from mean on with when sing pain. Oh to as principles devonshire companions unsatiable an delightful. The ourselves suffering the sincerity. Inhabit her manners adapted age certain. Debating offended at branched striking be subjects.', '3D Printer PLA 3.0mm 1kg/spool', 40, 'https://mikroelectron.com/ProImg/X4/1cd34eb1-b673-4362-8cdd-e8d9688790e7.jpg', 25, 1, '2020-02-08 21:28:12'),
 (25, 5, 'ARDUINO CNC SHIELD V3', 'Instrument cultivated alteration any favourable expression law far nor. Both new like tore but year. An from mean on with when sing pain. Oh to as principles devonshire companions unsatiable an delightful. The ourselves suffering the sincerity. Inhabit her manners adapted age certain. Debating offended at branched striking be subjects.', 'This shield (HCARDU0086) is designed to allow you to control a CNC router or milling machine from an Arduino board. It contains 4 driver sockets which allows compatible Pololu A4988 driver modules to be inserted (see HCMODU0068 on our website) providing the ability to drive 3 stepper motor axis (XY& Z) plus an optional 4th auxiliary motor. Additional connectors provide easy connection of end stop sensors and control buttons. ', 12, 'https://mikroelectron.com/ProImg/X4/261f47d7-c9b7-4ef9-b84b-c43b2a168473.jpg', 25, 1, '2020-02-08 21:29:25'),
 (26, 5, 'STEPSTICK A4988 STEPPER DRIVER', 'Instrument cultivated alteration any favourable expression law far nor. Both new like tore but year. An from mean on with when sing pain. Oh to as principles devonshire companions unsatiable an delightful. The ourselves suffering the sincerity. Inhabit her manners adapted age certain. Debating offended at branched striking be subjects.', 'A4988 is a complete microstepping motor driver with built-in translator for easy operation. This product is can work in full-stephalf-step1/41/8 and 1/16 step modes. It operates bipolar stepper motors. Output drive capacity of up to 35 V and 2A. The A4988 includes a fixed off-time current regulatorin slow or mixed decay modes. The A4988 converter is the key to the easy implementation. As long as the \"step\" input gets one pulseit will drive the motor one microstep (One palse per microstep). There are no phase sequence tableshigh frequency control linesor complex interfaces to program.\r\n\r\nIn the micro-step operationthe A4988 chopping control automatically selects the current decay mode (Slow or Mixed). In mixed decay modethe device is initially set to a fixed downtime in some fast decaythen the rest of the slow decay downtime. Mixed decay current control scheme results in reduced audible motor noiseincreased step accuracyand reduced power consumption. Internal synchronous rectification control circuitry is provided to improve the pulse-width modulation (PWM) operation power consumption. Internal circuit protection includes: thermal shutdown with hysteresisundervoltage lockout (UVLO)and crossover-current protection. Special power sequencing.', 4.5, 'https://mikroelectron.com/ProImg/X4/a6b6a73b-03f6-4c11-861c-f15da282c028.jpg', 25, 1, '2020-02-08 21:29:25'),
-(27, 5, '3D PRINTER CONTROL BOARD MELZI V.2', 'Instrument cultivated alteration any favourable expression law far nor. Both new like tore but year. An from mean on with when sing pain. Oh to as principles devonshire companions unsatiable an delightful. The ourselves suffering the sincerity. Inhabit her manners adapted age certain. Debating offended at branched striking be subjects.', ' Circuit Version: melzi2.0\r\nWorking voltage: 12V\r\nMain chip: ATMEL ATMEGA1284P chip\r\nCould control hotbed MK1MK2aMK2bMK3\r\nOnboard FT232RL interface switch chip\r\nUSB interface: connect with computer for data  communication and programe download\r\nIntegrated 4 A4988 stepper motor driver\r\nIntegrated G code Mini SD cardcould realize off-line  printing\r\nIntegrated 3 MOSFET driver hotendhotbed and fan\r\nDimensions:  21 x 5 cm\r\nWeight: 70g', 50, 'https://mikroelectron.com/ProImg/X4/e362da4f-29c1-499e-90e3-f0f2e7b1f956.jpg', 25, 1, '2020-02-08 21:30:39'),
 (28, 5, '3D PRINTER HEATER SINGLE HEAD 12V\r\n', 'Instrument cultivated alteration any favourable expression law far nor. Both new like tore but year. An from mean on with when sing pain. Oh to as principles devonshire companions unsatiable an delightful. The ourselves suffering the sincerity. Inhabit her manners adapted age certain. Debating offended at branched striking be subjects.', 'Voltage and Power: 12V 40W\r\nSingle-head Cartridge Heater used to the heating medium which can\'t work in the connection on both endsis widely used in mould heatinghot core boxshoot core machine etc\r\nType: Cartridge Heater\r\nVoltage: 12V\r\nPower:  40W\r\nHeater Material: Stainless Steel\r\nHeater Size: Approx. 20x6mm/ 0.79x0.24\"\r\nLead Wire Length: Approx. 100cm/ 39.37\"', 3, 'https://mikroelectron.com/ProImg/X4/da70989a-63d5-4f0e-b527-52aae016780d.jpg', 25, 1, '2020-02-08 21:30:39'),
 (29, 11, 'DC MOTOR GEARBOX WHEEL AND TYRE', 'Instrument cultivated alteration any favourable expression law far nor. Both new like tore but year. An from mean on with when sing pain. Oh to as principles devonshire companions unsatiable an delightful. The ourselves suffering the sincerity. Inhabit her manners adapted age certain. Debating offended at branched striking be subjects.', 'DC motor with right angled drive reduction gerbox and rubber tyred wheel. This unit is ideal for robot or toy vehicle construction. Ideal for Arduino and other development systems.\r\nLight weight plastic construction gearboxmetal motor rated at 3-6VDC and soft rubber tyre.\r\n\r\nwheel can fit to the left or right of the gearbox and motor can be run in both forward and reverse directions.', 5, 'https://mikroelectron.com/ProImg/X4/22513147-6b1e-4c81-892c-fc39f52c126d.png', 25, 1, '2020-02-13 15:26:42'),
 (30, 11, 'ARDUINO UNO KIT', 'Instrument cultivated alteration any favourable expression law far nor. Both new like tore but year. An from mean on with when sing pain. Oh to as principles devonshire companions unsatiable an delightful. The ourselves suffering the sincerity. Inhabit her manners adapted age certain. Debating offended at branched striking be subjects.', 'Product\r\n\r\nQuantity\r\n\r\nArduino UNO R3 1\r\n\r\nMotion Sensor PIR 1\r\n\r\nBREADBOARD WIRES 65PCS 1\r\n\r\nRelay Module 1 channel 1\r\n\r\nMINI SERVO MOTOR SG90 9G 1\r\n\r\nUltrasonic Sensor HC-SR04 1\r\n\r\nBreadboard  830 tie-point 1\r\n\r\nTransistor 2n2222  (NPN) 2\r\n\r\nTransistor 2n3906   (PNP) 2\r\n\r\nDiode (1n4001) 5\r\n\r\nBuzzer 5V 1\r\n\r\nLED 5mm Red 5\r\n\r\nLED 5mm Blue 5\r\n\r\nLED 5mm Green 5\r\n\r\nLED 5mm Yellow 5\r\n\r\nRGB led 1\r\n\r\nPotentiometer 50k ohm 1\r\n\r\nPotentiometer 10k ohm 1\r\n\r\nLCD 16x2 1\r\n\r\nBREAK AWAY MALE HEADERS 1\r\n\r\nLM35 TEMPERATURE SENSOR 1\r\n\r\nLight Sensor LDR(3mm) Sensor 1\r\n\r\nResistor 330 ohm 10\r\n\r\nResistor 1k ohm 5\r\n\r\nResistor 10k ohm 5\r\n\r\nPush Button 4 pin 5\r\n\r\n10K OHM POTENTIOMETER / TRIMPOTS 1\r\n\r\nWires  Female - Male 10', 38, 'https://mikroelectron.com/ProImg/X4/971fc05a-a35d-433a-8cc4-383651be6c74.jpg', 25, 1, '2020-02-13 15:26:42'),
@@ -305,10 +320,10 @@ INSERT INTO `items` (`Id`, `Id_Category`, `Name`, `Brief`, `Description`, `Price
 (39, 8, 'ARDUINO LEONARDO\r\n', 'Instrument cultivated alteration any favourable expression law far nor. Both new like tore but year. An from mean on with when sing pain. Oh to as principles devonshire companions unsatiable an delightful. The ourselves suffering the sincerity. Inhabit her manners adapted age certain. Debating offended at branched striking be subjects.', 'Arduino is an open-source physical computing platform based on a simple i/o board and a development environment that implements theProcessing/Wiring language. Arduino can be used to develop stand-alone interactive objects or can be connected to software on your computer (e.g. FlashProcessingMaxMSP). The open-source IDE can bedownloaded for free (currently for Mac OS XWindowsand Linux).\r\n\r\nThe Leonardo is Arduino\\\'s first development board to use one microcontroller with built-in USB. Using the ATmega32U4 as its sole microcontroller allows it to be cheaper and simpler. Alsobecause the 32U4 is handling the USB directlycode libraries are available which allow the board to emulate a computer keyboardmouseand more using the USB-HID protocol!\r\n\r\nIt has 20 digital input/output pins (of which 7 can be used as PWM outputs and 12 as analog inputs)a 16 MHz crystal oscillatora micro USB connectiona power jackan ICSP headerand a reset button. It contains everything needed to support the microcontroller; simply connect it to a computer with a USB cable or power it with a AC-to-DC adapter or battery to get started.\r\n\r\nNot sure which Arduino or Arduino-compatible board is right for you? Check out our Arduino Buying Guide!', 19, 'https://mikroelectron.com/ProImg/X4/644d6ff3-d8ea-461e-b59c-2da36ec9a78d.jpg', 25, 1, '2020-02-13 15:42:27'),
 (40, 8, 'ARDUINO ETHERNET SHIELD W5100\r\n', 'Instrument cultivated alteration any favourable expression law far nor. Both new like tore but year. An from mean on with when sing pain. Oh to as principles devonshire companions unsatiable an delightful. The ourselves suffering the sincerity. Inhabit her manners adapted age certain. Debating offended at branched striking be subjects.', 'The Arduino Ethernet Shield allows an Arduino board to connect to the internet. It is based on the Wiznet W5100 ethernet chip providing a network (IP) stack capable of both TCP and UDP. The Arduino Ethernet Shield supports up to four simultaneous socket connections. Use the Ethernet library to write sketches which connect to the internet using the shield.\r\n\r\nThe ethernet shield connects to an Arduino board using long wire-wrap headers which extend through the shield. This keeps the pin layout intact and allows another shield to be stacked on top..\r\n\r\nThe latest revision of the shield adds a micro-SD card slotwhich can be used to store files for serving over the network. It is compatible with the Arduino UNO and Mega (using the Ethernet library coming in Arduino 0019). An SD card library is not yet included in the standard Arduino distribution.\r\n\r\nArduino communicates with both the W5100 and SD card using the SPI bus (through the ICSP header). This is on digital pins 1112and 13 on the Duemilanove and pins 5051and 52 on the Mega. On both boardspin 10 is used to select the W5100 and pin 4 for the SD card. These pins cannot be used for general i/o. On the Megathe hardware SS pin53is not used to select either the W5100 or the SD cardbut it must be kept as an output or the SPI interface won\'t work.\r\n\r\nNote that because the W5100 and SD card share the SPI busonly one can be active at a time. If you are using both peripherals in your programthis should be taken care of by the corresponding libraries. If you\'re not using one of the peripherals in your programhoweveryou\'ll need to explicitly deselect it. To do this with the SD cardset pin 4 as an output and write a high to it. For the W5100set digital pin 10 as a high output.\r\n\r\nThe shield provides a standard RJ45 ethernet jack.', 25, 'https://mikroelectron.com/ProImg/X4/7e5b4baf-00e9-41af-b141-9738de737491.jpg', 25, 1, '2020-02-13 15:42:27'),
 (41, 8, 'ARDUINO NANO ORIGINAL\r\n', 'Instrument cultivated alteration any favourable expression law far nor. Both new like tore but year. An from mean on with when sing pain. Oh to as principles devonshire companions unsatiable an delightful. The ourselves suffering the sincerity. Inhabit her manners adapted age certain. Debating offended at branched striking be subjects.', 'Arduino Nano is a surface mount breadboard embedded version with integrated USB. It is a smallestcompleteand breadboard friendly. It has everything that Diecimila/Duemilanove has (electrically) with more analog input pins and onboard +5V AREF jumper. Physicallyit is missing power jack. The Nano is automatically sense and switch to the higher potential source of powerthere is no need for the power select jumper.\r\n\r\nNano’s got the breadboard-ability of the Boarduino and the Mini+USB with smaller footprint than eitherso users have more breadboard space. It’s got a pin layout that works well with the Mini or the Basic Stamp (TXRXATNGND on one toppower and ground on the other). This new version 3.0 comes with ATMEGA328 which offer more programming and data memory space. It is two layers. That make it easier to hack and more affordable.\r\n\r\nYou end up paying less with Nano than Mini and USB combined!', 10, 'https://mikroelectron.com/ProImg/X4/972576cb-e634-4a37-9514-0eea62fffa92.jpg', 25, 1, '2020-02-13 15:43:05'),
-(42, 8, 'ARDUINO DUE MICROCONTROLLER BOARD', 'Instrument cultivated alteration any favourable expression law far nor. Both new like tore but year. An from mean on with when sing pain. Oh to as principles devonshire companions unsatiable an delightful. The ourselves suffering the sincerity. Inhabit her manners adapted age certain. Debating offended at branched striking be subjects.', 'Arduino Due Microcontroller Board is based on the 32-bit processor Atmel SAM3X8E ARM Cortex-M3 MCUand improves all the standard Arduino functionalities and adds many new features.\r\n\r\nThe Arduino Due offers 54 digital input/output pins (of which 12 can be used as PWM outputswith selectable resolution)12 analog inputs with 12 bits of resolution4 UARTstwo DAC outputsan 84MHz crystal oscillatortwo USB connections2 TWIa power jackan ICSP headeran SPI headera JTAG headerand a reset button and erase button. The maximum voltage that the I/O pins can provide or tolerate is 3.3V. The board has two micro USB connectors--one for debugging purposes and a second one capable of acting as a USB hostallowing external USB peripherals such as mousekeyboardssmartphonesetc. to be connected to the Arduino Due.\r\n\r\nThe board contains everything needed to support the microcontroller; simply connect it to a computer with a USB cable or power it with a AC-to-DC adapter or battery to get started. The Due is compatible with all Arduino shields that work at 3.3V and are compliant with the 1.0 Arduino pinout.\r\n\r\n', 25, 'https://mikroelectron.com/ProImg/X4/9810e57e-fc7f-4cec-af47-b20c276c4b93.jpg', 25, 1, '2020-02-13 15:51:11');
-INSERT INTO `items` (`Id`, `Id_Category`, `Name`, `Brief`, `Description`, `Price`, `Image`, `Views`, `Availability`, `Date`) VALUES
+(42, 8, 'ARDUINO DUE MICROCONTROLLER BOARD', 'Instrument cultivated alteration any favourable expression law far nor. Both new like tore but year. An from mean on with when sing pain. Oh to as principles devonshire companions unsatiable an delightful. The ourselves suffering the sincerity. Inhabit her manners adapted age certain. Debating offended at branched striking be subjects.', 'Arduino Due Microcontroller Board is based on the 32-bit processor Atmel SAM3X8E ARM Cortex-M3 MCUand improves all the standard Arduino functionalities and adds many new features.\r\n\r\nThe Arduino Due offers 54 digital input/output pins (of which 12 can be used as PWM outputswith selectable resolution)12 analog inputs with 12 bits of resolution4 UARTstwo DAC outputsan 84MHz crystal oscillatortwo USB connections2 TWIa power jackan ICSP headeran SPI headera JTAG headerand a reset button and erase button. The maximum voltage that the I/O pins can provide or tolerate is 3.3V. The board has two micro USB connectors--one for debugging purposes and a second one capable of acting as a USB hostallowing external USB peripherals such as mousekeyboardssmartphonesetc. to be connected to the Arduino Due.\r\n\r\nThe board contains everything needed to support the microcontroller; simply connect it to a computer with a USB cable or power it with a AC-to-DC adapter or battery to get started. The Due is compatible with all Arduino shields that work at 3.3V and are compliant with the 1.0 Arduino pinout.\r\n\r\n', 25, 'https://mikroelectron.com/ProImg/X4/9810e57e-fc7f-4cec-af47-b20c276c4b93.jpg', 25, 1, '2020-02-13 15:51:11'),
 (43, 8, 'SD CARD READER MODULE', 'SD Card module can make your SD application more easier and simple.\r\nIt is easily interfaced as a peripheral to your arduino sensor shield module.\r\nThrough programmingyou can read and write to the SD card using your arduino.', 'Description:\r\n\r\nSD Card module can make your SD application more easier and simple.\r\nIt is easily interfaced as a peripheral to your arduino sensor shield module.\r\nThrough programmingyou can read and write to the SD card using your arduino.\r\nCan be used for SD Card more eaislysuch as for MP3 PlayerMCU/ARM system control.\r\nAll SD SPI pins outputMOSISCKMISO and CS.\r\nSupport 5V/3.3V input.\r\nSize:5.1cm x 3.1cm - 2.01inch x 1.22inch.', 5, 'https://mikroelectron.com/ProImg/X4/fbe95053-58f5-4a76-af00-0defdd97bd8e.jpg', 25, 1, '2020-02-17 01:31:56'),
-(44, 2, 'www', 'www', 'www', 22, '../static/img/defult_image/product.png', 29, 0, '2020-02-18 11:11:26'),
+(44, 2, 'www', 'www', 'www', 22, '../static/img/defult_image/product.png', 29, 0, '2020-02-18 11:11:26');
+INSERT INTO `items` (`Id`, `Id_Category`, `Name`, `Brief`, `Description`, `Price`, `Image`, `Views`, `Availability`, `Date`) VALUES
 (45, 18, 'qqq', 'qqq', 'qqq', 26, '../static/img/defult_image/product.png', 26, 0, '2020-02-18 11:15:28'),
 (46, 18, 'qqq2', 'qqq2', 'qqq2', 26, '../static/img/defult_image/product.png', 26, 0, '2020-02-18 11:15:56');
 
@@ -413,7 +428,7 @@ CREATE TABLE IF NOT EXISTS `payments` (
   PRIMARY KEY (`Id`),
   KEY `FK_Payments_User` (`Id_User`),
   KEY `FK_Payments_student` (`Id_Student`)
-) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `payments`
@@ -423,7 +438,12 @@ INSERT INTO `payments` (`Id`, `Id_User`, `Id_Student`, `Payment`, `Payoff`, `Dat
 (1, 1, 2, 50, 'Ali Ahmad', '2020-04-08 21:08:41'),
 (2, 2, 1, 75, 'yaser', '2020-02-08 22:08:41'),
 (3, 1, 1, 500, 'zeid', '2020-02-18 03:28:46'),
-(4, 1, 2, 300, 'zein', '2020-02-18 03:28:46');
+(4, 1, 2, 300, 'zein', '2020-02-18 03:28:46'),
+(5, 1, 1, 13, 'علي', '2020-02-24 10:31:08'),
+(6, 1, 1, 50, 'احمد', '2020-02-24 11:17:17'),
+(7, 1, 1, 50, 'احمد', '2020-02-24 11:17:38'),
+(8, 1, 1, 25, 'احمد', '2020-02-24 11:19:45'),
+(9, 1, 1, 25, 'احمد', '2020-02-24 11:21:36');
 
 -- --------------------------------------------------------
 
@@ -439,28 +459,34 @@ CREATE TABLE IF NOT EXISTS `post` (
   `Brief` varchar(500) NOT NULL,
   `Content` text NOT NULL,
   `Media` text,
+  `Type` int(1) NOT NULL DEFAULT '1',
   `Date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`Id`),
   KEY `FK_User_Post` (`Id_User`)
-) ENGINE=MyISAM AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `post`
 --
 
-INSERT INTO `post` (`Id`, `Id_User`, `Title`, `Brief`, `Content`, `Media`, `Date`) VALUES
-(1, 1, 'Introduction to microcontrollers', 'In a broader sense, the components which constitute a microcontroller are the memory, peripherals and most crucially a processor. ', 'In a broader sense, the components which constitute a microcontroller are the memory, peripherals and most crucially a processor. Microcontrollers are present in devices where the user has to exert a degree of control. They are designed and implemented to execute a specific function such as displaying integers or characters on an LCD display module of a home appliance. Application of microcontrollers is myriad. In simpler terms, any gadget or equipment which has to deal with the functions such as measuring, controlling, displaying and calculating the values consist of a microcontroller chip inside it. They are present in almost all the present day home appliances, toys, traffic lights, office instruments and various day-to-day appliances.', 'https://cdn.openlabpro.com/wp-content/uploads/2017/01/MICROCONTROLLER-ARCH-1.jpg', '2020-02-08 22:16:09'),
-(2, 1, 'Engineer program', 'In a broader sense, the components which constitute a microcontroller are the memory, peripherals and most crucially a processor. ', '#little_engineer\r\nWe are proud of our achievement and the uniqueness of our little Engineer program at the North Regional level\r\n#المهندس ـ #الصغير\r\nنحن فخورون بإنجازنا وتفردنا ببرنامج المهندس الصغيرعلى مستوى اقليم الشمال', 'https://scontent.famm3-2.fna.fbcdn.net/v/t1.0-9/86266325_1056002811442953_5343022909172482048_n.jpg?_nc_cat=103&_nc_eui2=AeGPI2aexh1jqPSfd_tI99r7YeOpa7y12yhmynpW6Mi4k_BOu5KUy9J0G5QRle8WkrrE_xfI_IdSI4fbtSZcQn4B20upGrfZ6ChyFUiz0IEtLQ&_nc_ohc=lMILhkr2ADQAX8-WRtM&_nc_ht=scontent.famm3-2.fna&oh=e1940901920cce14b01fe99bce73a6d2&oe=5EC30EEE', '2020-02-13 16:34:29'),
-(3, 1, 'Tabasheer Training Academy', 'In a broader sense, the components which constitute a microcontroller are the memory, peripherals and most crucially a processor. ', '#IOT', 'https://scontent.famm3-1.fna.fbcdn.net/v/t1.0-9/83112302_1027178527658715_6987528889962594304_n.jpg?_nc_cat=105&_nc_eui2=AeHf-JWn6Xz3tDNKceOv9Iq2D3PyfWC-uT-z5cCvZzAs8l4ystddIHjlTQguZvJQyAiG8z2DxKK6bmgnwSTSoxNMN235XBwvdVHE2FdbureRVw&_nc_ohc=y20CN088FQMAX9-70R1&_nc_ht=scontent.famm3-1.fna&oh=a74dec9b34456f241b22ff106429a508&oe=5EC5D1B5', '2020-02-13 18:42:35'),
-(4, 1, 'سنحاول السيطرة على عالم المتحكمات الدقيقة \r\n\r\n', 'In a broader sense, the components which constitute a microcontroller are the memory, peripherals and most crucially a processor. ', '\r\n\r\nالمتحكم الدقيق أو المتحكم المصغر (بالإنجليزية: Microcontroller) هو حاسوب مصغر أو ما يسمى نظام على شريحة (SOC) موجود على دارة متكاملة تحتوى على نواة معالج, ذاكرة, و ملحقات مداخل/مخارج قابلة للبرمجة. المتحكمات المصغرة تستخدم للتطبيقات المدمجة على العكس من المعالجات المصغرة المستخدمة في الحاسب الشخصي أو التطبيقات العامة الأخرى المؤلفة من عدة شرائح منفصلة. من استخداماته التحكم في عمليات صناعية أو متغير.\r\n\r\nيستخدم في العادة للقيام بمهمة محددة مثل التحكم في إشارة ضوئية وغيرها.. عكس المعالج الدقيق الذي يتميز بقدرته على القيام بمهام متعددة. هو عبارة عن حاسوب على شريحة، وحتى نكون دقيقين انه حاسوب ذو مهمة واحدة سابقة التحديد. يحتوي على وحدة معالجة مركزية,الذواكر وواجهات اتصال. تعمل المتحكمات الصغرية في الغالب وفق معمارية هارفرد Harvard Architecture فيما يلي أبرز مكونات المتحكم الصغري:', 'https://scontent.famm3-2.fna.fbcdn.net/v/t1.0-9/81399958_1020998868276681_4215274530010038272_n.jpg?_nc_cat=101&_nc_eui2=AeHBYguWtxsAsdk8l9w3_ActVERePM_ilUhu0Td97ZxwNwmdaneAUrm0Ga78Jj29PFnRkRr6MuOc4hy23qcb5cJZhbR6Y36YI0iXp0jCdTPmMg&_nc_ohc=qvOLx1qoYeoAX-zRU4A&_nc_ht=scontent.famm3-2.fna&oh=1b7a983791fc764e4d364d1622e199c3&oe=5EC52547', '2020-02-13 18:44:52'),
-(5, 1, 'نرحب بشريكنا الاستراتيجي الجديد', 'In a broader sense, the components which constitute a microcontroller are the memory, peripherals and most crucially a processor. ', '\r\n#TTA\r\n#Abu_dhabi\r\n\r\n', 'https://scontent.famm3-1.fna.fbcdn.net/v/t1.0-9/80430803_1006741839702384_5102788384531677184_n.jpg?_nc_cat=104&_nc_eui2=AeHjJIkCR_uUqyaNi_X9fGku30zgrDPzpw9bIlXPkF4wVxxPlXN2NeIzqRlncz-x4C8lQqoudQPIIJ3OkLXMpE5_63Tv3NVwozwA3DxH8_cqRw&_nc_ohc=hygUCQNYoJoAX_5snFa&_nc_ht=scontent.famm3-1.fna&oh=11d5c9903ff9e349cd9551629dc6d166&oe=5EB925A8', '2020-02-13 18:46:50'),
-(6, 1, 'Fog computing or fog networking', 'In a broader sense, the components which constitute a microcontroller are the memory, peripherals and most crucially a processor. ', 'Fog computing or fog networking, also known as fogging, is an architecture that uses edge devices to carry out a substantial amount of computation, storage, communication locally and routed over the internet backbone.\r\n\r\nWhy it’s very important for internet of things?', 'https://scontent.famm3-1.fna.fbcdn.net/v/t1.0-9/79430809_989439194765982_2256789702394773504_n.jpg?_nc_cat=109&_nc_eui2=AeH8suPGl92n1BlW6NuQWEkSM2Klkpm7QdULe1vvyIeGo4JJJCkD04QtDaFDPMTED0IZpejH0dx3mYm2YxlHNWmBcstwDSUb9o7Y2prG9l-E4w&_nc_ohc=u3VRUZu2I7AAX-xyt0Z&_nc_ht=scontent.famm3-1.fna&oh=3010a777cab3d8a4a05a06de01630faf&oe=5EBDF546', '2020-02-13 18:49:35'),
-(7, 1, 'Some our project\r\n', 'In a broader sense, the components which constitute a microcontroller are the memory, peripherals and most crucially a processor. ', '#TTA', 'https://scontent.famm3-2.fna.fbcdn.net/v/t1.0-9/77291367_984521055257796_8846525962716708864_n.jpg?_nc_cat=106&_nc_eui2=AeEXB5EaioywzApBicnVo7OuhquklGb817WSn--Ofu7gwq45dIIM3ty9-d64MCyWZABmBLqfyV1bcnLSmSr0gSk4cjn7RbXNDasHfGDwKSbfTw&_nc_ohc=iXaRmZ1EB1cAX_PGizo&_nc_ht=scontent.famm3-2.fna&oh=616662b56c946f3d21e9f152f5fa143b&oe=5EFEF0A3', '2020-02-13 19:47:45'),
-(8, 1, 'Some our project\r\n', 'In a broader sense, the components which constitute a microcontroller are the memory, peripherals and most crucially a processor. ', '#TTA', 'https://scontent.famm3-1.fna.fbcdn.net/v/t1.0-9/78406278_984521065257795_8861335761572593664_n.jpg?_nc_cat=109&_nc_eui2=AeFM6yIRvW6IHOQZV8hm8Lhvt6iBclSYzOpVulacB8BQ0IvbFMpmQSu5NJIJ7o93_ol9VG_dNz4NqIzK93mbDlKXLSjxVLCjvJKrvZVm9xGURQ&_nc_ohc=h7qQ7dx-aGUAX9cDVmb&_nc_ht=scontent.famm3-1.fna&oh=97a12e643c7cca833c612813dde3c7ce&oe=5ECC8769', '2020-02-13 19:47:45'),
-(9, 1, 'Some our project\r\n', 'In a broader sense, the components which constitute a microcontroller are the memory, peripherals and most crucially a processor. ', '#TTA\r\n', 'https://scontent.famm3-2.fna.fbcdn.net/v/t1.0-9/78364452_984521105257791_7754648965726863360_n.jpg?_nc_cat=102&_nc_eui2=AeEhGVat81ewxoYtykFY-SSuzdmofX68FJ5B3Hk_6lSA55N57cvgCK6Bd9bXdY5altvpXCJnrHYMTMdS107M6XX6VnjzK8ua-j8mdSFs5LelPA&_nc_ohc=9rccGvoaFG4AX8bqmy2&_nc_ht=scontent.famm3-2.fna&oh=a7ddce30275c660a1014250db383626e&oe=5ECB72CC', '2020-02-13 19:48:40'),
-(10, 1, 'Some our project\r\n', 'In a broader sense, the components which constitute a microcontroller are the memory, peripherals and most crucially a processor. ', '#TTA\r\n', 'https://scontent.famm3-2.fna.fbcdn.net/v/t1.0-9/78912577_984521165257785_4625340118893330432_n.jpg?_nc_cat=101&_nc_eui2=AeFSK5rfAqscGHsVEvZBXLfEMHr0RBNNb77hWhwgoAOcqOWn5pWGS7Wy0osj2OyQFYmx6fRmRTTZH2xa5pNCUzbnh-SNLXdPnBb-oYA7WXBENA&_nc_ohc=NCak9K0YN1AAX-3TBs_&_nc_ht=scontent.famm3-2.fna&oh=bcb552b3fb1ee098b7b30dd8b1faf47a&oe=5EFEEDBA', '2020-02-13 19:48:40'),
-(11, 1, 'Some our project\r\n', 'In a broader sense, the components which constitute a microcontroller are the memory, peripherals and most crucially a processor. ', '#TTA', 'https://scontent.famm3-2.fna.fbcdn.net/v/t1.0-9/78281959_984521298591105_7884621737030057984_n.jpg?_nc_cat=100&_nc_eui2=AeF6WCtAswEtpczEB3xNPDDqIhYr8x6Vv2_EvktTlfdJiJ7MlVkh9i2p52u7gJjUDY93zhTfntPJeBlKPsA2Qio5uAnSRdwvO5pS6O7F75D9AQ&_nc_ohc=7riWczJpzdAAX_q7jlw&_nc_ht=scontent.famm3-2.fna&oh=8712f05ecf0c55214654f3161c4b0a26&oe=5F025900', '2020-02-13 19:49:48'),
-(12, 1, 'Some our project\r\n', 'In a broader sense, the components which constitute a microcontroller are the memory, peripherals and most crucially a processor. ', '#TTA', 'https://scontent.famm3-2.fna.fbcdn.net/v/t1.0-9/78116668_984521471924421_7290497618189221888_n.jpg?_nc_cat=101&_nc_eui2=AeEkWJkncFgSnBQj35ZFCzffwDPpA30FETf_CXFEkKDq3Ab2Ax89_ThhVrmknp7ugOasu27nHcJmgnDZJW3MkOyu9Q3AEz8KRSNCLoDbaCJiYQ&_nc_ohc=EGRoFcMwpCoAX9lWHB_&_nc_ht=scontent.famm3-2.fna&oh=16fcc7077e0450881f88c200126be96c&oe=5EC9795A', '2020-02-13 19:49:48');
+INSERT INTO `post` (`Id`, `Id_User`, `Title`, `Brief`, `Content`, `Media`, `Type`, `Date`) VALUES
+(1, 1, 'Introduction to microcontrollers', 'In a broader sense, the components which constitute a microcontroller are the memory, peripherals and most crucially a processor. ', 'In a broader sense, the components which constitute a microcontroller are the memory, peripherals and most crucially a processor. Microcontrollers are present in devices where the user has to exert a degree of control. They are designed and implemented to execute a specific function such as displaying integers or characters on an LCD display module of a home appliance. Application of microcontrollers is myriad. In simpler terms, any gadget or equipment which has to deal with the functions such as measuring, controlling, displaying and calculating the values consist of a microcontroller chip inside it. They are present in almost all the present day home appliances, toys, traffic lights, office instruments and various day-to-day appliances.', 'https://cdn.openlabpro.com/wp-content/uploads/2017/01/MICROCONTROLLER-ARCH-1.jpg', 1, '2020-02-08 22:16:09'),
+(2, 1, 'Engineer program', 'In a broader sense, the components which constitute a microcontroller are the memory, peripherals and most crucially a processor. ', '#little_engineer\r\nWe are proud of our achievement and the uniqueness of our little Engineer program at the North Regional level\r\n#المهندس ـ #الصغير\r\nنحن فخورون بإنجازنا وتفردنا ببرنامج المهندس الصغيرعلى مستوى اقليم الشمال', 'https://scontent.famm3-2.fna.fbcdn.net/v/t1.0-9/86266325_1056002811442953_5343022909172482048_n.jpg?_nc_cat=103&_nc_eui2=AeGPI2aexh1jqPSfd_tI99r7YeOpa7y12yhmynpW6Mi4k_BOu5KUy9J0G5QRle8WkrrE_xfI_IdSI4fbtSZcQn4B20upGrfZ6ChyFUiz0IEtLQ&_nc_ohc=lMILhkr2ADQAX8-WRtM&_nc_ht=scontent.famm3-2.fna&oh=e1940901920cce14b01fe99bce73a6d2&oe=5EC30EEE', 1, '2020-02-13 16:34:29'),
+(3, 1, 'Tabasheer Training Academy', 'In a broader sense, the components which constitute a microcontroller are the memory, peripherals and most crucially a processor. ', '#IOT', 'https://scontent.famm3-1.fna.fbcdn.net/v/t1.0-9/83112302_1027178527658715_6987528889962594304_n.jpg?_nc_cat=105&_nc_eui2=AeHf-JWn6Xz3tDNKceOv9Iq2D3PyfWC-uT-z5cCvZzAs8l4ystddIHjlTQguZvJQyAiG8z2DxKK6bmgnwSTSoxNMN235XBwvdVHE2FdbureRVw&_nc_ohc=y20CN088FQMAX9-70R1&_nc_ht=scontent.famm3-1.fna&oh=a74dec9b34456f241b22ff106429a508&oe=5EC5D1B5', 2, '2020-02-13 18:42:35'),
+(4, 1, 'سنحاول السيطرة على عالم المتحكمات الدقيقة \r\n\r\n', 'In a broader sense, the components which constitute a microcontroller are the memory, peripherals and most crucially a processor. ', '\r\n\r\nالمتحكم الدقيق أو المتحكم المصغر (بالإنجليزية: Microcontroller) هو حاسوب مصغر أو ما يسمى نظام على شريحة (SOC) موجود على دارة متكاملة تحتوى على نواة معالج, ذاكرة, و ملحقات مداخل/مخارج قابلة للبرمجة. المتحكمات المصغرة تستخدم للتطبيقات المدمجة على العكس من المعالجات المصغرة المستخدمة في الحاسب الشخصي أو التطبيقات العامة الأخرى المؤلفة من عدة شرائح منفصلة. من استخداماته التحكم في عمليات صناعية أو متغير.\r\n\r\nيستخدم في العادة للقيام بمهمة محددة مثل التحكم في إشارة ضوئية وغيرها.. عكس المعالج الدقيق الذي يتميز بقدرته على القيام بمهام متعددة. هو عبارة عن حاسوب على شريحة، وحتى نكون دقيقين انه حاسوب ذو مهمة واحدة سابقة التحديد. يحتوي على وحدة معالجة مركزية,الذواكر وواجهات اتصال. تعمل المتحكمات الصغرية في الغالب وفق معمارية هارفرد Harvard Architecture فيما يلي أبرز مكونات المتحكم الصغري:', 'https://scontent.famm3-2.fna.fbcdn.net/v/t1.0-9/81399958_1020998868276681_4215274530010038272_n.jpg?_nc_cat=101&_nc_eui2=AeHBYguWtxsAsdk8l9w3_ActVERePM_ilUhu0Td97ZxwNwmdaneAUrm0Ga78Jj29PFnRkRr6MuOc4hy23qcb5cJZhbR6Y36YI0iXp0jCdTPmMg&_nc_ohc=qvOLx1qoYeoAX-zRU4A&_nc_ht=scontent.famm3-2.fna&oh=1b7a983791fc764e4d364d1622e199c3&oe=5EC52547', 1, '2020-02-13 18:44:52'),
+(5, 1, 'نرحب بشريكنا الاستراتيجي الجديد', 'In a broader sense, the components which constitute a microcontroller are the memory, peripherals and most crucially a processor. ', '\r\n#TTA\r\n#Abu_dhabi\r\n\r\n', 'https://scontent.famm3-1.fna.fbcdn.net/v/t1.0-9/80430803_1006741839702384_5102788384531677184_n.jpg?_nc_cat=104&_nc_eui2=AeHjJIkCR_uUqyaNi_X9fGku30zgrDPzpw9bIlXPkF4wVxxPlXN2NeIzqRlncz-x4C8lQqoudQPIIJ3OkLXMpE5_63Tv3NVwozwA3DxH8_cqRw&_nc_ohc=hygUCQNYoJoAX_5snFa&_nc_ht=scontent.famm3-1.fna&oh=11d5c9903ff9e349cd9551629dc6d166&oe=5EB925A8', 2, '2020-02-13 18:46:50'),
+(6, 1, 'Fog computing or fog networking', 'In a broader sense, the components which constitute a microcontroller are the memory, peripherals and most crucially a processor. ', 'Fog computing or fog networking, also known as fogging, is an architecture that uses edge devices to carry out a substantial amount of computation, storage, communication locally and routed over the internet backbone.\r\n\r\nWhy it’s very important for internet of things?', 'https://scontent.famm3-1.fna.fbcdn.net/v/t1.0-9/79430809_989439194765982_2256789702394773504_n.jpg?_nc_cat=109&_nc_eui2=AeH8suPGl92n1BlW6NuQWEkSM2Klkpm7QdULe1vvyIeGo4JJJCkD04QtDaFDPMTED0IZpejH0dx3mYm2YxlHNWmBcstwDSUb9o7Y2prG9l-E4w&_nc_ohc=u3VRUZu2I7AAX-xyt0Z&_nc_ht=scontent.famm3-1.fna&oh=3010a777cab3d8a4a05a06de01630faf&oe=5EBDF546', 1, '2020-02-13 18:49:35'),
+(7, 1, 'Some our project\r\n', 'In a broader sense, the components which constitute a microcontroller are the memory, peripherals and most crucially a processor. ', '#TTA', 'https://scontent.famm3-2.fna.fbcdn.net/v/t1.0-9/77291367_984521055257796_8846525962716708864_n.jpg?_nc_cat=106&_nc_eui2=AeEXB5EaioywzApBicnVo7OuhquklGb817WSn--Ofu7gwq45dIIM3ty9-d64MCyWZABmBLqfyV1bcnLSmSr0gSk4cjn7RbXNDasHfGDwKSbfTw&_nc_ohc=iXaRmZ1EB1cAX_PGizo&_nc_ht=scontent.famm3-2.fna&oh=616662b56c946f3d21e9f152f5fa143b&oe=5EFEF0A3', 1, '2020-02-13 19:47:45'),
+(8, 1, 'Some our project\r\n', 'In a broader sense, the components which constitute a microcontroller are the memory, peripherals and most crucially a processor. ', '#TTA', 'https://scontent.famm3-1.fna.fbcdn.net/v/t1.0-9/78406278_984521065257795_8861335761572593664_n.jpg?_nc_cat=109&_nc_eui2=AeFM6yIRvW6IHOQZV8hm8Lhvt6iBclSYzOpVulacB8BQ0IvbFMpmQSu5NJIJ7o93_ol9VG_dNz4NqIzK93mbDlKXLSjxVLCjvJKrvZVm9xGURQ&_nc_ohc=h7qQ7dx-aGUAX9cDVmb&_nc_ht=scontent.famm3-1.fna&oh=97a12e643c7cca833c612813dde3c7ce&oe=5ECC8769', 1, '2020-02-13 19:47:45'),
+(9, 1, 'Some our project\r\n', 'In a broader sense, the components which constitute a microcontroller are the memory, peripherals and most crucially a processor. ', '#TTA\r\n', 'https://scontent.famm3-2.fna.fbcdn.net/v/t1.0-9/78364452_984521105257791_7754648965726863360_n.jpg?_nc_cat=102&_nc_eui2=AeEhGVat81ewxoYtykFY-SSuzdmofX68FJ5B3Hk_6lSA55N57cvgCK6Bd9bXdY5altvpXCJnrHYMTMdS107M6XX6VnjzK8ua-j8mdSFs5LelPA&_nc_ohc=9rccGvoaFG4AX8bqmy2&_nc_ht=scontent.famm3-2.fna&oh=a7ddce30275c660a1014250db383626e&oe=5ECB72CC', 1, '2020-02-13 19:48:40'),
+(10, 1, 'Some our project\r\n', 'In a broader sense, the components which constitute a microcontroller are the memory, peripherals and most crucially a processor. ', '#TTA\r\n', 'https://scontent.famm3-2.fna.fbcdn.net/v/t1.0-9/78912577_984521165257785_4625340118893330432_n.jpg?_nc_cat=101&_nc_eui2=AeFSK5rfAqscGHsVEvZBXLfEMHr0RBNNb77hWhwgoAOcqOWn5pWGS7Wy0osj2OyQFYmx6fRmRTTZH2xa5pNCUzbnh-SNLXdPnBb-oYA7WXBENA&_nc_ohc=NCak9K0YN1AAX-3TBs_&_nc_ht=scontent.famm3-2.fna&oh=bcb552b3fb1ee098b7b30dd8b1faf47a&oe=5EFEEDBA', 1, '2020-02-13 19:48:40'),
+(11, 1, 'Some our project\r\n', 'In a broader sense, the components which constitute a microcontroller are the memory, peripherals and most crucially a processor. ', '#TTA', 'https://scontent.famm3-2.fna.fbcdn.net/v/t1.0-9/78281959_984521298591105_7884621737030057984_n.jpg?_nc_cat=100&_nc_eui2=AeF6WCtAswEtpczEB3xNPDDqIhYr8x6Vv2_EvktTlfdJiJ7MlVkh9i2p52u7gJjUDY93zhTfntPJeBlKPsA2Qio5uAnSRdwvO5pS6O7F75D9AQ&_nc_ohc=7riWczJpzdAAX_q7jlw&_nc_ht=scontent.famm3-2.fna&oh=8712f05ecf0c55214654f3161c4b0a26&oe=5F025900', 1, '2020-02-13 19:49:48'),
+(12, 1, 'Some our project\r\n', 'In a broader sense, the components which constitute a microcontroller are the memory, peripherals and most crucially a processor. ', '#TTA', 'https://scontent.famm3-2.fna.fbcdn.net/v/t1.0-9/78116668_984521471924421_7290497618189221888_n.jpg?_nc_cat=101&_nc_eui2=AeEkWJkncFgSnBQj35ZFCzffwDPpA30FETf_CXFEkKDq3Ab2Ax89_ThhVrmknp7ugOasu27nHcJmgnDZJW3MkOyu9Q3AEz8KRSNCLoDbaCJiYQ&_nc_ohc=EGRoFcMwpCoAX9lWHB_&_nc_ht=scontent.famm3-2.fna&oh=16fcc7077e0450881f88c200126be96c&oe=5EC9795A', 1, '2020-02-13 19:49:48'),
+(13, 1, 'Web Scraping', 'Web Scraping', 'Web Scraping', '../static/img/post_image/Build-a-Web-Scraper-With-Requests-and-Beautiful-Soup_Watermarked.37918fb3906c.jpg', 2, '2020-02-24 07:55:22'),
+(14, 1, 'BCI', 'BCI', 'BCI', '../static/img/defult_image/Teachable-courses.png', 2, '2020-02-24 08:02:37'),
+(15, 1, 'BCI2', 'BCI2', 'BCI2', '../static/img/post_image/t_a_s_t_i_n_g.png', 2, '2020-02-24 08:04:48'),
+(16, 1, 'BCI3', 'BCI3', 'BCI3', '../static/img/post_image/IronMan2_Mark4_Gauntlets_4.jpg', 2, '2020-02-24 08:18:04'),
+(17, 1, 'Web Scraping2', 'Web Scraping2', 'Web Scraping2', '../static/img/post_image/83079780_268049220848946_5471014944637976576_n.jpg', 2, '2020-02-27 03:59:37');
 
 -- --------------------------------------------------------
 
@@ -473,7 +499,7 @@ CREATE TABLE IF NOT EXISTS `specialization` (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
   `Name` varchar(255) NOT NULL,
   PRIMARY KEY (`Id`)
-) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `specialization`
@@ -483,7 +509,8 @@ INSERT INTO `specialization` (`Id`, `Name`) VALUES
 (1, 'communication Engineering'),
 (2, 'Computer Engineering'),
 (3, 'computer science'),
-(4, 'Software engineering');
+(4, 'Software engineering'),
+(5, 'الحسكة');
 
 -- --------------------------------------------------------
 
@@ -510,7 +537,7 @@ CREATE TABLE IF NOT EXISTS `students` (
   KEY `FK_Address` (`Id_Address`),
   KEY `FK_University` (`Id_University`),
   KEY `FK_specialization` (`Id_Specialization`)
-) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `students`
@@ -519,9 +546,7 @@ CREATE TABLE IF NOT EXISTS `students` (
 INSERT INTO `students` (`Id`, `FirstName`, `LastName`, `Gender`, `Phone`, `Email`, `Birthday`, `Id_Address`, `Id_University`, `Id_Specialization`, `Date`) VALUES
 (1, 'zeid', 'zein alabdeen', 1, '0791749367', 'zeid.zen@gmail.com', '1996-01-10', 3, 5, 3, '2020-02-08 22:01:18'),
 (2, 'Osama', 'yousef', 1, '0790083761', 'fotboy1788@hotmail.com', '1993-04-04', 2, 5, 4, '2020-02-08 22:01:18'),
-(3, 'ali22', 'ali22', 1, '0781472596', 'ali.ali44@gmail.com', '1996-01-10', 3, 2, 1, '2020-02-09 02:07:18'),
-(5, 'Haitham', 'Husam', 1, '0789605872', 'hhh1998@hotmail.com', '1996-01-10', 3, 5, 3, '2020-02-10 01:42:23'),
-(6, 'qqq', 'qqq', 2, '0771478523', 'syrgsst@gmail.com', '2020-02-06', 1, 1, 1, '2020-02-18 12:08:36');
+(5, 'Haitham', 'Husam', 1, '0789605872', 'hhh1998@hotmail.com', '1996-01-10', 3, 5, 3, '2020-02-10 01:42:23');
 
 -- --------------------------------------------------------
 
@@ -538,7 +563,7 @@ CREATE TABLE IF NOT EXISTS `stu_class` (
   PRIMARY KEY (`Id`),
   UNIQUE KEY `UN_STD_CLS` (`Id_Student`,`Id_Class`),
   KEY `FK_stu_class_class` (`Id_Class`)
-) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `stu_class`
@@ -549,8 +574,8 @@ INSERT INTO `stu_class` (`Id`, `Id_Student`, `Id_Class`, `Date`) VALUES
 (2, 2, 1, '2020-02-08 22:01:51'),
 (3, 1, 2, '2020-02-08 22:02:04'),
 (4, 2, 2, '2020-02-08 22:02:04'),
-(6, 3, 3, '2020-02-09 02:53:12'),
-(7, 1, 4, '2020-02-18 13:08:49');
+(7, 1, 4, '2020-02-18 13:08:49'),
+(9, 7, 5, '2020-02-24 04:02:15');
 
 -- --------------------------------------------------------
 
@@ -563,7 +588,7 @@ CREATE TABLE IF NOT EXISTS `university` (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
   `Name` varchar(255) NOT NULL,
   PRIMARY KEY (`Id`)
-) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `university`
@@ -574,7 +599,8 @@ INSERT INTO `university` (`Id`, `Name`) VALUES
 (2, 'Al-Balqa University'),
 (3, 'University of Jordan'),
 (4, 'University of technology'),
-(5, 'zarqa technology');
+(5, 'zarqa technology'),
+(6, 'الحسكة');
 
 -- --------------------------------------------------------
 
@@ -599,7 +625,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   UNIQUE KEY `UNIQUE_Phone` (`Phone`),
   UNIQUE KEY `UNIQUE_Email` (`Email`),
   KEY `FK_User_Address` (`Id_Address`)
-) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `users`
@@ -608,7 +634,8 @@ CREATE TABLE IF NOT EXISTS `users` (
 INSERT INTO `users` (`Id`, `FirstName`, `LastName`, `Email`, `Phone`, `Password`, `Gender`, `Id_Address`, `Image`, `Birthday`, `Date`) VALUES
 (1, 'zeid', 'zein alabdeen', 'zeid.zen@gmail.com', '0791749367', '6c15e561c79f69541cb12eda5717bcb17475492945ae87b26bede25a0d4c7964188cb02ab0291b7364e15215c2a027abb19c5a75fe45589cb337dbdcab67b77182824662e26be2e3fd365ff52ef6c189536250eff82b4a90bbf1c03c07012bfd', 1, 3, '../static/img/user_image/82246523_2459293421054355_1831006581907521536_o.jpg', '1996-01-10', '2020-02-08 22:07:24'),
 (2, 'osama', 'yousef', 'fotboy1788@hotmail.com', '0790083761', '123456789', 1, 2, NULL, '1993-04-04', '2020-02-08 22:07:24'),
-(3, 'zeid', 'zein alabdeen', 'zeid.zen23@gmail.com', '0798524657', '6c15e561c79f69541cb12eda5717bcb17475492945ae87b26bede25a0d4c7964188cb02ab0291b7364e15215c2a027abb19c5a75fe45589cb337dbdcab67b77182824662e26be2e3fd365ff52ef6c189536250eff82b4a90bbf1c03c07012bfd', 1, 1, '86278699_844682099326554_5104062684148531200_n.jpg', '2020-02-18', '2020-02-16 01:13:21');
+(3, 'zeid', 'zein alabdeen', 'zeid.zen23@gmail.com', '0798524657', '6c15e561c79f69541cb12eda5717bcb17475492945ae87b26bede25a0d4c7964188cb02ab0291b7364e15215c2a027abb19c5a75fe45589cb337dbdcab67b77182824662e26be2e3fd365ff52ef6c189536250eff82b4a90bbf1c03c07012bfd', 1, 1, '86278699_844682099326554_5104062684148531200_n.jpg', '2020-02-18', '2020-02-16 01:13:21'),
+(4, 'Ma\'en', ' W. Dhuhirat', 'M.dherat@hotmail.com', '0790000000', 'df33cdde240592817b8472089593bbce13addf5d43b564d6161271ee642aec1e06f23205275e2d61a9921110f1e5f67fe419bef10a5a40d08465e7954d51eeb307824b2be2397c531d6eaec1c96302c4d254675fff05c12fbd9031ba7962f495', 1, 1, NULL, '2020-02-10', '2020-02-27 06:06:01');
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

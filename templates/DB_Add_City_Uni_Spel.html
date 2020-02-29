@@ -31,44 +31,22 @@
 
 												<div class="col-md-12">
 													<div class="form-group">
-														<form action="/Add_city_to_DB" method="post"  >
+														<form action="/add_city_to_db" method="POST"  >
 
-															<label>City Name</label>
-															<input type="text" name="city_name" value="" placeholder="City Name"  class="form-control w-100">
+															<label>Type</label>
+															<select class="form-control select2 w-100" name="Type" required >
+																<option value=""> --- Please Select --- </option>
+																<option value="1">City</option>
+																<option value="2">University</option>
+																<option value="3">Specialization</option>
+															</select>
 															<br>
+
+															<label>Name</label>
+															<input type="text" name="Name" value="" placeholder="Name"  class="form-control w-100">
 
 															<div class="container-login100-form-btn">
 																	<input  type="submit" name="ADD_City" value="ADD City" class="login100-form-btn btn-primary"
-																							style="background:#00c3ed">
-															</div>
-
-														</form>
-															<br>
-
-                                                        <form action="/Add_university_to_DB" method="post"  >
-
-															<label>University</label>
-															<input type="text" name="university_name" value="" placeholder="University Name"  class="form-control w-100">
-															<br>
-
-															<div class="container-login100-form-btn">
-																	<input  type="submit" name="ADD_University" value="ADD University" class="login100-form-btn btn-primary"
-																							style="background:#00c3ed">
-															</div>
-
-														</form>
-														<br>
-
-
-                                                        <form action="/Add_specialization_to_DB" method="post"  >
-
-
-															<label>Specialization</label>
-															<input type="text" name="specialization" value="" placeholder="Specialization"  class="form-control w-100">
-															<br>
-
-															<div class="container-login100-form-btn">
-																	<input  type="submit" name="ADD_Specialization" value="ADD Specialization" class="login100-form-btn btn-primary"
 																							style="background:#00c3ed">
 															</div>
 

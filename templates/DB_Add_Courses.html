@@ -30,7 +30,7 @@
 
 												<div class="col-md-12">
 													<div class="form-group">
-														<form action="/Add_courses_to_DB" method="post" enctype="multipart/form-data" >
+														<form action="/add_courses_to_db" method="post" enctype="multipart/form-data" >
 
 															<label  for="input-CategoryId">Category</label>
 															<select name="category_Id" id="input-CategoryId" class="form-control w-100" required >
@@ -45,15 +45,27 @@
 															<input type="text" name="courses_name" value="" placeholder="Courses Name"  class="form-control w-100" required >
 															<br>
 															<label>Brief</label>
-															<input type="text" name="courses_brief" value="" placeholder="Courses Brief"  class="form-control w-100" required > 
+															<textarea rows="3"  name="courses_brief" placeholder="Courses Brief" class="form-control w-100"   required > </textarea>
+															<br>
+															
+															<label>Features</label>
+															<textarea rows="3" cols="500" name="Features" placeholder="Feature , Feature , Feature " class="form-control w-100"   required > </textarea>
 															<br>
 
 															<label>Description</label>
-															<input type="text" name="courses_description" value="" placeholder="Courses Description"  class="form-control w-100">
+															<textarea rows="6"  name="courses_description" placeholder="Courses Description" class="form-control w-100"   required > </textarea>
 															<br>
 
-															<label>Image</label>
-															<input type="file" name="courses_image" value="" placeholder="Courses Image"  class="form-control w-100"  >
+															<label>Main Image</label>
+															<input type="file" name="courses_image" value="" placeholder="Courses Image"  class="form-control w-100" required >
+															<br>
+
+															<label>More Image</label>
+															<input type="file" name="Midea_Image1" value="" placeholder="Courses Image"  class="form-control w-100"  >
+															<br>
+
+															<label>More Image</label>
+															<input type="file" name="Midea_Image2" value="" placeholder="Courses Image"  class="form-control w-100"  >
 															<br>
 
 															<label>Price</label>

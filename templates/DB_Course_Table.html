@@ -33,9 +33,12 @@
 															<th class="wd-15p">Brief</th>
 															<th class="wd-15p">Description</th>
 															<th class="wd-10p">Image</th>
+															<th class="wd-10p">Image</th>
 															<th class="wd-25p">Price</th>
 															<th class="wd-20p">Number Of Hour</th>
 															<th class="wd-20p">Views</th>
+															<th class="wd-20p">Option</th>
+															<th class="wd-20p">Option</th>
 
 
 														</tr>
@@ -43,13 +46,46 @@
 													<tbody>
 														{% for  course in data ['courses'] :%}
 														<tr>
-															<td class="wd-15p">{{course['Name']}}</td>
-															<td class="wd-15p">{{course['Brief'][0:70]}}<wbr></td>
-															<td class="wd-15p">{{course['Description']}}</td>
-															<td class="wd-20p"><img width="50px" height="50px"src="{{course['Image']}}"></td>
-															<td class="wd-10p">{{course['Price']}}</td>
-															<td class="wd-20p">{{course['Number_of_hours']}}</td>
-															<td class="wd-25p">{{course['Views']}}</td>
+															<form action="/update_course" method="post" enctype="multipart/form-data">
+
+																<input type="hidden" name="course_Id" value="{{course['Id']}}">
+																<td class="wd-15p" contenteditable='true'><input type="number" name="course_Name" min="0" value="{{course['Name']}}"></td>
+																<td class="wd-15p" contenteditable='true'>
+																	<textarea rows="5" cols="50" name="course_brief">
+																		{{course['Brief']}}
+																	</textarea>
+																</td>
+																<td class="wd-15p" contenteditable='true'>
+																	<textarea rows="5" cols="50" name="course_description">
+																		{{course['Description']}}
+																	</textarea>
+
+
+																</td>
+																<td class="wd-20p" contenteditable='true'><input type="file" name="course_image" ></td>
+																<td class="wd-20p" contenteditable='true'><img width="50px" height="50px"src="{{course['Image']}}"></td>
+																<td class="wd-10p"><input type="number" name="course_Price" min="0" value="{{course['Price']}}"></td>
+																<td class="wd-20p"><input type="number" name="course_Number_of_hours" min="0" value="{{course['Number_of_hours']}}"></td>
+																<td class="wd-25p"><input type="number" name="course_Views" min="25" value="{{course['Views']}}"></td>
+																<td  class="wd-25p">
+																		<input  type="submit" name="ADD_Student" value="Save Edit"
+																					class="login100-form-btn btn-primary">
+
+																</td>
+															</form>
+															<td class="wd-25p">
+																	<input  type="button" name="ADD_Student" value="x" onClick="delete_me({{course['Id']}})"
+																				class="login100-form-btn btn-primary" style="background: red;">
+															</td>
+															<script>
+																function delete_me(id_course)
+																{
+																 	if(confirm("Are You Want to delete Product")){
+																 		window.location.href='/delete_course/' + id_course +'';
+																 		return true;
+																 	}
+																}
+															</script>
 
 														</tr>
 														{% endfor %}
