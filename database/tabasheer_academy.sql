@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Feb 28, 2020 at 02:47 PM
+-- Generation Time: Feb 29, 2020 at 09:15 AM
 -- Server version: 5.7.26
 -- PHP Version: 7.2.18
 
@@ -136,7 +136,7 @@ CREATE TABLE IF NOT EXISTS `courses` (
   `Date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`Id`),
   KEY `FK_courses_category` (`Id_Category`)
-) ENGINE=MyISAM AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=24 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `courses`
@@ -157,7 +157,10 @@ INSERT INTO `courses` (`Id`, `Id_Category`, `Name`, `Brief`, `Description`, `Ima
 (13, 13, 'Data Analysis', 'Data analysis is a process of inspecting, cleansing, transforming and modeling data with the goal of discovering useful information, informing conclusion and supporting decision-making.', 'Data analysis is a process of inspecting, cleansing, transforming and modeling data with the goal of discovering useful information, informing conclusion and supporting decision-making.', '../static/img/course_image/Business_Data_and_Graph_Analysis.png', 500, 100, 25, '2020-02-22 03:05:20'),
 (14, 13, 'Data Mining Techniques', 'Data mining is highly effective, so long as it draws upon one or more of these techniques:', 'Data mining is highly effective, so long as it draws upon one or more of these techniques:', '../static/img/course_image/1 _FmxiAaS1Or1Wpo6-Gf1hw.jpeg', 300, 100, 25, '2020-02-22 03:07:41'),
 (15, 17, 'Arduino  3 ', 'Open-source electronic prototyping platform enabling users to create interactive electronic objects.', 'Open-source electronic prototyping platform enabling users to create interactive electronic objects.', '../static/img/course_image/ap550x55016x121transparentt.u1.png', 50, 10, 26, '2020-02-23 09:46:57'),
-(16, 13, 'Machine Learning 2 ', 'Machine learning is an application of artificial intelligence (AI) that provides systems the ability to automatically learn and improve from experience without being explicitly programmed. Machine learning focuses on the development of computer programs that can access data and use it learn for themselves.', 'Machine learning is an application of artificial intelligence (AI) that provides systems the ability to automatically learn and improve from experience without being explicitly programmed. Machine learning focuses on the development of computer programs that can access data and use it learn for themselves.', '../static/img/course_image/bigstock-D-Rendering-Of-Human-Brain-O-180772720-1024x683.jpg', 600, 100, 90, '2020-02-23 09:51:46');
+(16, 13, 'Machine Learning 2 ', 'Machine learning is an application of artificial intelligence (AI) that provides systems the ability to automatically learn and improve from experience without being explicitly programmed. Machine learning focuses on the development of computer programs that can access data and use it learn for themselves.', 'Machine learning is an application of artificial intelligence (AI) that provides systems the ability to automatically learn and improve from experience without being explicitly programmed. Machine learning focuses on the development of computer programs that can access data and use it learn for themselves.', '../static/img/course_image/bigstock-D-Rendering-Of-Human-Brain-O-180772720-1024x683.jpg', 600, 100, 90, '2020-02-23 09:51:46'),
+(21, 17, 'OS', ' os1 , os2 , os3', '  os1 , os2 , os3', '../static/img/course_image/abstract-technology-particle-background_52683-25766.jpg', 800, 80, 26, '2020-02-29 08:52:10'),
+(22, 13, 'OS', ' OS1 , OS2 , OS3', '  OS1 , OS2 , OS3', '../static/img/course_image/83079780_268049220848946_5471014944637976576_n.jpg', 800, 13, 26, '2020-02-29 08:56:32'),
+(23, 13, 'OS', ' OS1 , OS2 , OS3', '  OS1 , OS2 , OS3', '../static/img/course_image/83079780_268049220848946_5471014944637976576_n.jpg', 800, 13, 26, '2020-02-29 08:57:41');
 
 -- --------------------------------------------------------
 
@@ -172,7 +175,7 @@ CREATE TABLE IF NOT EXISTS `features_courses` (
   `Feature` varchar(255) NOT NULL,
   PRIMARY KEY (`Id`),
   KEY `Id_course` (`Id_course`)
-) ENGINE=MyISAM AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=20 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `features_courses`
@@ -194,7 +197,10 @@ INSERT INTO `features_courses` (`Id`, `Id_course`, `Feature`) VALUES
 (13, 5, 'test'),
 (14, 5, 'test'),
 (15, 6, 'test'),
-(16, 6, 'test');
+(16, 6, 'test'),
+(17, 23, '  OS1 '),
+(18, 23, ' OS2 '),
+(19, 23, ' OS3');
 
 -- --------------------------------------------------------
 
@@ -209,7 +215,7 @@ CREATE TABLE IF NOT EXISTS `features_products` (
   `Feature` varchar(255) NOT NULL,
   PRIMARY KEY (`Id`),
   KEY `FK_Features_Items` (`Id_Item`)
-) ENGINE=MyISAM AUTO_INCREMENT=25 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=61 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `features_products`
@@ -226,20 +232,20 @@ INSERT INTO `features_products` (`Id`, `Id_Item`, `Feature`) VALUES
 (8, 38, '6 Analog Inputs'),
 (9, 38, '32k Flash Memory'),
 (10, 38, '16Mhz Clock Speed'),
-(11, 1, 'test'),
-(12, 2, 'test'),
-(13, 2, 'tsest'),
-(14, 2, 'test'),
-(15, 2, 'test'),
-(16, 3, 'test'),
-(17, 3, 'test'),
-(18, 3, 'test'),
-(19, 3, 'test'),
-(20, 5, 'test'),
-(21, 5, 'test'),
-(22, 5, 'test'),
-(23, 2, 'test'),
-(24, 2, 'tset');
+(60, 64, 'aaa'),
+(59, 64, ' ttt'),
+(58, 63, 'tset2'),
+(57, 63, ' test1 '),
+(56, 62, 'test3 '),
+(55, 62, ' test2 '),
+(54, 62, '  test1 '),
+(53, 61, 'www'),
+(52, 61, 'www'),
+(51, 61, ' www'),
+(47, 59, 'add1 '),
+(48, 59, 'add2 '),
+(49, 59, ' add3 '),
+(50, 59, 'add4');
 
 -- --------------------------------------------------------
 
@@ -261,7 +267,7 @@ CREATE TABLE IF NOT EXISTS `items` (
   `Date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`Id`),
   KEY `FK_Items_category` (`Id_Category`)
-) ENGINE=MyISAM AUTO_INCREMENT=49 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=65 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `items`
@@ -309,11 +315,11 @@ INSERT INTO `items` (`Id`, `Id_Category`, `Name`, `Brief`, `Description`, `Price
 (40, 8, 'ARDUINO ETHERNET SHIELD W5100\r\n', 'Instrument cultivated alteration any favourable expression law far nor. Both new like tore but year. An from mean on with when sing pain. Oh to as principles devonshire companions unsatiable an delightful. The ourselves suffering the sincerity. Inhabit her manners adapted age certain. Debating offended at branched striking be subjects.', 'The Arduino Ethernet Shield allows an Arduino board to connect to the internet. It is based on the Wiznet W5100 ethernet chip providing a network (IP) stack capable of both TCP and UDP. The Arduino Ethernet Shield supports up to four simultaneous socket connections. Use the Ethernet library to write sketches which connect to the internet using the shield.\r\n\r\nThe ethernet shield connects to an Arduino board using long wire-wrap headers which extend through the shield. This keeps the pin layout intact and allows another shield to be stacked on top..\r\n\r\nThe latest revision of the shield adds a micro-SD card slotwhich can be used to store files for serving over the network. It is compatible with the Arduino UNO and Mega (using the Ethernet library coming in Arduino 0019). An SD card library is not yet included in the standard Arduino distribution.\r\n\r\nArduino communicates with both the W5100 and SD card using the SPI bus (through the ICSP header). This is on digital pins 1112and 13 on the Duemilanove and pins 5051and 52 on the Mega. On both boardspin 10 is used to select the W5100 and pin 4 for the SD card. These pins cannot be used for general i/o. On the Megathe hardware SS pin53is not used to select either the W5100 or the SD cardbut it must be kept as an output or the SPI interface won\'t work.\r\n\r\nNote that because the W5100 and SD card share the SPI busonly one can be active at a time. If you are using both peripherals in your programthis should be taken care of by the corresponding libraries. If you\'re not using one of the peripherals in your programhoweveryou\'ll need to explicitly deselect it. To do this with the SD cardset pin 4 as an output and write a high to it. For the W5100set digital pin 10 as a high output.\r\n\r\nThe shield provides a standard RJ45 ethernet jack.', 25, 'https://mikroelectron.com/ProImg/X4/7e5b4baf-00e9-41af-b141-9738de737491.jpg', 25, 1, '2020-02-13 15:42:27'),
 (41, 8, 'ARDUINO NANO ORIGINAL\r\n', 'Instrument cultivated alteration any favourable expression law far nor. Both new like tore but year. An from mean on with when sing pain. Oh to as principles devonshire companions unsatiable an delightful. The ourselves suffering the sincerity. Inhabit her manners adapted age certain. Debating offended at branched striking be subjects.', 'Arduino Nano is a surface mount breadboard embedded version with integrated USB. It is a smallestcompleteand breadboard friendly. It has everything that Diecimila/Duemilanove has (electrically) with more analog input pins and onboard +5V AREF jumper. Physicallyit is missing power jack. The Nano is automatically sense and switch to the higher potential source of powerthere is no need for the power select jumper.\r\n\r\nNano’s got the breadboard-ability of the Boarduino and the Mini+USB with smaller footprint than eitherso users have more breadboard space. It’s got a pin layout that works well with the Mini or the Basic Stamp (TXRXATNGND on one toppower and ground on the other). This new version 3.0 comes with ATMEGA328 which offer more programming and data memory space. It is two layers. That make it easier to hack and more affordable.\r\n\r\nYou end up paying less with Nano than Mini and USB combined!', 10, 'https://mikroelectron.com/ProImg/X4/972576cb-e634-4a37-9514-0eea62fffa92.jpg', 25, 1, '2020-02-13 15:43:05'),
 (42, 8, 'ARDUINO DUE MICROCONTROLLER BOARD', 'Instrument cultivated alteration any favourable expression law far nor. Both new like tore but year. An from mean on with when sing pain. Oh to as principles devonshire companions unsatiable an delightful. The ourselves suffering the sincerity. Inhabit her manners adapted age certain. Debating offended at branched striking be subjects.', 'Arduino Due Microcontroller Board is based on the 32-bit processor Atmel SAM3X8E ARM Cortex-M3 MCUand improves all the standard Arduino functionalities and adds many new features.\r\n\r\nThe Arduino Due offers 54 digital input/output pins (of which 12 can be used as PWM outputswith selectable resolution)12 analog inputs with 12 bits of resolution4 UARTstwo DAC outputsan 84MHz crystal oscillatortwo USB connections2 TWIa power jackan ICSP headeran SPI headera JTAG headerand a reset button and erase button. The maximum voltage that the I/O pins can provide or tolerate is 3.3V. The board has two micro USB connectors--one for debugging purposes and a second one capable of acting as a USB hostallowing external USB peripherals such as mousekeyboardssmartphonesetc. to be connected to the Arduino Due.\r\n\r\nThe board contains everything needed to support the microcontroller; simply connect it to a computer with a USB cable or power it with a AC-to-DC adapter or battery to get started. The Due is compatible with all Arduino shields that work at 3.3V and are compliant with the 1.0 Arduino pinout.\r\n\r\n', 25, 'https://mikroelectron.com/ProImg/X4/9810e57e-fc7f-4cec-af47-b20c276c4b93.jpg', 25, 1, '2020-02-13 15:51:11'),
-(43, 8, 'SD CARD READER MODULE', 'SD Card module can make your SD application more easier and simple.\r\nIt is easily interfaced as a peripheral to your arduino sensor shield module.\r\nThrough programmingyou can read and write to the SD card using your arduino.', 'Description:\r\n\r\nSD Card module can make your SD application more easier and simple.\r\nIt is easily interfaced as a peripheral to your arduino sensor shield module.\r\nThrough programmingyou can read and write to the SD card using your arduino.\r\nCan be used for SD Card more eaislysuch as for MP3 PlayerMCU/ARM system control.\r\nAll SD SPI pins outputMOSISCKMISO and CS.\r\nSupport 5V/3.3V input.\r\nSize:5.1cm x 3.1cm - 2.01inch x 1.22inch.', 5, 'https://mikroelectron.com/ProImg/X4/fbe95053-58f5-4a76-af00-0defdd97bd8e.jpg', 25, 1, '2020-02-17 01:31:56'),
-(44, 2, 'www', 'www', 'www', 22, '../static/img/defult_image/product.png', 29, 0, '2020-02-18 11:11:26');
+(43, 8, 'SD CARD READER MODULE', 'SD Card module can make your SD application more easier and simple.\r\nIt is easily interfaced as a peripheral to your arduino sensor shield module.\r\nThrough programmingyou can read and write to the SD card using your arduino.', 'Description:\r\n\r\nSD Card module can make your SD application more easier and simple.\r\nIt is easily interfaced as a peripheral to your arduino sensor shield module.\r\nThrough programmingyou can read and write to the SD card using your arduino.\r\nCan be used for SD Card more eaislysuch as for MP3 PlayerMCU/ARM system control.\r\nAll SD SPI pins outputMOSISCKMISO and CS.\r\nSupport 5V/3.3V input.\r\nSize:5.1cm x 3.1cm - 2.01inch x 1.22inch.', 5, 'https://mikroelectron.com/ProImg/X4/fbe95053-58f5-4a76-af00-0defdd97bd8e.jpg', 25, 1, '2020-02-17 01:31:56');
 INSERT INTO `items` (`Id`, `Id_Category`, `Name`, `Brief`, `Description`, `Price`, `Image`, `Views`, `Availability`, `Date`) VALUES
-(45, 18, 'qqq', 'qqq', 'qqq', 26, '../static/img/defult_image/product.png', 26, 0, '2020-02-18 11:15:28'),
-(46, 18, 'qqq2', 'qqq2', 'qqq2', 26, '../static/img/defult_image/product.png', 26, 0, '2020-02-18 11:15:56');
+(62, 8, 'test', ' test1 , test2 ,test3 ', '  test1 , test2 ,test3 ', 80, '../static/img/product_image/t_a_s_t_i_n_g.png', 26, 0, '2020-02-29 08:14:36'),
+(63, 1, 'test3 ', ' test5', '  test1 ,tset2', 80, '../static/img/product_image/Build-a-Web-Scraper-With-Requests-and-Beautiful-Soup_Watermarked.37918fb3906c.jpg', 26, 0, '2020-02-29 08:17:55'),
+(64, 1, 'tyttt', ' ttt', ' tttaaa', 80, '../static/img/product_image/المهندس_الصغير3.jpg', 26, 0, '2020-02-29 08:21:13');
 
 -- --------------------------------------------------------
 
@@ -329,7 +335,7 @@ CREATE TABLE IF NOT EXISTS `media_courses` (
   `Type` int(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (`Id`),
   KEY `Id_course` (`Id_course`)
-) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `media_courses`
@@ -339,7 +345,9 @@ INSERT INTO `media_courses` (`Id`, `Id_course`, `Path`, `Type`) VALUES
 (1, 1, 'https://www.researchgate.net/profile/Dong_Liang29/publication/258381983/figure/fig10/AS:324650941861909@1454414224690/The-wireless-PZT-sensor-network-mode-based-on-MA-for-the-joint-failure-monitoring.png', 1),
 (2, 1, 'https://kbimages1-a.akamaihd.net/185b6f73-12b4-4a0b-9e94-5e6840ba4613/1200/1200/False/wireless-communication-and-sensor-network.jpg', 1),
 (3, 3, 'https://www.jsumo.com/arduino-mega-advanced-kit-original-mega-1727-66-B.jpg', 1),
-(4, 3, 'https://www.robotshop.com/media/catalog/product/cache/image/400x400/9df78eab33525d08d6e5fb8d27136e95/s/u/sunfounder-uno-usb-microcontroller-r3.jpg', 1);
+(4, 3, 'https://www.robotshop.com/media/catalog/product/cache/image/400x400/9df78eab33525d08d6e5fb8d27136e95/s/u/sunfounder-uno-usb-microcontroller-r3.jpg', 1),
+(5, 23, '../static/img/product_image/q141s3xfs.png', 1),
+(6, 23, '../static/img/product_image/MzI3ODU3Ng.jpeg', 1);
 
 -- --------------------------------------------------------
 
@@ -351,11 +359,11 @@ DROP TABLE IF EXISTS `media_products`;
 CREATE TABLE IF NOT EXISTS `media_products` (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
   `Id_Item` int(11) NOT NULL,
-  `Type` int(1) NOT NULL,
+  `Type` int(1) NOT NULL DEFAULT '1',
   `Path` text NOT NULL,
   PRIMARY KEY (`Id`),
   KEY `FK_Media_Items` (`Id_Item`)
-) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `media_products`
@@ -363,6 +371,7 @@ CREATE TABLE IF NOT EXISTS `media_products` (
 
 INSERT INTO `media_products` (`Id`, `Id_Item`, `Type`, `Path`) VALUES
 (1, 1, 1, 'https://mikroelectron.com/ProImg/X4/e5520e6e-8352-4d62-9713-807ad3ad79b7.jpg'),
+(6, 61, 1, '../static/img/product_image/المهندس_الصغير.jpg'),
 (3, 2, 1, 'https://mikroelectron.com/ProImg/X4/6cd7428c-577e-4b90-bb2a-8b16474e95cd.jpg'),
 (4, 2, 1, 'https://mikroelectron.com/ProImg/X4/cbb64216-5f3b-4fc9-b79b-8495302b23af.jpg'),
 (5, 3, 1, 'https://mikroelectron.com/ProImg/X4/fd5100d0-045b-4a76-8917-f4539a467985.jpg');
