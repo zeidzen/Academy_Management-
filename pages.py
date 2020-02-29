@@ -4,8 +4,7 @@ import processes_DB
 import math
 from werkzeug.utils import secure_filename
 import os
-from flask import Flask, request, url_for, redirect, session, jsonify, flash 
-
+from flask import Flask, request, url_for, redirect, session, jsonify, flash
 # -----------------------------------------------------------------------------
 # Header class
 # -----------------------------------------------------------------------------
@@ -17,7 +16,8 @@ class Header():
         self.insert_data = processes_DB.insert_data()
         self.register_user = processes_DB.Register_And_login()
         self.delete_data = processes_DB.delete_data ()
-        self.data['title'] = 'Tabasheer Training Academy'        
+        self.update_data = processes_DB.insert_data ()
+        self.data['title'] = 'Tabasheer Training Academy'
         self.data['Products_Categories'] = self.show_data.get_all_categories_for_products()
 
         
@@ -25,7 +25,8 @@ class Header():
         self.data['User'] = self.show_data.get_info_user_by_Id(Id_User)
         
     def Add_category(self, **info):
-        self.insert_data.add_category(**info)
+        return self.insert_data.add_category(**info)
+
         
     def Del_category(self, Id_category: int):
         return self.delete_data.delete_category_by_Id(Id_category)
@@ -54,6 +55,7 @@ class Header():
             if image and self.Check_Image_Extenstion(image.filename):
                 filename = secure_filename(image.filename)
                 image.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+
             path = '../' + folder + image.filename.replace(' ', '_')
             return path
 
@@ -134,23 +136,21 @@ class Courses(Header):
 
 
     def add_courses(self, **info):
-        self.insert_data.add_course(**info)
-        
+        return self.insert_data.add_course(**info)
 
-    def add_feautre_courses (self, **info):
+    def add_feautre_courses(self, **info):
         self.insert_data.add_feautre_courses(**info)
-        
-    def add_media_courses (self ,**info) : 
-           self.insert_data.add_media_courses(**info)
-       
+
+    def add_media_courses(self, **info):
+        self.insert_data.add_media_courses(**info)
+
     def Del_course(self, Id_Course: int):
         return self.delete_data.delete_course_by_Id(Id_Course)
-    
-    
+
     def update_course(self, **info):
         return self.update_data.Update_info_course(**info)
-    
-    def get_last_id_course (self) : 
+
+    def get_last_id_course(self):
         return self.show_data.get_last_id_course()
     
 # -----------------------------------------------------------------------------
@@ -181,7 +181,6 @@ class Products(Header):
 
         self.data['layer'] = int(math.ceil(self.data['Number_Products_In_Page'] / 3))
 
-
     def Show_Category_Products (self, Id_Category, page=1, sort=0, Number_Products_In_Page=9) : 
         
         self.data['Id_Category'] = Id_Category
@@ -198,7 +197,6 @@ class Products(Header):
             self.data['Number_Products_In_Page'] = len(self.data['all_products'])
         self.data['layer'] = int(math.ceil(self.data['Number_Products_In_Page'] / 3))
 
-    
     def show_details_Product (self, Id_Product: int) : 
         
         self.data['check_offer_existe'] = self.show_data.check_offer_existe(Id_Product)
@@ -224,22 +222,20 @@ class Products(Header):
         
     def Add_Product (self, **info):
         return self.insert_data.add_product(**info)
-    
-    def Add_Features_Product (self, **info):
-        return self.insert_data.add_features_product(**info)    
-    
 
-    
-    def Add_Media_Product (self, **info):
-        return self.insert_data.add_media_product(**info)  
-    
+    def Add_Features_Product(self, **info):
+        return self.insert_data.add_features_product(**info)
+
+    def Add_Media_Product(self, **info):
+        return self.insert_data.add_media_product(**info)
+
     def Del_product(self, Id_Product: int):
         return self.delete_data.delete_product_by_Id(Id_Product)
     
     def update_product(self, **info):
         return self.insert_data.update_info_product(**info)
-    
-    def get_last_id_product (self) : 
+
+    def get_last_id_product(self):
         return self.show_data.get_last_id_product()
     
 # -----------------------------------------------------------------------------
@@ -281,7 +277,7 @@ class Achievements(Header):
         self.data['Most_Watched'] = self.show_data.get_top_viewed_item()
         
     def Add_Achievement (self, **info):
-        self.insert_data.add_post(**info)        
+        return self.insert_data.add_post(**info)
         
     def Del_post(self, Id_post: int):
         return self.delete_data.delete_post_by_Id(Id_post)
@@ -295,9 +291,11 @@ class About(Header):
         super().__init__()
         self.data['title'] = 'About Us'
 
+
 # ----------------------------------------------------------------------------
 # Dashboard 
 # ------------------------------------------------------------------------------
+
 class Dashboard(Header):
     def __init__(self , Id_User):
         super().__init__()
@@ -312,6 +310,8 @@ class Dashboard(Header):
         self.data['User'] = self.show_data.get_info_user_by_Id(Id_User)
         self.data['Number_Students_Per_Course'] = self.show_data.Number_students_per_course()
         self. data ['Number_Students_Per_Class'] = self.show_data.number_students_per_class ()
+
+
 # ----------------------------------------------------------------------------
 # Users
 # ------------------------------------------------------------------------------
@@ -320,8 +320,7 @@ class Users (Header):
         super().__init__()
         self.data['title'] = 'My Account'
         self.data['Cities'] = self.show_data.get_all_cities()
-                
-        
+
     def login(self, **info):
         return self.register_user.Login_func(**info)    
        
@@ -330,7 +329,8 @@ class Users (Header):
    
     def ForgottenPassword (self):
        pass
-             
+
+
 # -----------------------------------------------------------------------------
 # Add Student class
 # -----------------------------------------------------------------------------
@@ -341,16 +341,19 @@ class Students (Header):
         self.data['Cities'] = self.show_data.get_all_cities()
         self.data['University'] = self.show_data.get_all_universities()
         self.data['Specialization'] = self.show_data.get_all_specialization()
-        
 
     def Add_students(self, **info):
-        self.insert_data.add_student(**info)
+        return self.insert_data.add_student(**info)
         
     def Show_Data_Students (self) : 
         self.data['student'] = self.show_data.get_all_students()
         
     def Del_student(self, Id_Student: int):
         return self.delete_data.delete_Student_by_Id(Id_Student)
+
+    def update_student(self, **info):
+        return self.insert_data.Update_info_Student(**info)
+
 
 # -----------------------------------------------------------------------------
 # Classes
@@ -364,10 +367,10 @@ class Classes (Header):
         self.data['all_students'] = self.show_data.get_all_students()
 
     def Add_class(self, **info):
-        self.insert_data.add_class(**info)
+        return self.insert_data.add_class(**info)
 
     def Add_stu_class(self, **info):
-        self.insert_data.add_student_to_class(**info)
+        return self.insert_data.add_student_to_class(**info)
                 
     def Show_Data_Classes (self) : 
         self.data['classes'] = self.show_data.get_all_classes()
@@ -377,7 +380,8 @@ class Classes (Header):
 
     def Update_classes(self, **info):
         return self.update_data.Update_info_classes(**info)
-    
+
+
 # -----------------------------------------------------------------------------
 #  OFFERS
 # -----------------------------------------------------------------------------
@@ -388,14 +392,15 @@ class Offers (Header):
         self.data['product'] = self.show_data.get_all_products_without_offers()
 
     def Add_Offers(self, **info):
-        self.insert_data.add_offer(**info)
+        return self.insert_data.add_offer(**info)
 
     def Show_Offers_Curses (self) : 
         self.data['course_offer'] = self.show_data.get_offer_by_courses()
         
     def Show_Offers_Products (self) : 
         self.data['product_offer'] = self.show_data.get_offer_by_produts()
-        
+
+
 # -----------------------------------------------------------------------------
 # PAYMENTS
 # -----------------------------------------------------------------------------
@@ -406,11 +411,12 @@ class Payments (Header):
         self.data['student'] = self.show_data.get_all_students()
 
     def Add_Payment(self, **info):
-        self.insert_data.add_payment(**info)
+        return self.insert_data.add_payment(**info)
 
     def Show_Data_Payments (self) :
         self.data['payment'] = self.show_data.get_payment()
-               
+
+
 # -----------------------------------------------------------------------------     
 # City_Uni_Spel
 # -----------------------------------------------------------------------------        
@@ -420,13 +426,13 @@ class City_Uni_Spel(Header):
         self.data['title'] = 'Add City Uni Spec'
 
     def add_city(self, **info):
-        self.insert_data.add_city(**info)
+        return self.insert_data.add_city(**info)
 
     def add_university(self, **info):
-        self.insert_data.add_university(**info)
+        return self.insert_data.add_university(**info)
 
     def add_specializaton(self, **info):
-        self.insert_data.add_specialization(**info)
+        return self.insert_data.add_specialization(**info)
 
 # -----------------------------------------------------------------------------     
 # Error class

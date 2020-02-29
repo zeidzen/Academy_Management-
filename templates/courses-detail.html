@@ -22,7 +22,7 @@
 									
 
 
-									{% if data ['Media']|length > 0 :   %}
+									{% if data ['Media']|length > 1 :   %}
 									<div id="thumb-slider" class="owl-theme owl-loaded owl-drag full_slider owl-carousel " data-nav='yes' data-loop="yes" data-margin="10" data-items_xs="2" data-items_sm="3" data-items_md="{{data ['Number_Medias']}}">
 										<a  class="img thumbnail " data-image="{{course['Image']}}" title="{{course['Name']}}">
 											<img src="{{course ['Image']}}" title="{{course['Name']}}" alt="{{course['Name']}}">

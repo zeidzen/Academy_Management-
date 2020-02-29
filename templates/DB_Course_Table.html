@@ -23,6 +23,10 @@
 									<div class="card shadow">
 										<div class="card-header">
 											<h2 class="mb-0">Courses Table</h2>
+
+											{% if data['messages'] != 'None': %}
+											<h2 class="mb-0">{{data['messages']}}</h2>
+											{% endif %}
 										</div>
 										<div class="card-body">
 											<div class="table-responsive">
@@ -44,12 +48,12 @@
 														</tr>
 													</thead>
 													<tbody>
-														{% for  course in data ['courses'] :%}
+														{% for  course in data ['Courses'] :%}
 														<tr>
 															<form action="/update_course" method="post" enctype="multipart/form-data">
 
 																<input type="hidden" name="course_Id" value="{{course['Id']}}">
-																<td class="wd-15p" contenteditable='true'><input type="number" name="course_Name" min="0" value="{{course['Name']}}"></td>
+																<td class="wd-15p" contenteditable='true'><input type="text" name="course_Name" min="0" value="{{course['Name']}}"></td>
 																<td class="wd-15p" contenteditable='true'>
 																	<textarea rows="5" cols="50" name="course_brief">
 																		{{course['Brief']}}

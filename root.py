@@ -1,12 +1,16 @@
 #$# -*- coding: utf-8 -*-
 import config as con
-from flask import Flask, request, url_for, redirect, session, jsonify, flash , render_template
+from flask import Flask, request, url_for, redirect, session, jsonify, flash
+from flask import render_template
 import pages
-from werkzeug import secure_filename
+import os
+from werkzeug.utils import secure_filename
+import time
 
 app = Flask(__name__)
 # for session
 app.secret_key = 'Ýy:þCr0qIPüÈø~~E-^pP>·ê¨ç¥MB|aXÁ'
+
 
 @app.route('/')
 def index():
@@ -44,12 +48,16 @@ def Category_Courses_Page(Id_Category, page):
     Courses_Class.Show_Courses_Category (Id_Category, page)
     return render_template('courses_by_Category.html', data=Courses_Class.data)
 
+
 @app.route('/add_category')
 def add_category_Page():
     if 'Id_User' not in session:
         return redirect(url_for('Home_Page'))
     Courses_Class = pages.Courses()
+    session['add_category_error'] = ''
     Courses_Class.Show_Data_User(session['Id_User'])
+    Courses_Class.data['messages'] = session['add_category_error']
+    del session['add_category_error']
     return render_template('DB_Add_Category.html', data=Courses_Class.data)
 
 
@@ -60,9 +68,13 @@ def add_Category():
         data['Name'] = request.form['category_name']
         data['Type'] = request.form['category_type']
         Courses_Class = pages.Courses()
-        Courses_Class.Add_category(**data)
-    return redirect(url_for('add_category_Page'))
-
+        response = Courses_Class.Add_category(**data)
+        if response == True:
+            session['add_category_error'] = 'Data Inserted Successfully!'
+            return redirect(url_for('add_category_Page'))
+        elif response[0] == False:
+            session['add_category_error'] = response[1]
+            return redirect(url_for('add_category_Page'))
 
 
 @app.route('/update_category', methods=['POST'])
@@ -111,13 +123,16 @@ def add_product_Page():
     Products_Class =pages.Products ()
     Products_Class.Show_Data_User(session ['Id_User'])
     Products_Class.data ['title'] = 'Add Product'
+    session['Add_Product_Error'] = ''
+    Products_Class.data['messages'] = session['Add_Product_Error']
+    del session['Add_Product_Error']
     return render_template('DB_Add_Items.html', data=Products_Class.data)
 
 
-@app.route('/add_product_to_db', methods=['GET','POST'])
+@app.route('/add_product_to_db', methods=['POST'])
 def Add_Product():
     
-    Products_Class =pages.Products ()
+    Products_Class = pages.Products()
     data = dict()
     if request.method == 'POST':
         data['Id_Category'] = request.form['category_Id']
@@ -126,48 +141,49 @@ def Add_Product():
         data['Description'] = request.form['item_description']
         data['Price'] = request.form['item_price']
         image = request.files['item_image']
-        data['Image'] = Products_Class.Uploud_Image('static/img/product_image/', image)  
-        data['Views'] = request.form ['item_view']
+        data['Image'] = Products_Class.Uploud_Image('static/img/product_image/', image)
+        data['Views'] = request.form['item_view']
         data['Availability'] = request.form['item_availability']
         status = Products_Class.Add_Product(**data)
         Id_product = Products_Class.get_last_id_product()
-
         UPLOAD_FOLDER = './uploads'
-        app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER 
-             
+        app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
         Media_Image1 = request.files['Midea_Image1']
         Media_Image2 = request.files['Midea_Image2']
+
         Media_data = dict()
-        if Media_Image1.filename != '' : 
-            Media_data ['Id_Item'] =Id_product
-            Media_data ['Type'] = 1
-            Media_data ['Path'] = Products_Class.Uploud_Image('static/img/product_image/', Media_Image1)
+        if Media_Image1.filename != '':
+            Media_data['Id_Item'] = Id_product
+            Media_data['Type'] = 1
+            Media_data['Path'] = Products_Class.Uploud_Image('static/img/product_image/', Media_Image1)
             Products_Class.Add_Media_Product(**Media_data)
-            
+
         Media_data = dict()
-        if Media_Image2.filename != '' :
-            Media_data ['Id_Item'] =Id_product
-            Media_data ['Type'] = 1
-            Media_data ['Path'] = Products_Class.Uploud_Image('static/img/product_image/', Media_Image2)
+        if Media_Image2.filename != '':
+            Media_data['Id_Item'] = Id_product
+            Media_data['Type'] = 1
+            Media_data['Path'] = Products_Class.Uploud_Image('static/img/product_image/', Media_Image2)
             Products_Class.Add_Media_Product(**Media_data)
-                
+
         Features = request.form['Features']
-        Features = Features.split(',')  
-        if len (Features) > 0 : 
+        Features = Features.split(',')
+        if len(Features) > 0:
             Features_data = dict()
-            for feature  in Features : 
+            for feature in Features:
                 Features_data['Id_Item'] = Id_product
-                Features_data ['Feature'] = feature
+                Features_data['Feature'] = feature
                 Products_Class.Add_Features_Product(**Features_data)
-                
+
         if status[0] == True:
+            session['Add_Product_Error'] = 'Data Inserted Successfully!'
             return redirect(url_for('add_product_Page'))
+
         elif status[0] == False:
             session['Add_Product_Error'] = status[1]
             return redirect(url_for('add_product_Page'))
 
     return redirect(url_for('add_product_Page'))
-
 
 @app.route('/display_products')
 def Display_Products_Page():
@@ -177,6 +193,9 @@ def Display_Products_Page():
     Products_Class.data['title'] = 'Display Product'
     Products_Class.Show_Data_User ( session ['Id_User'] )
     Products_Class.Show_Data_Products()
+    session['Add_Product_Error'] = ''
+    Products_Class.data['messages'] = session['Add_Product_Error']
+    del session['Add_Product_Error']
     return render_template('DB_Products_Table.html', data=Products_Class.data)
 
 
@@ -197,11 +216,12 @@ def update_product():
         
         status = Products_Class.update_product(**data)
         if status == True:
-            return redirect(url_for('display_products'))
+            session['Add_Product_Error'] = 'Data Updated Successfully!'
+            return redirect(url_for('Display_Products_Page'))
         elif status[0] == False:
             session['Add_Product_Error'] = status[1]
-            return redirect(url_for('display_products'))        
-    return redirect(url_for('display_products'))
+            return redirect(url_for('Display_Products_Page'))
+
 
 
 
@@ -230,7 +250,6 @@ def Course_Page(Id_Course):
     return render_template('courses-detail.html', data=Courses_Class.data)
 
 
-
 @app.route('/add_courses')
 def Add_Courses_Page():
     if 'Id_User' not in session:
@@ -238,10 +257,13 @@ def Add_Courses_Page():
     Courses_Class = pages.Courses()
     Courses_Class.data ['title'] = 'Add Courses'
     Courses_Class.Show_Data_User(session['Id_User'])
+    session['add_course_error'] = ''
+    Courses_Class.data['messages'] = session['add_course_error']
+    del session['add_course_error']
     return render_template('DB_Add_Courses.html', data=Courses_Class.data)
 
 
-@app.route('/add_courses_to_db', methods=['POST'])
+@app.route('/Add_courses_to_DB', methods=['POST'])
 def Add_Courses():
     Courses_Class = pages.Courses()
     if request.method == 'POST':
@@ -255,57 +277,43 @@ def Add_Courses():
         data['Price'] = request.form['courses_price']
         data['Number_of_hours'] = request.form['courses_num_of_hours']
         data['Views'] = request.form['courses_view']
-        Courses_Class.add_courses(**data)
+        response = Courses_Class.add_courses(**data)
         Id_Course = Courses_Class.get_last_id_course()
-             
+
         Media_Image1 = request.files['Midea_Image1']
         Media_Image2 = request.files['Midea_Image2']
         Media_data = dict()
-        if Media_Image1.filename != '' : 
-            Media_data ['Id_course'] =Id_Course
-            Media_data ['Type'] = 1
-            Media_data ['Path'] = Courses_Class.Uploud_Image('static/img/product_image/', Media_Image1)
+        if Media_Image1.filename != '':
+            Media_data['Id_course'] = Id_Course
+            Media_data['Type'] = 1
+            Media_data['Path'] = Courses_Class.Uploud_Image('static/img/product_image/', Media_Image1)
             Courses_Class.add_media_courses(**Media_data)
-            
+
         Media_data = dict()
-        if Media_Image2.filename != '' :
-            Media_data ['Id_course'] =Id_Course
-            Media_data ['Type'] = 1
-            Media_data ['Path'] = Courses_Class.Uploud_Image('static/img/product_image/', Media_Image2)
+        if Media_Image2.filename != '':
+            Media_data['Id_course'] = Id_Course
+            Media_data['Type'] = 1
+            Media_data['Path'] = Courses_Class.Uploud_Image('static/img/product_image/', Media_Image2)
             Courses_Class.add_media_courses(**Media_data)
-                
+
         Features = request.form['Features']
-        Features = Features.split(',')  
-        if len (Features) > 0 : 
+        Features = Features.split(',')
+        if len(Features) > 0:
             Features_data = dict()
-            for feature  in Features : 
+            for feature in Features:
                 Features_data['Id_course'] = Id_Course
-                Features_data ['Feature'] = feature
+                Features_data['Feature'] = feature
                 Courses_Class.add_feautre_courses(**Features_data)
-                
-        return redirect(url_for('Add_Courses_Page'))
+
+        if response == True:
+            session['add_course_error'] = 'Data Inserted Successfully!'
+            return redirect(url_for('Add_Courses_Page'))
+        elif response[0] == False:
+            session['add_course_error'] = response[1]
+            return redirect(url_for('Add_Courses_Page'))
+
     else:
         return redirect(url_for('Add_Courses_Page'))
-
-
-@app.route('/update_course', methods=['POST'])
-def update_course():
-    update_course = pages.Update_Data(session['Id_User'])
-    if request.method == 'POST':
-        data = dict()
-        data['Id'] = request.form['course_Id']
-        data['Name'] = request.form['course_Name']
-        data['Brief'] = request.form['course_brief']
-        data['Description'] = request.form['course_description']
-        image = request.files['course_image']
-        data['Image'] = update_course.Uploud_Image('static/img/course_image/', image)
-        data['Price'] = request.form['course_Price']
-        data['Number_of_hours'] = request.form['course_Number_of_hours']
-        data['Views'] = request.form['course_Views']
-        update_course.update_course(**data)
-        return redirect(url_for('Display_Course_Page'))
-    else:
-        return redirect(url_for('Display_Course_Page'))
 
 
 @app.route('/display_course')
@@ -317,13 +325,44 @@ def Display_Course_Page():
     Courses_Class.data ['title'] = 'Dispaly Courses'
     Courses_Class.Show_Data_Courses()
     Courses_Class.Show_Data_User(session['Id_User'])
+    session['Add_course_Error'] = ''
+    Courses_Class.data['messages'] = session['Add_course_Error']
+    del session['Add_course_Error']
     return render_template('DB_Course_Table.html', data=Courses_Class.data)
+
+
+@app.route('/update_course', methods=['POST'])
+def update_course():
+    update_course = pages.Courses()
+    if request.method == 'POST':
+        data = dict()
+        data['Id'] = request.form['course_Id']
+        data['Name'] = request.form['course_Name']
+        data['Brief'] = request.form['course_brief']
+        data['Description'] = request.form['course_description']
+        image = request.files['course_image']
+        data['Image'] = update_course.Uploud_Image('static/img/course_image/', image)
+        data['Price'] = request.form['course_Price']
+        data['Number_of_hours'] = request.form['course_Number_of_hours']
+        data['Views'] = request.form['course_Views']
+        status = update_course.update_course(**data)
+        if status == True:
+            session['Add_course_Error'] = 'Data Updated Successfully!'
+            return redirect(url_for('Display_Course_Page'))
+        elif status[0] == False:
+            session['Add_course_Error'] = status[1]
+            return redirect(url_for('Display_Course_Page'))
+
+    else:
+        return redirect(url_for('Display_Course_Page'))
+
 
 @app.route('/delete_course/<id_course>')
 def Delete_Course_Page(id_course):
     Courses_Class = pages.Courses()
     Courses_Class.Del_course(int(id_course))
     return redirect(url_for('Display_Course_Page'))
+
 
 #==============================================================================
 #==============================================================================
@@ -356,6 +395,9 @@ def add_Achievements_Class_Page():
     Achievements_Class = pages.Achievements()
     Achievements_Class.data ['title'] = 'Add Achievements'
     Achievements_Class.Show_Data_User (session ['Id_User'])
+    session['add_post_error'] = ''
+    Achievements_Class.data['messages'] = session['add_post_error']
+    del session['add_post_error']
     return render_template('DB_Add_Post.html', data=Achievements_Class.data)
 
 
@@ -371,10 +413,16 @@ def add_Post():
         Media = request.files['post_media']
         data['Media'] = Achievements_Class.Uploud_Image('static/img/post_image/', Media)
         data['Type'] = request.form['post_type']
-        Achievements_Class.Add_Achievement(**data)
+        response = Achievements_Class.Add_Achievement(**data)
+        if response == True:
+            session['add_post_error'] = 'Data Inserted Successfully!'
+            return redirect(url_for('add_Achievements_Class_Page'))
+        elif response[0] == False:
+            session['add_post_error'] = response[1]
+            return redirect(url_for('add_Achievements_Class_Page'))
         
-        
-    return redirect(url_for('add_Achievements_Class_Page'))
+    else :
+        return redirect(url_for('add_Achievements_Class_Page'))
 
 
 #==============================================================================
@@ -436,11 +484,11 @@ def Login_Page():
     if 'Id_User' in session:
         return redirect(url_for('Dashboard_Page'))
     else:
+        
         Users_Class = pages.Users()
         if 'Login_Error' in session:
             Users_Class.data['Login_Error'] = session['Login_Error']
             del session['Login_Error']
-        Users_Class.data ['title'] = 'Login'
         return render_template('DB_Login.html', data=Users_Class.data)
 
 
@@ -522,7 +570,10 @@ def add_student_Page():
         return redirect(url_for('Home_Page'))
     Students_Class =pages.Students()
     Students_Class.data ['title'] = 'Add Student'
+    session['add_student_error'] = ''
     Students_Class.Show_Data_User (session ['Id_User'])
+    Students_Class.data['messages'] = session['add_student_error']
+    del session['add_student_error']
     return render_template('DB_Add_Student.html', data=Students_Class.data)
 
 @app.route('/add_student_to_db', methods=['POST'])
@@ -541,8 +592,13 @@ def add_Student():
         data['Id_Address'] = request.form['country_id']
         data['Id_University'] = request.form['university_id']
         data['Id_Specialization'] = request.form['specialization_id']
-        Students_Class.Add_students(**data)
-        return redirect(url_for('add_student_Page'))
+        response = Students_Class.Add_students(**data)
+        if response == True:
+            session['add_student_error'] = 'Data Inserted Successfully!'
+            return redirect(url_for('add_student_Page'))
+        elif response[0] == False:
+            session['add_student_error'] = response[1]
+            return redirect(url_for('add_student_Page'))
     else:
         return redirect(url_for('add_student_Page'))
 
@@ -553,7 +609,10 @@ def add_Student_Class_Page():
 
     Classes_Class = pages.Classes()
     Classes_Class.data ['title'] = 'Add Student To Class'
+    session['add_student_class_error'] = ''
     Classes_Class.Show_Data_User(session ['Id_User'])
+    Classes_Class.data['messages'] = session['add_student_class_error']
+    del session['add_student_class_error']
     return render_template('DB_Add_Stu_Class.html', data=Classes_Class.data)
 
 
@@ -566,7 +625,14 @@ def add_student_class():
         data['Id_Student'] = request.form['student_id']
         data['Id_Class'] = request.form['class_id']
 
-        Classes_Class.Add_stu_class(**data)
+        response = Classes_Class.Add_stu_class(**data)
+        if response ==True:
+            session['add_student_class_error'] = 'Data Inserted Successfully!'
+            return redirect(url_for('add_Student_Class_Page'))
+        elif response[0] == False:
+            session['add_student_class_error'] = response[1]
+            return redirect(url_for('add_student_Page'))
+
 
     return redirect(url_for('add_Student_Class_Page'))
 
@@ -579,13 +645,16 @@ def Display_Student_Page():
 
     Student_Class = pages.Students()
     Student_Class.Show_Data_Students()
-    Student_Class.Show_Data_User ( session ['Id_User']) 
+    Student_Class.Show_Data_User ( session ['Id_User'])
+    session['Add_student_Error'] = ''
+    Student_Class.data['messages'] = session['Add_student_Error']
+    del session['Add_student_Error']
     return render_template('DB_Student_Table.html', data=Student_Class.data)
 
 
 @app.route('/update_student', methods=['POST'])
 def update_student():
-    update_student = pages.Update_Data(session['Id_User'])
+    update_student = pages.Students()
     if request.method == 'POST':
         data = dict()
         data['Id'] = request.form['student_Id']
@@ -596,8 +665,14 @@ def update_student():
         data['Id_Address'] = request.form['city_id']
         data['Id_University'] = request.form['university_id']
         data['Id_Specialization'] = request.form['specialization_id']
-        update_student.update_student(**data)
-        return redirect(url_for('Display_Student_Page'))
+        status = update_student.update_student(**data)
+        if status == True:
+            session['Add_student_Error'] = 'Data Updated Successfully!'
+            return redirect(url_for('Display_Student_Page'))
+        elif status[0] == False:
+            session['Add_student_Error'] = status[1]
+            return redirect(url_for('Display_Student_Page'))
+
     else:
         return redirect(url_for('Display_Student_Page'))
     
@@ -611,7 +686,10 @@ def add_class_Page():
 
     Classes_Class = pages.Classes()
     Classes_Class.data ['title'] = 'Add Class'
+    session['add_class_error'] = ''
     Classes_Class.Show_Data_User(session ['Id_User'])
+    Classes_Class.data['messages'] = session['add_class_error']
+    del session['add_class_error']
     return render_template('DB_Add_Classes.html', data=Classes_Class.data)
 
 
@@ -629,8 +707,14 @@ def add_Class():
         data['End_Date'] = data['End_Date'].replace('/', '-')
         data['Lecturer'] = request.form['lecturer_name']
         data['capacity'] = request.form['capacity']
-        Classes_Class.Add_class(**data)
-        return redirect(url_for('add_class_Page'))
+        response = Classes_Class.Add_class(**data)
+        if response == True:
+            session['add_class_error'] = 'Data Inserted Successfully!'
+            return redirect(url_for('add_class_Page'))
+        elif response[0] == False:
+            session['add_class_error'] = response[1]
+            return redirect(url_for('add_class_Page'))
+
     else:
         return redirect(url_for('add_class_Page'))
     
@@ -642,7 +726,10 @@ def Display_Class_Page():
     Classes_Class = pages.Classes ()
     Classes_Class.data['title'] = 'Display Classes'
     Classes_Class.Show_Data_Classes()
-    Classes_Class.Show_Data_User ( session ['Id_User']) 
+    Classes_Class.Show_Data_User ( session ['Id_User'])
+    session['Add_class_Error'] = ''
+    Classes_Class.data['messages'] = session['Add_class_Error']
+    del session['Add_class_Error']
     return render_template('DB_Tables.html', data=Classes_Class.data)    
     
 @app.route('/update_class', methods=['POST'])
@@ -658,8 +745,14 @@ def update_class():
         data['End_Date'] = data['End_Date'].replace('/', '-')
         data['Lecturer'] = request.form['Lecturer']
         data['capacity'] = request.form['capacity']
-        Classes_Class.Update_classes(**data)
-        return redirect(url_for('Display_Class_Page'))
+        status = Classes_Class.Update_classes(**data)
+        if status == True:
+            session['Add_class_Error'] = 'Data Updated Successfully!'
+            return redirect(url_for('Display_Class_Page'))
+        elif status[0] == False:
+            session['Add_class_Error'] = status[1]
+            return redirect(url_for('Display_Class_Page'))
+
 
 
 
@@ -670,26 +763,35 @@ def update_class():
 def add_offer_Page():
     if 'Id_User' not in session:
         return redirect(url_for('Home_Page'))
-    
-    Offers_Class = pages.Offers ()
+    Offers_Class = pages.Offers()
     Offers_Class.data ['title'] = 'Add Offers'
     Offers_Class.Show_Data_User (session ['Id_User'])
+    session['add_offer_Page'] = ''
+    Offers_Class.data['messages'] = session['add_offer_Page']
+    del session['add_offer_Page']
+
     return render_template('DB_Add_Offers.html', data=Offers_Class.data)
 
 
 @app.route('/add_offers_to_db', methods=['POST'])
 def add_Offers():
     data = dict()
-    Offers_Class = pages.Classes ()
+    Offers_Class = pages.Offers()
     if request.method == 'POST':
         data['Id_Item'] = request.form['Product_id']
         data['New_Price'] = request.form['new_price']
         data['End_Date'] = request.form['end_date']
         data['End_Date'] = data['End_Date'].replace('/', '-')
-        data['Type'] = request.form['type']
-        Offers_Class.Add_Offers(**data)
-
-    return redirect(url_for('add_offer_Page'))
+        data['Type'] = request.form['newsletter']
+        response = Offers_Class.Add_Offers(**data)
+        if response == True:
+            session['add_offer_error'] = 'Data Inserted Successfully!'
+            return redirect(url_for('add_offer_Page'))
+        elif response[0] == False:
+            session['add_offer_error'] = response[1]
+            return redirect(url_for('add_offer_Page'))
+    else:
+        return redirect(url_for('add_offer_Page'))
 
 
 #==============================================================================
@@ -702,6 +804,9 @@ def add_payment_Page():
     Payments_Class = pages.Payments ()
     Payments_Class.data ['title'] = 'Add payment'
     Payments_Class.Show_Data_User(session ['Id_User'])
+    session['add_payment_Page'] = ''
+    Payments_Class.data['messages'] = session['add_payment_Page']
+    del session['add_payment_Page']
     return render_template('DB_Add_Payment.html', data=Payments_Class.data)
 
 
@@ -714,8 +819,15 @@ def add_Payment():
         data['Id_Student'] = request.form['Student_id']
         data['Payment'] = request.form['Payment']
         data['Payoff'] = request.form['Payoff']
-        Payments_Class.Add_Payment(**data)
-    return redirect(url_for('add_payment_Page'))
+        response = Payments_Class.Add_Payment(**data)
+        if response == True:
+            session['add_payments_error'] = 'Data Inserted Successfully!'
+            return redirect(url_for('add_payment_Page'))
+        elif response[0] == False:
+            session['add_payments_error'] = response[1]
+            return redirect(url_for('add_payment_Page'))
+    else:
+        return redirect(url_for('add_payment_Page'))
 
 #==============================================================================
 #==============================================================================
@@ -726,6 +838,9 @@ def add_city_uni_spe_Page():
 
     City_Uni_Spel_Class = pages.City_Uni_Spel()
     City_Uni_Spel_Class.Show_Data_User(session ['Id_User'])
+    session['add_city_error'] = ''
+    City_Uni_Spel_Class.data['messages'] = session['add_city_error']
+    del session['add_city_error']
     return render_template('DB_Add_City_Uni_Spel.html', data=City_Uni_Spel_Class.data)
 
 
@@ -737,11 +852,29 @@ def add_city_uni_spe_func():
         Type = request.form['Type' ]
         data['Name'] = request.form['Name' ]
         if Type == '1' : 
-             City_Uni_Spel_Class.add_city(**data)
+             response = City_Uni_Spel_Class.add_city(**data)
+             if response == True:
+                 session['add_city_error'] = 'Data Inserted to City Successfully!'
+                 return redirect(url_for('add_city_uni_spe_Page'))
+             elif response[0] == False:
+                 session['add_city_error'] = response[1]
+                 return redirect(url_for('add_city_uni_spe_Page'))
         elif Type == '2' : 
-             City_Uni_Spel_Class.add_university (**data)
+             response = City_Uni_Spel_Class.add_university (**data)
+             if response == True:
+                 session['add_city_error'] = 'Data Inserted to University Successfully!'
+                 return redirect(url_for('add_city_uni_spe_Page'))
+             elif response[0] == False:
+                 session['add_city_error'] = response[1]
+                 return redirect(url_for('add_city_uni_spe_Page'))
         elif Type == '3' : 
-            City_Uni_Spel_Class.add_specializaton (**data)    
+            response = City_Uni_Spel_Class.add_specializaton (**data)
+            if response == True:
+                session['add_city_error'] = 'Data Inserted to Specialization Successfully!'
+                return redirect(url_for('add_city_uni_spe_Page'))
+            elif response[0] == False:
+                session['add_city_error'] = response[1]
+                return redirect(url_for('add_city_uni_spe_Page'))
             
     return redirect(url_for('add_city_uni_spe_Page'))
 
@@ -808,12 +941,6 @@ def Display_User_Page():
     return render_template('DB_User_Profile.html', data=Users_Class.data)
 # ==============================================================================
 # ==============================================================================
-    
-
-
-
-
-
 
 
 
