@@ -3,15 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
-<<<<<<< HEAD
-<<<<<<< HEAD
--- Generation Time: Feb 22, 2020 at 04:31 AM
-=======
--- Generation Time: Feb 28, 2020 at 02:47 PM
->>>>>>> Branch-V1
-=======
--- Generation Time: Feb 29, 2020 at 09:15 AM
->>>>>>> Branch-V1
+-- Generation Time: Feb 29, 2020 at 09:18 AM
 -- Server version: 5.7.26
 -- PHP Version: 7.2.18
 
@@ -144,15 +136,7 @@ CREATE TABLE IF NOT EXISTS `courses` (
   `Date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`Id`),
   KEY `FK_courses_category` (`Id_Category`)
-<<<<<<< HEAD
-<<<<<<< HEAD
-) ENGINE=MyISAM AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
-=======
-) ENGINE=MyISAM AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
->>>>>>> Branch-V1
-=======
 ) ENGINE=MyISAM AUTO_INCREMENT=24 DEFAULT CHARSET=utf8;
->>>>>>> Branch-V1
 
 --
 -- Dumping data for table `courses`
@@ -171,20 +155,12 @@ INSERT INTO `courses` (`Id`, `Id_Category`, `Name`, `Brief`, `Description`, `Ima
 (11, 17, 'Arduino  With Python', 'Learn Arduino Online At Your Own Pace. Start Today and Become an Expert in Days. Join Over 40 Million People Learning Online with Udemy. 30-Day Money-Back Guarantee! Pandas Tutorials. 30-Day Money Guarantee. Lifetime Access. REST APIs With Flask.', 'Learn Arduino Online At Your Own Pace. Start Today and Become an Expert in Days. Join Over 40 Million People Learning Online with Udemy. 30-Day Money-Back Guarantee! Pandas Tutorials. 30-Day Money Guarantee. Lifetime Access. REST APIs With Flask.', '../static/img/course_image/Arduino-With-Python-How-to-Get-Started_Watermarked.67d3c045231b.jpg', 300, 60, 25, '2020-02-18 06:34:54'),
 (12, 13, 'Deep Learning', 'Deep learning is a subset of machine learning in artificial intelligence (AI) that has networks capable of learning unsupervised from data that is unstructured or unlabeled. Also known as deep neural learning or deep neural network.', 'Deep learning is a subset of machine learning in artificial intelligence (AI) that has networks capable of learning unsupervised from data that is unstructured or unlabeled. Also known as deep neural learning or deep neural network.', '../static/img/course_image/iStock-1181216327-750x422.jpg', 500, 50, 25, '2020-02-18 08:01:31'),
 (13, 13, 'Data Analysis', 'Data analysis is a process of inspecting, cleansing, transforming and modeling data with the goal of discovering useful information, informing conclusion and supporting decision-making.', 'Data analysis is a process of inspecting, cleansing, transforming and modeling data with the goal of discovering useful information, informing conclusion and supporting decision-making.', '../static/img/course_image/Business_Data_and_Graph_Analysis.png', 500, 100, 25, '2020-02-22 03:05:20'),
-<<<<<<< HEAD
-(14, 13, 'Data Mining Techniques', 'Data mining is highly effective, so long as it draws upon one or more of these techniques:', 'Data mining is highly effective, so long as it draws upon one or more of these techniques:', '../static/img/course_image/1__FmxiAaS1Or1Wpo6-Gf1hw.jpeg', 300, 100, 25, '2020-02-22 03:07:41');
-=======
 (14, 13, 'Data Mining Techniques', 'Data mining is highly effective, so long as it draws upon one or more of these techniques:', 'Data mining is highly effective, so long as it draws upon one or more of these techniques:', '../static/img/course_image/1 _FmxiAaS1Or1Wpo6-Gf1hw.jpeg', 300, 100, 25, '2020-02-22 03:07:41'),
 (15, 17, 'Arduino  3 ', 'Open-source electronic prototyping platform enabling users to create interactive electronic objects.', 'Open-source electronic prototyping platform enabling users to create interactive electronic objects.', '../static/img/course_image/ap550x55016x121transparentt.u1.png', 50, 10, 26, '2020-02-23 09:46:57'),
-<<<<<<< HEAD
-(16, 13, 'Machine Learning 2 ', 'Machine learning is an application of artificial intelligence (AI) that provides systems the ability to automatically learn and improve from experience without being explicitly programmed. Machine learning focuses on the development of computer programs that can access data and use it learn for themselves.', 'Machine learning is an application of artificial intelligence (AI) that provides systems the ability to automatically learn and improve from experience without being explicitly programmed. Machine learning focuses on the development of computer programs that can access data and use it learn for themselves.', '../static/img/course_image/bigstock-D-Rendering-Of-Human-Brain-O-180772720-1024x683.jpg', 600, 100, 90, '2020-02-23 09:51:46');
->>>>>>> Branch-V1
-=======
 (16, 13, 'Machine Learning 2 ', 'Machine learning is an application of artificial intelligence (AI) that provides systems the ability to automatically learn and improve from experience without being explicitly programmed. Machine learning focuses on the development of computer programs that can access data and use it learn for themselves.', 'Machine learning is an application of artificial intelligence (AI) that provides systems the ability to automatically learn and improve from experience without being explicitly programmed. Machine learning focuses on the development of computer programs that can access data and use it learn for themselves.', '../static/img/course_image/bigstock-D-Rendering-Of-Human-Brain-O-180772720-1024x683.jpg', 600, 100, 90, '2020-02-23 09:51:46'),
 (21, 17, 'OS', ' os1 , os2 , os3', '  os1 , os2 , os3', '../static/img/course_image/abstract-technology-particle-background_52683-25766.jpg', 800, 80, 26, '2020-02-29 08:52:10'),
 (22, 13, 'OS', ' OS1 , OS2 , OS3', '  OS1 , OS2 , OS3', '../static/img/course_image/83079780_268049220848946_5471014944637976576_n.jpg', 800, 13, 26, '2020-02-29 08:56:32'),
 (23, 13, 'OS', ' OS1 , OS2 , OS3', '  OS1 , OS2 , OS3', '../static/img/course_image/83079780_268049220848946_5471014944637976576_n.jpg', 800, 13, 26, '2020-02-29 08:57:41');
->>>>>>> Branch-V1
 
 -- --------------------------------------------------------
 
