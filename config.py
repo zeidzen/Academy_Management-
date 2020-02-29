@@ -6,4 +6,5 @@ host_app ='127.0.0.1' # '62.171.142.203'
 username='root'  # 'tta'
 password='2020' # '$T20t_20A$'
 database='tabasheer_academy'
+
 #gonicorn Ip : 0.0.0.0

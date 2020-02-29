@@ -93,18 +93,9 @@ class Courses(Header):
         self.data['Courses'] = self.show_data.get_all_courses()
         self.data['page'] = int(page)
         self.data['Max_page'] = math.ceil(len(self.data['Courses']) / 5)
-<<<<<<< HEAD
-        self.data['Courses_Categories'] = self.show_data.get_all_categories_for_course()
-        self.data['Most_Watched'] = self.show_data.get_top_viewed_courses()
-
-# -----------------------------------------------------------------------------
-# Category class
-# -----------------------------------------------------------------------------
-=======
         self.data['Most_Watched'] = self.show_data.get_top_viewed_item()
         
     def Show_Courses_Category (self, Id_Category: int, Page: int) : 
->>>>>>> Branch-V1
 
         self.data['Category_Name'] = self.show_data.get_category_by_Id(Id_Category)[1]
         self.data['Courses'] = self.show_data.get_all_courses_by_category(Id_Category)
@@ -112,34 +103,15 @@ class Courses(Header):
         self.data['Max_page'] = math.ceil(len(self.data['Courses']) / 5)
         self.data['title'] = 'Courses : {}'.format(self.data['Category_Name'])
         self.data['Courses_Categories'] = self.show_data.get_all_categories_for_course()
-<<<<<<< HEAD
-        self.data['Id_Category'] = Id_Category
-        self.data['Most_Watched'] = self.show_data.get_top_viewed_courses()
-        
-        
-=======
         self.data['Most_Watched'] = self.show_data.get_top_viewed_courses()
         self.data['Id_Category'] = Id_Category
->>>>>>> Branch-V1
         
         # self.data['Category_Name'] = self.show_data.get_category_by_Id(Id_Category)[1]
         # self.data['Category_path'] = 'Categories    >    {}'.format(self.data['Category_Name'])
         # self.data['Link_Page'] = '/category={}/page='.format(Id_Category)
-<<<<<<< HEAD
-
-
-# -----------------------------------------------------------------------------
-# Course class
-# -----------------------------------------------------------------------------
-
-class Course(Header):
-    def __init__(self, Id_Course: int):
-        super().__init__()
-=======
         
     def Show_Details_Course (self, Id_Course: int) : 
         
->>>>>>> Branch-V1
         self.data['check_offer_existe'] = self.show_data.check_offer_existe(Id_Course, 2)
         if self.data['check_offer_existe'] == True:
             self.data['Course'] = self.show_data.get_offer_by_id_course(Id_Course)
@@ -279,14 +251,9 @@ class Search(Header):
         self.data['all_Items'] = self.show_data.search_items(Name_Search)
         self.data['Most_Watched'] = self.show_data.get_top_viewed_item()
         self.data['page'] = int(page)
-        self.data['Max_page'] = math.ceil(len(self.data['all_Items']) / 5)
+        self.data['Max_page'] = math.ceil(len(self.data['all_Items']) / 9)
         self.data['title'] = 'Search : {} '.format(Name_Search)
         self.data['Name_Search'] = Name_Search
-<<<<<<< HEAD
-        self.data['Courses_Categories'] = self.show_data.get_all_categories_for_course()
-        self.data['Most_Watched'] = self.show_data.get_top_viewed_courses()
-=======
->>>>>>> Branch-V1
 
 # -----------------------------------------------------------------------------
 # Achievements 
@@ -300,17 +267,6 @@ class Achievements(Header):
         self.data['posts'] = self.show_data.get_all_posts(1)
         self.data['page'] = int(page)
         self.data['Max_page'] = math.ceil(len(self.data['posts']) / 5)
-<<<<<<< HEAD
-        self.data['Courses_Categories'] = self.show_data.get_all_categories_for_course()
-        self.data['Most_Watched'] = self.show_data.get_top_viewed_item()
-
-
-# -----------------------------------------------------------------------------
-# Post class
-class Post(Header):
-    def __init__(self, Id_Post: int):
-        super().__init__()
-=======
         self.data['Most_Watched'] = self.show_data.get_top_viewed_item()
         
     def Show_Data_Posts (self, page=1) :
@@ -321,7 +277,6 @@ class Post(Header):
         self.data['Most_Watched'] = self.show_data.get_top_viewed_item()
         
     def Show_Details_Achievement (self, Id_Post: int):
->>>>>>> Branch-V1
         self.data['post'] = self.show_data.get_post_by_id(Id_Post)
         self.data['Most_Watched'] = self.show_data.get_top_viewed_item()
         

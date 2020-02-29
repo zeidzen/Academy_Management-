@@ -107,11 +107,7 @@ class DataBase () :
         self.connection.commit()
 
     def Delete_Data (self,table,name,value) : 
-<<<<<<< HEAD
-        sql ="DELETE FROM {} WHERE {}='{}' ;".format(table,name,value)
-=======
         sql ="DELETE FROM {} WHERE {}='{}'  ;".format(table,name,value)
->>>>>>> Branch-V1
         mycursor = self.connection.cursor()
         mycursor.execute(sql)  
         self.connection.commit()
