@@ -1,0 +1,95 @@
+{% include  "header.html" %}
+
+		<!-- //Header Container  -->
+		<!-- Main Container  -->
+		<div class="main-container container">
+			<ul class="header-main ">
+				<li class="home"><a href="#">Home   </a><i class="fa fa-angle-right" aria-hidden="true"></i></li>
+				<li class="home"><a href="#">Account   </a><i class="fa fa-angle-right" aria-hidden="true"></i></li>
+				<li>  Add Item</li>
+			</ul>
+
+			<div class="row">
+				<div id="content" class="col-sm-12">
+					<h2 class="title">Add Items</h2>
+
+					<form action="/Add_items_to_DB" method="POST" enctype="multipart/form-data" class="form-horizontal account-register clearfix">
+						<fieldset id="account">
+							<legend>Add Item Details</legend>
+							<div class="form-group required" style="display: none;">
+								<label class="col-sm-2 control-label">Customer Group</label>
+								<div class="col-sm-10">
+									<div class="radio">
+										<label>
+											<input type="radio" name="customer_group_id" value="1" checked="checked"> Default
+										</label>
+									</div>
+								</div>
+							</div>
+
+
+<!--							<div class="form-group required">-->
+<!--								<label class="col-sm-2 control-label" for="input-CategoryId">Category id</label>-->
+<!--								<div class="col-sm-10">-->
+<!--									<input type="number" name="category_Id" value="" placeholder="Category id" id="input-CategoryId" class="form-control">-->
+<!--								</div>-->
+<!--							</div>-->
+							<div class="form-group required">
+								<label class="col-sm-2 control-label" for="input-CategoryId">Category </label>
+								<div class="col-sm-10">
+									<select name="category_Id" id="input-CategoryId" class="form-control">
+										<option value=""> --- Please Select --- </option>
+										{% for  Id , Name in data ['Category'] :%}
+										<option value="{{ Id }}">{{Name}}</option>
+										{% endfor %}
+									</select>
+								</div>
+							</div>
+
+							<div class="form-group required">
+								<label class="col-sm-2 control-label" for="input-itemname">Item Name</label>
+								<div class="col-sm-10">
+									<input type="text" name="item_name" value="" placeholder="Item Name" id="input-itemname"  class="form-control">
+								</div>
+							</div>
+                            <div class="form-group required">
+								<label class="col-sm-2 control-label" for="input-itemDescription">Item Description</label>
+								<div class="col-sm-10">
+									<input type="text" name="item_description" value="" placeholder="Item Description" id="input-itemDescription"  class="form-control">
+								</div>
+							</div>
+                             <div class="form-group required">
+								<label class="col-sm-2 control-label" for="input-itemprice">Item Price</label>
+								<div class="col-sm-10">
+									<input type="number" name="item_price" value="" placeholder="Item Price" id="input-itemprice"  class="form-control">
+								</div>
+							</div>
+                             <div class="form-group required">
+								<label class="col-sm-2 control-label" for="input-itemImage">Item Image</label>
+								<div class="col-sm-10">
+									<input type="file" name="item_image" value="" placeholder="Item Image" id="input-itemImage"  class="form-control">
+								</div>
+							</div>
+							 <div class="form-group required">
+								<label class="col-sm-2 control-label" for="input-itemview">Item View</label>
+								<div class="col-sm-10">
+									<input type="number" name="item_view" value="25" placeholder="Item View" id="input-itemview" min = "25" class="form-control">
+								</div>
+							</div>
+
+						</fieldset>
+
+
+						<!--Submit-->
+						<div class="buttons">
+							<div class="pull-right">I have read and agree to the <a href="#" class="agree"><b>Pricing Tables</b></a>
+								<input class="box-checkbox" type="checkbox" name="agree" value="1"> &nbsp;
+								<input type="submit" value="Continue" class="btn btn-primary">
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+		<!-- //Main Container -->
+		{% include  "footer.html" %}

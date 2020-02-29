@@ -60,8 +60,7 @@ class Show_Data():
             item.append(selected)
         return item
 
-
-    def get_all_products_without_offers (self) : 
+    def get_all_products_without_offers (self):
         sql = """select Id , Name,Image, Description, Price, Date , Brief
             from items WHERE Id NOT IN (SELECT Id_Item FROM offers WHERE Type = 1 ) ;"""
             
@@ -152,7 +151,6 @@ class Show_Data():
                     WHERE Id_Category = {}                
                     ORDER BY Price  ;'''.format(Category)
 
-
         elif sort == 4:
 
             sql = '''SELECT Id , Name , Description ,Image , Price , Views , Date   
@@ -166,18 +164,18 @@ class Show_Data():
                     ORDER BY Id  ;'''.format(Category)
 
         items = self.con.Select_Data_More_Row(sql)
-        Products = list()
-        for Product in items:
+        products = list()
+        for product in items:
             data = dict()
-            data['Id'] = Product[0]
-            data['Name'] = Product[1]
-            data['Description'] = Product[2]
-            data['Image'] = Product[3]
-            data['Price'] = Product[4]
-            data['Views'] = Product[5]
-            data['Date'] = Product[6]
-            Products.append(data)
-        return Products
+            data['Id'] = product[0]
+            data['Name'] = product[1]
+            data['Description'] = product[2]
+            data['Image'] = product[3]
+            data['Price'] = product[4]
+            data['Views'] = product[5]
+            data['Date'] = product[6]
+            products.append(data)
+        return products
 
     def get_product_by_Id(self, Id_Product) -> dict:
         sql = '''SELECT Id , Name , Description ,Image , Price , Views , Availability ,  Date  
@@ -200,17 +198,18 @@ class Show_Data():
         total = self.con.Select_Data_One_Row(sql)
         return total[0]
 
-    def get_last_id_product (self) : 
+    def get_last_id_product(self):
         sql = "SELECT id FROM items ORDER BY id DESC LIMIT 1"
         Id = self.con.Select_Data_One_Row(sql)
         return Id[0]
+
     # ------------------------------------------------------------------------------
     # Media Products
     # ------------------------------------------------------------------------------
 
     def get_media_by_id_product(self, Id_Product: int):
-        sql = '''SELECT m.Id , m.Type , m.Path  FROM media_products  as m, Items
-        WHERE m.Id_Item = Items.Id  and m.Id_Item = {}  ; '''.format(Id_Product)
+        sql = '''SELECT m.Id , m.Type , m.Path  FROM media_products  as m, items
+        WHERE m.Id_Item = items.Id  and m.Id_Item = {}  ; '''.format(Id_Product)
         medias = self.con.Select_Data_More_Row(sql)
         data = list()
         for media in medias:
@@ -225,8 +224,8 @@ class Show_Data():
     # Features Products
     # ------------------------------------------------------------------------------
     def get_features_by_id_product(self, Id_Product: int):
-        sql = '''SELECT  f.Feature  FROM features_products as f  ,Items
-        WHERE Id_Item = Items.Id  and Id_Item = {}  ; '''.format(Id_Product)
+        sql = '''SELECT  f.Feature  FROM features_products as f  ,items
+        WHERE Id_Item = items.Id  and Id_Item = {}  ; '''.format(Id_Product)
         Features = self.con.Select_Data_More_Row(sql)
         data = list()
         for Feature in Features:
@@ -274,7 +273,7 @@ class Show_Data():
             courses.append(selected)
         return courses
 
-    def get_course_by_Id(self, Id_Course: int) -> list:
+    def get_course_by_Id(self, Id_Course: int):
         sql = """select Id , Name, Description, Image, Price, Number_of_hours, Date , Brief
         from courses Where Id = {} ;""".format(Id_Course)
         data = self.con.Select_Data_One_Row(sql)
@@ -344,13 +343,18 @@ class Show_Data():
         return data 
         
         
-    def get_last_id_course (self) : 
-        sql = "SELECT id FROM courses ORDER BY id DESC LIMIT 1"
-        Id = self.con.Select_Data_One_Row(sql)
-        return Id[0]     
+        
         
     # ------------------------------------------------------------------------------
-    # Search
+
+    def get_last_id_course(self):
+        sql = "SELECT id FROM courses ORDER BY id DESC LIMIT 1"
+        Id = self.con.Select_Data_One_Row(sql)
+        return Id[0]
+
+
+
+        # Search
     # ------------------------------------------------------------------------------
 
     def search_items(self, value: str) -> list:
@@ -443,8 +447,8 @@ class Show_Data():
     # ------------------------------------------------------------------------------
 
     def get_media_by_id_course(self, Id_Course: int):
-        sql = '''SELECT m.Type , m.Path  FROM media_courses as m , Items
-        WHERE m.Id_course = Items.Id  and Id_course = {}  ; '''.format(Id_Course)
+        sql = '''SELECT m.Type , m.Path  FROM media_courses as m , items
+        WHERE m.Id_course = items.Id  and Id_course = {}  ; '''.format(Id_Course)
         medias = self.con.Select_Data_More_Row(sql)
         data = list()
         for media in medias:
@@ -459,8 +463,8 @@ class Show_Data():
     # ------------------------------------------------------------------------------
 
     def get_features_by_id_course(self, Id_Course: int):
-        sql = '''SELECT  f.Feature  FROM features_courses as f  ,Items
-        WHERE f.Id_course = Items.Id  and Id_course = {}  ; '''.format(Id_Course)
+        sql = '''SELECT  f.Feature  FROM features_courses as f  ,items
+        WHERE f.Id_course = items.Id  and Id_course = {}  ; '''.format(Id_Course)
         Features = self.con.Select_Data_More_Row(sql)
         data = list()
         for Feature in Features:
@@ -511,7 +515,7 @@ class Show_Data():
     # Student
     # ------------------------------------------------------------------------------
 
-    def get_student_for_id(self, id_student: int) -> dict:
+    def get_student_for_id(self, id_student: int) -> list:
         sql = """select st.Id , st.FirstName , st.LastName , st.Gender , st.Phone , st.Email , st.Birthday ,
                      c.Name, u.Name , sp.Name
                      From students st , city c, university u , specialization sp
@@ -590,7 +594,6 @@ class Show_Data():
         total = self.con.Select_Data_One_Row(sql)
         return total[0]
 
-
     def number_students_per_class (self) : 
         sql = """select classes.Id , classes.Name  , COUNT(sc.Id_Student) from  classes , stu_class as sc 
                 WHERE  classes.Id =sc.Id_Class  
@@ -607,6 +610,7 @@ class Show_Data():
     
     
     # ------------------------------------------------------------------------------
+
     # Posts
     # ------------------------------------------------------------------------------
 
@@ -955,28 +959,29 @@ class insert_data():
     # test
     def Update_info_course(self, **info) -> bool:
         try:
-            # self.con.Update_Data_All_Coulmn_String('courses',info['Id'] , **info)
+            id = info['Id']
+            del info['Id']
+            self.con.Update_Data_All_Coulmn_String('courses',id , **info)
             return True
         except:
             return False, 'A system error occurred, please try again later'
 
     # Feautre
     def add_feautre_courses(self, **info) -> bool:
-        
+        try:
             self.con.Insert_Data('features_courses', **info)
             return True
-        # try:
-        # except:
-        #     return False, 'A system error occurred, please try again later'
-        
+        except:
+            return False, 'A system error occurred, please try again later'
+
     # Media
     def add_media_courses(self, **info) -> bool:
-       
-            self.con.Insert_Data('media_courses', **info)
-            return True
-        # try:
-        # except:
-        #     return False, 'A system error occurred, please try again later'
+
+        self.con.Insert_Data('media_courses', **info)
+        return True
+    # try:
+    # except:
+    #     return False, 'A system error occurred, please try again later'
 
 # -----------------------------------------------------------------------------
 # Class
@@ -996,9 +1001,12 @@ class insert_data():
         except:
             return False, 'A system error occurred, please try again later'
 
+    # test
     def Update_info_classes(self, **info) -> bool:
         try:
-            # self.con.Update_Data_All_Coulmn_String('classes',info['Id'] , **info)
+            id = info['Id']
+            del info['Id']
+            self.con.Update_Data_All_Coulmn_String('classes', id, **info)
             return True
         except:
             return False, 'A system error occurred, please try again later'
@@ -1007,14 +1015,15 @@ class insert_data():
 # Category
 # -----------------------------------------------------------------------------
 
+    # test
     def add_category(self, **info) -> bool:
         try:
             self.con.Insert_Data('categories', **info)
             return True
         except:
             return False, 'A system error occurred, please try again later'
-        
-        
+
+    # test
     def Update_info_category(self, **info) -> bool:
         try:
             id = info['Id']
@@ -1023,13 +1032,10 @@ class insert_data():
             return True
         except:
             return False, 'A system error occurred, please try again later'
-        
-        
 
 # -----------------------------------------------------------------------------
 # Product
 # -----------------------------------------------------------------------------
-
 
     def add_product(self, **info) -> bool:
         try:
@@ -1038,17 +1044,16 @@ class insert_data():
         except:
             return False, 'A system error occurred, please try again later'
 
-
     def update_info_product(self, **info) -> bool:
-        try:
             id = info['Id']
             del info['Id']
             self.con.Update_Data_All_Coulmn_String('items', id, **info)
             return True
-        except:
-            return False, 'A system error occurred, please try again later'
-        
-        
+        #         try:
+
+        # except:
+        #     return False, 'A system error occurred, please try again later'
+
     # Feautre
     def add_features_product(self, **info) -> bool:
         try:
@@ -1057,18 +1062,15 @@ class insert_data():
         except:
             return False, 'A system error occurred, please try again later'
 
-    # Media
+        # Media
+
     def add_media_product(self, **info) -> bool:
-            self.con.Insert_Data('media_products', **info)
-            return True
-        # try:
-        # except:
-        #     return False, 'A system error occurred, please try again later'
-        
+        self.con.Insert_Data('media_products', **info)
+        return True
 
-        
-        
-
+    # try:
+    # except:
+    #     return False, 'A system error occurred, please try again later'
 # -----------------------------------------------------------------------------
 # Post # Offers # Payment
 # -----------------------------------------------------------------------------
@@ -1198,6 +1200,16 @@ class delete_data():
         except:
             return False, 'Something went wrong please try again later'
 
+    # ------------------------------------------------------------------------------
+    # Post
+    # ------------------------------------------------------------------------------
+    # test
+    def delete_post_by_Id(self, Id_post: int) -> bool:
+        try:
+            self.con.Delete_Data('post', 'Id', Id_post)
+            return True
+        except:
+            return False, 'Something went wrong please try again later'
 
 # ------------------------------------------------------------------------------
 # ------------------------------------------------------------------------------
@@ -1301,4 +1313,5 @@ class Register_And_login():
                 return False, 'Please enter a valid password'
         except:
             return False, 'Please enter a valid password'
+
 
