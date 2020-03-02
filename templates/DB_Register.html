@@ -25,13 +25,15 @@
 									<div class="card shadow">
 										<div class="card-header">
 											<h2 class="mb-0">Add User</h2>
+											<h2 class="mb-0" style="color: green;">{{data ['Messages_Successfully']}} </h2>
+											<h2 class="mb-0" style="color: red;">{{data ['Messages_Error']}} </h2>	
 										</div>
 										<div class="card-body">
 											<div class="row">
 
 												<div class="col-md-12">
 													<div class="form-group">
-														<form action="/register" method="POST"  >
+														<form action="/register" method="POST" enctype="multipart/form-data" >
 
 															<label>First Name</label>
 															<input type="text" name="firstname" value="" placeholder="First Name"  class="form-control w-100" required>
@@ -79,6 +81,10 @@
 
 															<label>Birthday</label>
 															<input type="date"  name="birthday" value=""  placeholder="DD-MM-YYYY"  pattern="[0-9]{2}-[0-9]{2}-[0-9]{4}" class="form-control w-100" required >
+															<br>
+
+															<label>Image</label>
+															<input type="file"  name="user_image" value=""  class="form-control w-100" required >
 															<br>
 
 															

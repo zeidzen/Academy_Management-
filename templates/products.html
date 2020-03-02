@@ -17,7 +17,7 @@
 							<div class="box-category">
 
 								<ul id="cat_accordion" class="list-group">
-									{% for category  in data ['Products_Categories'] : %}
+									{% for category  in data ['products_categories'] : %}
 									<li class=""><a href="/category_products={{category ['Id'] }}/page=1" class="cutom-parent">{{category ['Name'] }}</a>  <span class="dcjq-icon"></span></li>
 									{%endfor%}
 								</ul>
@@ -122,7 +122,7 @@
 						{% for index in range (  data ['layer']  ) :  %}
 						<div class="products-list grid">
 							<!---->
-							{% if  ((index*3)+(max*page-max) + 3) > max  : %}
+							{% if  ((index*3)+( max*page-max ) + 3) > max  : %}
 								{%set end = max * page %}
 							{%else%}
 								{%set end = (index*3)+(max*page-max) + 3   %}

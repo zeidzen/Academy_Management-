@@ -53,11 +53,17 @@ def Category_Courses_Page(Id_Category, page):
 def add_category_Page():
     if 'Id_User' not in session:
         return redirect(url_for('Home_Page'))
+    
     Courses_Class = pages.Courses()
-    session['add_category_error'] = ''
     Courses_Class.Show_Data_User(session['Id_User'])
-    Courses_Class.data['messages'] = session['add_category_error']
-    del session['add_category_error']
+    
+    if 'add_category_error' in session : 
+        Courses_Class.data['Messages_Error'] = session['add_category_error']
+        del  session['add_category_error']
+    elif 'successfully_add_category' in session : 
+        Courses_Class.data['Messages_Successfully'] = session['successfully_add_category']
+        del session['successfully_add_category']
+        
     return render_template('DB_Add_Category.html', data=Courses_Class.data)
 
 
@@ -69,11 +75,15 @@ def add_Category():
         data['Type'] = request.form['category_type']
         Courses_Class = pages.Courses()
         response = Courses_Class.Add_category(**data)
-        if response == True:
-            session['add_category_error'] = 'Data Inserted Successfully!'
+        
+        if response[0] == True:
+            session['successfully_add_category'] = response [1]
             return redirect(url_for('add_category_Page'))
         elif response[0] == False:
             session['add_category_error'] = response[1]
+            return redirect(url_for('add_category_Page'))
+    
+            
             return redirect(url_for('add_category_Page'))
 
 
@@ -123,9 +133,13 @@ def add_product_Page():
     Products_Class =pages.Products ()
     Products_Class.Show_Data_User(session ['Id_User'])
     Products_Class.data ['title'] = 'Add Product'
-    session['Add_Product_Error'] = ''
-    Products_Class.data['messages'] = session['Add_Product_Error']
-    del session['Add_Product_Error']
+    
+    if 'Add_Product_Error' in session : 
+        Products_Class.data['Messages_Error'] = session['Add_Product_Error']
+        del  session['Add_Product_Error']
+    elif 'successfully_add_Product' in session : 
+        Products_Class.data['Messages_Successfully'] = session['successfully_add_Product']
+        del session['successfully_add_Product']
     return render_template('DB_Add_Items.html', data=Products_Class.data)
 
 
@@ -144,7 +158,7 @@ def Add_Product():
         data['Image'] = Products_Class.Uploud_Image('static/img/product_image/', image)
         data['Views'] = request.form['item_view']
         data['Availability'] = request.form['item_availability']
-        status = Products_Class.Add_Product(**data)
+        response = Products_Class.Add_Product(**data)
         Id_product = Products_Class.get_last_id_product()
         UPLOAD_FOLDER = './uploads'
         app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
@@ -175,14 +189,14 @@ def Add_Product():
                 Features_data['Feature'] = feature
                 Products_Class.Add_Features_Product(**Features_data)
 
-        if status[0] == True:
-            session['Add_Product_Error'] = 'Data Inserted Successfully!'
+        if response[0] == True:
+            session['successfully_add_Product'] = response [1]
             return redirect(url_for('add_product_Page'))
-
-        elif status[0] == False:
-            session['Add_Product_Error'] = status[1]
+        elif response[0] == False:
+            session['Add_Product_Error'] = response[1]
             return redirect(url_for('add_product_Page'))
-
+    
+    
     return redirect(url_for('add_product_Page'))
 
 @app.route('/display_products')
@@ -525,10 +539,14 @@ def Sinup_Page():
     if 'Id_User' not in session:
         return redirect(url_for('Home_Page'))
     Users_Class = pages.Users()
-    if 'Sinup_Error' in session:
-        Users_Class.data['Sinup_Error'] = session['Sinup_Error']
-        del session['Sinup_Error']
     Users_Class.Show_Data_User (session ['Id_User'])
+    if 'add_user_error' in session : 
+        Users_Class.data['Messages_Error'] = session['add_user_error']
+        del  session['add_user_error']
+    elif 'successfully_add_user' in session : 
+        Users_Class.data['Messages_Successfully'] = session['successfully_add_user']
+        del session['successfully_add_user']
+        
     return render_template('DB_Register.html', data=Users_Class.data)
 
 
@@ -548,17 +566,19 @@ def register_data():
         birthday = request.form['birthday']
         data['birthday'] = birthday.replace('/', '-')
         # Image        
-#        Media = request.files['user_image']
-#        data['Image'] = Users_Class.Uploud_Image('static/img/user_image/', Media)    
-        
+        Media = request.files['user_image']
+        data['Image'] = Users_Class.Uploud_Image('static/img/user_image/', Media)    
         # Insert Data
-        status = Users_Class.Add_User(**data)
-        if status[0] == True:
-            session['Id_User'] = status[1]
-            return redirect(url_for('Home_Page'))
-
-        elif status[0] == False:
-            session['Sinup_Error'] = status[1]
+        response = Users_Class.Add_User(**data)
+            
+        if response[0] == True:
+            session['successfully_add_user'] = response [2]
+            return redirect(url_for('Sinup_Page'))
+        elif response[0] == False:
+            session['add_user_error'] = response[1]
+            return redirect(url_for('Sinup_Page'))        
+            
+            
             return redirect(url_for('Sinup_Page'))
 
 #==============================================================================
@@ -570,10 +590,15 @@ def add_student_Page():
         return redirect(url_for('Home_Page'))
     Students_Class =pages.Students()
     Students_Class.data ['title'] = 'Add Student'
-    session['add_student_error'] = ''
     Students_Class.Show_Data_User (session ['Id_User'])
-    Students_Class.data['messages'] = session['add_student_error']
-    del session['add_student_error']
+    
+    if 'add_student_error' in session : 
+        Students_Class.data['Messages_Error'] = session['add_student_error']
+        del  session['add_student_error']
+    elif 'successfully_add_student' in session : 
+        Students_Class.data['Messages_Successfully'] = session['successfully_add_student']
+        del session['successfully_add_student']
+    
     return render_template('DB_Add_Student.html', data=Students_Class.data)
 
 @app.route('/add_student_to_db', methods=['POST'])
@@ -581,7 +606,6 @@ def add_Student():
     data = dict()
     Students_Class =pages.Students()
     if request.method == 'POST':
-        data['Id'] = 0
         data['FirstName'] = request.form['firstname']
         data['LastName'] = request.form['lastname']
         data['Gender'] = request.form['newsletter']
@@ -593,8 +617,9 @@ def add_Student():
         data['Id_University'] = request.form['university_id']
         data['Id_Specialization'] = request.form['specialization_id']
         response = Students_Class.Add_students(**data)
-        if response == True:
-            session['add_student_error'] = 'Data Inserted Successfully!'
+        
+        if response[0] == True:
+            session['successfully_add_student'] = response [1]
             return redirect(url_for('add_student_Page'))
         elif response[0] == False:
             session['add_student_error'] = response[1]
@@ -606,14 +631,20 @@ def add_Student():
 def add_Student_Class_Page():
     if 'Id_User' not in session:
         return redirect(url_for('Home_Page'))
-
+    
     Classes_Class = pages.Classes()
     Classes_Class.data ['title'] = 'Add Student To Class'
-    session['add_student_class_error'] = ''
     Classes_Class.Show_Data_User(session ['Id_User'])
-    Classes_Class.data['messages'] = session['add_student_class_error']
-    del session['add_student_class_error']
-    return render_template('DB_Add_Stu_Class.html', data=Classes_Class.data)
+    
+    if 'add_stu_class_error' in session : 
+        Classes_Class.data['Messages_Error'] = session['add_stu_class_error']
+        del  session['add_stu_class_error']
+        
+    elif 'successfully_add_stu_class' in session : 
+        Classes_Class.data['Messages_Successfully'] = session['successfully_add_stu_class']
+        del session['successfully_add_stu_class']
+        
+    return render_template('DB_Add_Stu_Class.html', data=Classes_Class.data )
 
 
 @app.route('/add_student_class_to_db', methods=['POST'])
@@ -624,8 +655,17 @@ def add_student_class():
         data['Id'] = 0
         data['Id_Student'] = request.form['student_id']
         data['Id_Class'] = request.form['class_id']
-
+    
         response = Classes_Class.Add_stu_class(**data)
+        
+        if response[0] == True:
+            session['successfully_add_stu_class'] = response [1]
+            return redirect(url_for('add_Student_Class_Page'))
+        elif response[0] == False:
+            session['add_stu_class_error'] = response[1]
+            return redirect(url_for('add_Student_Class_Page'))
+    
+        
         if response ==True:
             session['add_student_class_error'] = 'Data Inserted Successfully!'
             return redirect(url_for('add_Student_Class_Page'))
@@ -686,10 +726,15 @@ def add_class_Page():
 
     Classes_Class = pages.Classes()
     Classes_Class.data ['title'] = 'Add Class'
-    session['add_class_error'] = ''
-    Classes_Class.Show_Data_User(session ['Id_User'])
-    Classes_Class.data['messages'] = session['add_class_error']
-    del session['add_class_error']
+    Classes_Class.Show_Data_User(session ['Id_User'])    
+    
+    if 'add_class_error' in session : 
+        Classes_Class.data['Messages_Error'] = session['add_class_error']
+        del  session['add_class_error']
+    elif 'successfully_add_class' in session : 
+        Classes_Class.data['Messages_Successfully'] = session['successfully_add_class']
+        del session['successfully_add_class']
+        
     return render_template('DB_Add_Classes.html', data=Classes_Class.data)
 
 
@@ -708,8 +753,8 @@ def add_Class():
         data['Lecturer'] = request.form['lecturer_name']
         data['capacity'] = request.form['capacity']
         response = Classes_Class.Add_class(**data)
-        if response == True:
-            session['add_class_error'] = 'Data Inserted Successfully!'
+        if response[0] == True:
+            session['successfully_add_class'] = response [1]
             return redirect(url_for('add_class_Page'))
         elif response[0] == False:
             session['add_class_error'] = response[1]
@@ -957,6 +1002,39 @@ def Delete_Category_Page(id_category):
     return redirect(url_for('Display_Category_Page'))
 
 
+@app.route('/adds')
+def adds():
+    if 'Id_User' not in session:
+        return redirect(url_for('Home_Page'))
+    Header_Class = pages.Header()
+    Header_Class.data ['title'] = 'Adds'
+    Header_Class.Show_Data_User(session['Id_User'])
+    
+    if 'add_adds_error' in session : 
+        Header_Class.data['Messages_Error'] = session['add_adds_error']
+        del  session['add_adds_error']
+    elif 'successfully_add_adds' in session : 
+        Header_Class.data['Messages_Successfully'] = session['successfully_add_adds']
+        del session['successfully_add_adds']
+    
+    return render_template('DB_Add_Adds.html', data=Header_Class.data)
+
+
+@app.route('/add_adds',methods=['POST'])
+def add_adds():
+    data = dict()
+    Header_Class = pages.Header()
+    if request.method == 'POST':
+        image = request.files['Image']
+        data['Path'] = Header_Class.Uploud_Image('static/img/course_image/',image )
+        response = Header_Class.Add_Adds(**data)
+        if response[0] == True:
+            session['successfully_add_adds'] = response [1]
+            return redirect(url_for('adds'))
+        elif response[0] == False:
+            session['add_adds_error'] = response[1]
+            return redirect(url_for('adds'))
+    return redirect(url_for('adds'))
 
 
 @app.route('/ForgottenPassword')

@@ -19,7 +19,7 @@ class Header():
         self.update_data = processes_DB.insert_data ()
         self.data['title'] = 'Tabasheer Training Academy'
         self.data['Products_Categories'] = self.show_data.get_all_categories_for_products()
-
+        self.data['Adds'] = self.show_data.get_adds()
         
     def Show_Data_User  (self , Id_User ) : 
         self.data['User'] = self.show_data.get_info_user_by_Id(Id_User)
@@ -33,6 +33,9 @@ class Header():
     
     def update_category(self, **info):
         return self.update_data.Update_info_category(**info)
+    
+    def Add_Adds (self , **info) : 
+        return self.insert_data.add_adds(**info )
         
     def Check_Image_Extenstion(self, filename):
         ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'])
@@ -139,10 +142,10 @@ class Courses(Header):
         return self.insert_data.add_course(**info)
 
     def add_feautre_courses(self, **info):
-        self.insert_data.add_feautre_courses(**info)
+        return self.insert_data.add_feautre_courses(**info)
 
     def add_media_courses(self, **info):
-        self.insert_data.add_media_courses(**info)
+        return self.insert_data.add_media_courses(**info)
 
     def Del_course(self, Id_Course: int):
         return self.delete_data.delete_course_by_Id(Id_Course)
@@ -247,7 +250,7 @@ class Search(Header):
         self.data['all_Items'] = self.show_data.search_items(Name_Search)
         self.data['Most_Watched'] = self.show_data.get_top_viewed_item()
         self.data['page'] = int(page)
-        self.data['Max_page'] = math.ceil(len(self.data['all_Items']) / 9)
+        self.data['Max_page'] = math.ceil(len(self.data['all_Items']) / 5)
         self.data['title'] = 'Search : {} '.format(Name_Search)
         self.data['Name_Search'] = Name_Search
 

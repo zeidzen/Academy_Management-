@@ -871,6 +871,11 @@ class Show_Data():
     #     return item
 
 
+    def get_adds(self):
+        sql = "SELECT Path FROM adds ORDER BY id DESC LIMIT 1"
+        Path = self.con.Select_Data_One_Row(sql)
+        return Path[0]
+
 # ------------------------------------------------------------------------------
 # ------------------------------------------------------------------------------
 # ------------------------------------------------------------------------------
@@ -917,7 +922,7 @@ class insert_data():
                 return False, 'Phone number is not from the telecommunications service providers in Jordan (Zain, Umniah, Orange).'
 
             self.con.Insert_Data('students', **info)
-            return True
+            return True ,'Data Inserted Successfully!'
 
         except:
             return False, 'A system error occurred, please try again later'
@@ -925,25 +930,27 @@ class insert_data():
 
 
     def Update_info_Student(self, **info) -> bool:
-
-        if self.check_Student_exists('Email', info['Email']) == True :
-            return False, 'An email already exists Please enter a new email'
-
-        Email_Pattern = "[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
-        if re.search(Email_Pattern, info['Email']) == True:
-            return False, 'The correct email entry is entered'
-
-        if self.check_Student_exists('Phone', info['Phone']) == True:
-            return False, 'Phone number already exists. Please enter a new number'
-
-        if info['Phone'][:3] not in ['079', '078', '077']:
-            return False, 'Phone number is not from the telecommunications service providers in Jordan (Zain, Umniah, Orange).'
-        Id = info['Id']
-        del info['Id']
-        print(info)
-        self.con.Update_Data_All_Coulmn_String('students', Id, **info)
-        return True
-
+        try : 
+            if self.check_Student_exists('Email', info['Email']) == True :
+                return False, 'An email already exists Please enter a new email'
+    
+            Email_Pattern = "[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
+            if re.search(Email_Pattern, info['Email']) == True:
+                return False, 'The correct email entry is entered'
+    
+            if self.check_Student_exists('Phone', info['Phone']) == True:
+                return False, 'Phone number already exists. Please enter a new number'
+    
+            if info['Phone'][:3] not in ['079', '078', '077']:
+                return False, 'Phone number is not from the telecommunications service providers in Jordan (Zain, Umniah, Orange).'
+            Id = info['Id']
+            del info['Id']
+            print(info)
+            self.con.Update_Data_All_Coulmn_String('students', Id, **info)
+            
+            return True , 'Update Data Successfully!'
+        except:
+            return False, 'A system error occurred, please try again later'
 
 # -----------------------------------------------------------------------------
 # Course
@@ -952,7 +959,7 @@ class insert_data():
     def add_course(self, **info) -> bool:
         try:
             self.con.Insert_Data('courses', **info)
-            return True
+            return True , 'Data Inserted Successfully!'
         except:
             return False, 'A system error occurred, please try again later'
 
@@ -962,7 +969,7 @@ class insert_data():
             id = info['Id']
             del info['Id']
             self.con.Update_Data_All_Coulmn_String('courses',id , **info)
-            return True
+            return True , 'Update Data Successfully!'
         except:
             return False, 'A system error occurred, please try again later'
 
@@ -970,7 +977,7 @@ class insert_data():
     def add_feautre_courses(self, **info) -> bool:
         try:
             self.con.Insert_Data('features_courses', **info)
-            return True
+            return True , 'Data Inserted Successfully!'
         except:
             return False, 'A system error occurred, please try again later'
 
@@ -978,7 +985,7 @@ class insert_data():
     def add_media_courses(self, **info) -> bool:
 
         self.con.Insert_Data('media_courses', **info)
-        return True
+        return True , 'Data Inserted Successfully!'
     # try:
     # except:
     #     return False, 'A system error occurred, please try again later'
@@ -990,14 +997,14 @@ class insert_data():
     def add_class(self, **info) -> bool:
         try:
             self.con.Insert_Data(table='classes', **info)
-            return True
+            return True , 'Data Inserted Successfully!'
         except:
             return False, 'A system error occurred, please try again later'
 
     def add_student_to_class(self, **info) -> bool:
         try:
             self.con.Insert_Data('stu_class', **info)
-            return True
+            return True ,'Data Inserted Successfully!'
         except:
             return False, 'A system error occurred, please try again later'
 
@@ -1007,7 +1014,7 @@ class insert_data():
             id = info['Id']
             del info['Id']
             self.con.Update_Data_All_Coulmn_String('classes', id, **info)
-            return True
+            return True , 'Update Data Successfully!'
         except:
             return False, 'A system error occurred, please try again later'
 
@@ -1019,7 +1026,7 @@ class insert_data():
     def add_category(self, **info) -> bool:
         try:
             self.con.Insert_Data('categories', **info)
-            return True
+            return True , 'Data Inserted Successfully!'
         except:
             return False, 'A system error occurred, please try again later'
 
@@ -1029,7 +1036,7 @@ class insert_data():
             id = info['Id']
             del info['Id']
             self.con.Update_Data_All_Coulmn_String('categories', id, **info)
-            return True
+            return True , 'Update Data Successfully!'
         except:
             return False, 'A system error occurred, please try again later'
 
@@ -1044,76 +1051,82 @@ class insert_data():
         except:
             return False, 'A system error occurred, please try again later'
 
+
     def update_info_product(self, **info) -> bool:
+        try:
             id = info['Id']
             del info['Id']
             self.con.Update_Data_All_Coulmn_String('items', id, **info)
-            return True
-        #         try:
-
-        # except:
-        #     return False, 'A system error occurred, please try again later'
+            return True ,'Update Data Successfully!'
+        except:
+            return False, 'A system error occurred, please try again later'
 
     # Feautre
     def add_features_product(self, **info) -> bool:
         try:
             self.con.Insert_Data('features_products', **info)
-            return True
+            return True , 'Data Inserted Successfully!'
         except:
             return False, 'A system error occurred, please try again later'
 
         # Media
 
     def add_media_product(self, **info) -> bool:
-        self.con.Insert_Data('media_products', **info)
-        return True
-
-    # try:
-    # except:
-    #     return False, 'A system error occurred, please try again later'
+         try:
+            self.con.Insert_Data('media_products', **info)
+            return True , 'Data Inserted Successfully!'
+         except:
+             return False, 'A system error occurred, please try again later'
 # -----------------------------------------------------------------------------
-# Post # Offers # Payment
+# Post # Offers # Payment # Adds
 # -----------------------------------------------------------------------------
 
     def add_post(self, **info) -> bool:
         try:
             self.con.Insert_Data('post', **info)
-            return True
+            return True , 'Data Inserted Successfully!'
         except:
             return False, 'A system error occurred, please try again later'
 
     def add_offer(self, **info) -> bool:
         try:
             self.con.Insert_Data('offers', **info)
-            return True
+            return True , 'Data Inserted Successfully!'
         except:
             return False, 'A system error occurred, please try again later'
 
     def add_payment(self, **info) -> bool:
         try:
             self.con.Insert_Data('payments', **info)
-            return True
+            return True , 'Data Inserted Successfully!'
         except:
             return False, 'A system error occurred, please try again later'
 
     def add_city(self, **info) -> bool:
+        try:
             self.con.Insert_Data('city', **info)
-            return True
-#        try:
-#        except:
-#            return False, 'A system error occurred, please try again later'
+            return True , 'Data Inserted Successfully!'
+        except:
+            return False, 'A system error occurred, please try again later'
 
     def add_university(self, **info) -> bool:
         try:
             self.con.Insert_Data('university', **info)
-            return True
+            return True , 'Data Inserted Successfully!'
         except:
             return False, 'A system error occurred, please try again later'
 
     def add_specialization(self, **info) -> bool:
         try:
             self.con.Insert_Data('specialization', **info)
-            return True
+            return True , 'Data Inserted Successfully!'
+        except:
+            return False, 'A system error occurred, please try again later'
+        
+    def add_adds(self ,**info ) : 
+        try:
+            self.con.Insert_Data('adds', **info)
+            return True , 'Data Inserted Successfully!'
         except:
             return False, 'A system error occurred, please try again later'
 
@@ -1153,7 +1166,7 @@ class delete_data():
                 return False, 'Student record not found'
 
             self.con.Delete_Data('students', 'Id', Id_Student)
-            return True
+            return True , 'Delete Data Successfully!'
         except:
             return False, 'Something went wrong please try again later'
 
@@ -1164,7 +1177,7 @@ class delete_data():
     def delete_course_by_Id(self, Id_course: int) -> bool:
         try:
             self.con.Delete_Data('courses', 'Id', Id_course)
-            return True
+            return True , 'Delete Data Successfully!'
         except:
             return False, 'Something went wrong please try again later'
 
@@ -1174,7 +1187,7 @@ class delete_data():
     def delete_classes_by_Id(self, Id_classes: int) -> bool:
         try:
             self.con.Delete_Data('classes', 'Id', Id_classes)
-            return True
+            return True , 'Delete Data Successfully!'
         except:
             return False, 'Something went wrong please try again later'
 
@@ -1185,7 +1198,7 @@ class delete_data():
     def delete_product_by_Id(self, Id_items: int) -> bool:
         try:
             self.con.Delete_Data('items', 'Id', Id_items)
-            return True
+            return True , 'Delete Data Successfully!'
         except:
             return False, 'Something went wrong please try again later'
 
@@ -1196,7 +1209,7 @@ class delete_data():
     def delete_category_by_Id(self, Id_category: int) -> bool:
         try:
             self.con.Delete_Data('categories', 'Id', Id_category)
-            return True
+            return True , 'Delete Data Successfully!'
         except:
             return False, 'Something went wrong please try again later'
 
@@ -1207,7 +1220,7 @@ class delete_data():
     def delete_post_by_Id(self, Id_post: int) -> bool:
         try:
             self.con.Delete_Data('post', 'Id', Id_post)
-            return True
+            return True , 'Delete Data Successfully!'
         except:
             return False, 'Something went wrong please try again later'
 
@@ -1290,7 +1303,7 @@ class Register_And_login():
             self.con.Insert_Data('users', **info)
             sql = "SELECT Id FROM users WHERE Email='{}' ; ".format(info['Email'])
             Id_User = self.con.Select_Data_One_Row(sql)
-            return True, Id_User
+            return True, Id_User , 'Data Inserted Successfully!'
         except:
             return False, 'System error occurred, please try again later'
 
@@ -1308,7 +1321,7 @@ class Register_And_login():
 
         try:
             if self.verify_password(data[2], info['Password']):
-                return True, data[0]
+                return True, data[0] 
             else:
                 return False, 'Please enter a valid password'
         except:
