@@ -134,31 +134,31 @@ class Show_Data():
     def get_all_products_by_category(self, Category: int, sort=0) -> list:
 
         if sort == 1:
-            sql = '''SELECT Id , Name , Description ,Image , Price , Views , Date   
+            sql = '''SELECT Id , Name , Description ,Image , Price , Views , Date ,Brief  
                     FROM items 
                     WHERE Id_Category = {}                
                     ORDER BY Name ;'''.format(Category)
         elif sort == 2:
-            sql = '''SELECT Id , Name , Description ,Image , Price , Views , Date   
+            sql = '''SELECT Id , Name , Description ,Image , Price , Views , Date ,Brief  
                     FROM items 
                     WHERE Id_Category = {}                
                     ORDER BY Name desc ;'''.format(Category)
 
         elif sort == 3:
 
-            sql = '''SELECT Id , Name , Description ,Image , Price , Views , Date   
+            sql = '''SELECT Id , Name , Description ,Image , Price , Views , Date ,Brief  
                     FROM items 
                     WHERE Id_Category = {}                
                     ORDER BY Price  ;'''.format(Category)
 
         elif sort == 4:
 
-            sql = '''SELECT Id , Name , Description ,Image , Price , Views , Date   
+            sql = '''SELECT Id , Name , Description ,Image , Price , Views , Date ,Brief  
                     FROM items 
                     WHERE Id_Category = {}                
                     ORDER BY Price  desc ;'''.format(Category)
         else:
-            sql = '''SELECT Id , Name , Description ,Image , Price , Views , Date   
+            sql = '''SELECT Id , Name , Description ,Image , Price , Views , Date ,Brief  
                     FROM items 
                     WHERE Id_Category = {}                
                     ORDER BY Id  ;'''.format(Category)
@@ -174,6 +174,7 @@ class Show_Data():
             data['Price'] = product[4]
             data['Views'] = product[5]
             data['Date'] = product[6]
+            data['Brief'] = product[7]
             products.append(data)
         return products
 

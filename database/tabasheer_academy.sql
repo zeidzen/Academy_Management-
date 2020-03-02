@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Feb 29, 2020 at 09:15 AM
+-- Generation Time: Mar 02, 2020 at 02:33 PM
 -- Server version: 5.7.26
 -- PHP Version: 7.2.18
 
@@ -25,6 +25,26 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `adds`
+--
+
+DROP TABLE IF EXISTS `adds`;
+CREATE TABLE IF NOT EXISTS `adds` (
+  `Id` int(11) NOT NULL AUTO_INCREMENT,
+  `Path` text NOT NULL,
+  PRIMARY KEY (`Id`)
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `adds`
+--
+
+INSERT INTO `adds` (`Id`, `Path`) VALUES
+(3, '../static/img/course_image/87848719_183126483128124_3205809017603489792_n.jpg');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `categories`
 --
 
@@ -34,7 +54,7 @@ CREATE TABLE IF NOT EXISTS `categories` (
   `Name` varchar(255) NOT NULL,
   `Type` int(1) NOT NULL,
   PRIMARY KEY (`Id`)
-) ENGINE=MyISAM AUTO_INCREMENT=23 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=24 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `categories`
@@ -59,6 +79,7 @@ INSERT INTO `categories` (`Id`, `Name`, `Type`) VALUES
 (16, 'Languages', 2),
 (17, 'IOT', 2),
 (18, 'IOT', 1),
+(23, 'EEG', 1),
 (22, 'EEG', 1);
 
 -- --------------------------------------------------------
@@ -104,7 +125,7 @@ CREATE TABLE IF NOT EXISTS `classes` (
   `Date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`Id`),
   KEY `FK_classes_course` (`Id_course`)
-) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `classes`
@@ -114,7 +135,10 @@ INSERT INTO `classes` (`Id`, `Id_course`, `Name`, `Start_Date`, `End_Date`, `Lec
 (1, 1, 'A1', '2020-02-08', '2020-04-04', 'Osama Yousef', 8, '2020-02-08 21:53:08'),
 (2, 2, 'A2', '2020-02-08', '2020-02-29', 'zeid zein alabdeen', 8, '2020-02-08 21:53:08'),
 (4, 12, 'توم و جيري ', '2020-02-13', '2020-02-20', 'علي', 20, '2020-02-18 11:58:56'),
-(5, 16, 'Level1', '2020-02-12', '2020-02-22', 'علي', 5, '2020-02-23 18:08:04');
+(5, 16, 'Level1', '2020-02-12', '2020-02-22', 'علي', 5, '2020-02-23 18:08:04'),
+(8, 16, 'Level1', '2020-03-21', '2020-03-19', 'test test ', 3, '2020-03-01 19:52:13'),
+(9, 23, 'Level1', '2020-03-19', '2020-03-06', 'test test ', 2, '2020-03-01 19:53:41'),
+(10, 21, 'test3 ', '2020-03-28', '2020-03-19', 'علي', 3, '2020-03-01 19:56:55');
 
 -- --------------------------------------------------------
 
@@ -215,7 +239,7 @@ CREATE TABLE IF NOT EXISTS `features_products` (
   `Feature` varchar(255) NOT NULL,
   PRIMARY KEY (`Id`),
   KEY `FK_Features_Items` (`Id_Item`)
-) ENGINE=MyISAM AUTO_INCREMENT=61 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=64 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `features_products`
@@ -232,6 +256,9 @@ INSERT INTO `features_products` (`Id`, `Id_Item`, `Feature`) VALUES
 (8, 38, '6 Analog Inputs'),
 (9, 38, '32k Flash Memory'),
 (10, 38, '16Mhz Clock Speed'),
+(63, 65, 'adddddd '),
+(62, 65, ' adddddd '),
+(61, 65, ' adddddd '),
 (60, 64, 'aaa'),
 (59, 64, ' ttt'),
 (58, 63, 'tset2'),
@@ -267,7 +294,7 @@ CREATE TABLE IF NOT EXISTS `items` (
   `Date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`Id`),
   KEY `FK_Items_category` (`Id_Category`)
-) ENGINE=MyISAM AUTO_INCREMENT=65 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=66 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `items`
@@ -319,7 +346,8 @@ INSERT INTO `items` (`Id`, `Id_Category`, `Name`, `Brief`, `Description`, `Price
 INSERT INTO `items` (`Id`, `Id_Category`, `Name`, `Brief`, `Description`, `Price`, `Image`, `Views`, `Availability`, `Date`) VALUES
 (62, 8, 'test', ' test1 , test2 ,test3 ', '  test1 , test2 ,test3 ', 80, '../static/img/product_image/t_a_s_t_i_n_g.png', 26, 0, '2020-02-29 08:14:36'),
 (63, 1, 'test3 ', ' test5', '  test1 ,tset2', 80, '../static/img/product_image/Build-a-Web-Scraper-With-Requests-and-Beautiful-Soup_Watermarked.37918fb3906c.jpg', 26, 0, '2020-02-29 08:17:55'),
-(64, 1, 'tyttt', ' ttt', ' tttaaa', 80, '../static/img/product_image/المهندس_الصغير3.jpg', 26, 0, '2020-02-29 08:21:13');
+(64, 1, 'tyttt', ' ttt', ' tttaaa', 80, '../static/img/product_image/المهندس_الصغير3.jpg', 26, 0, '2020-02-29 08:21:13'),
+(65, 1, 'adddddd', ' adddddd ', ' adddddd adddddd adddddd adddddd ', 50, '../static/img/product_image/0_6zL2_kgwP7GQkTNi.jpg', 25, 0, '2020-03-01 23:11:14');
 
 -- --------------------------------------------------------
 
@@ -363,7 +391,7 @@ CREATE TABLE IF NOT EXISTS `media_products` (
   `Path` text NOT NULL,
   PRIMARY KEY (`Id`),
   KEY `FK_Media_Items` (`Id_Item`)
-) ENGINE=MyISAM AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `media_products`
@@ -374,7 +402,8 @@ INSERT INTO `media_products` (`Id`, `Id_Item`, `Type`, `Path`) VALUES
 (6, 61, 1, '../static/img/product_image/المهندس_الصغير.jpg'),
 (3, 2, 1, 'https://mikroelectron.com/ProImg/X4/6cd7428c-577e-4b90-bb2a-8b16474e95cd.jpg'),
 (4, 2, 1, 'https://mikroelectron.com/ProImg/X4/cbb64216-5f3b-4fc9-b79b-8495302b23af.jpg'),
-(5, 3, 1, 'https://mikroelectron.com/ProImg/X4/fd5100d0-045b-4a76-8917-f4539a467985.jpg');
+(5, 3, 1, 'https://mikroelectron.com/ProImg/X4/fd5100d0-045b-4a76-8917-f4539a467985.jpg'),
+(13, 65, 1, '../static/img/product_image/python-library-1.jpg');
 
 -- --------------------------------------------------------
 
@@ -534,7 +563,7 @@ CREATE TABLE IF NOT EXISTS `students` (
   KEY `FK_Address` (`Id_Address`),
   KEY `FK_University` (`Id_University`),
   KEY `FK_specialization` (`Id_Specialization`)
-) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `students`
@@ -543,7 +572,11 @@ CREATE TABLE IF NOT EXISTS `students` (
 INSERT INTO `students` (`Id`, `FirstName`, `LastName`, `Gender`, `Phone`, `Email`, `Birthday`, `Id_Address`, `Id_University`, `Id_Specialization`, `Date`) VALUES
 (1, 'zeid', 'zein alabdeen', 1, '0791749367', 'zeid.zen@gmail.com', '1996-01-10', 3, 5, 3, '2020-02-08 22:01:18'),
 (2, 'Osama', 'yousef', 1, '0790083761', 'fotboy1788@hotmail.com', '1993-04-04', 2, 5, 4, '2020-02-08 22:01:18'),
-(5, 'Haitham', 'Husam', 1, '0789605872', 'hhh1998@hotmail.com', '1996-01-10', 3, 5, 3, '2020-02-10 01:42:23');
+(8, 'zeid', 'zein alabdeen', 1, '0781472587', 'zeid.zen55@gmail.com', '2020-03-11', 1, 1, 1, '2020-03-01 18:37:54'),
+(5, 'Haitham', 'Husam', 1, '0789605872', 'hhh1998@hotmail.com', '1996-01-10', 3, 5, 3, '2020-02-10 01:42:23'),
+(9, 'zeid', 'zein alabdeen', 1, '0771749369', 'zeid.zen44@gmail.com', '2020-03-12', 1, 1, 1, '2020-03-01 18:40:29'),
+(10, 'zeid', 'zein alabdeen', 1, '0789985274', 'zeid.zen4444@gmail.com', '2020-03-12', 1, 1, 1, '2020-03-01 18:41:29'),
+(11, 'zeid', 'zein alabdeen', 1, '0789985277', 'zeid.zen4449@gmail.com', '2020-03-12', 1, 1, 1, '2020-03-01 18:44:15');
 
 -- --------------------------------------------------------
 
@@ -560,7 +593,7 @@ CREATE TABLE IF NOT EXISTS `stu_class` (
   PRIMARY KEY (`Id`),
   UNIQUE KEY `UN_STD_CLS` (`Id_Student`,`Id_Class`),
   KEY `FK_stu_class_class` (`Id_Class`)
-) ENGINE=MyISAM AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `stu_class`
@@ -571,8 +604,11 @@ INSERT INTO `stu_class` (`Id`, `Id_Student`, `Id_Class`, `Date`) VALUES
 (2, 2, 1, '2020-02-08 22:01:51'),
 (3, 1, 2, '2020-02-08 22:02:04'),
 (4, 2, 2, '2020-02-08 22:02:04'),
+(10, 1, 5, '2020-03-01 19:40:40'),
 (7, 1, 4, '2020-02-18 13:08:49'),
-(9, 7, 5, '2020-02-24 04:02:15');
+(9, 7, 5, '2020-02-24 04:02:15'),
+(11, 5, 4, '2020-03-01 19:45:27'),
+(12, 11, 4, '2020-03-01 19:47:34');
 
 -- --------------------------------------------------------
 
@@ -622,7 +658,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   UNIQUE KEY `UNIQUE_Phone` (`Phone`),
   UNIQUE KEY `UNIQUE_Email` (`Email`),
   KEY `FK_User_Address` (`Id_Address`)
-) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `users`
@@ -630,9 +666,8 @@ CREATE TABLE IF NOT EXISTS `users` (
 
 INSERT INTO `users` (`Id`, `FirstName`, `LastName`, `Email`, `Phone`, `Password`, `Gender`, `Id_Address`, `Image`, `Birthday`, `Date`) VALUES
 (1, 'zeid', 'zein alabdeen', 'zeid.zen@gmail.com', '0791749367', '6c15e561c79f69541cb12eda5717bcb17475492945ae87b26bede25a0d4c7964188cb02ab0291b7364e15215c2a027abb19c5a75fe45589cb337dbdcab67b77182824662e26be2e3fd365ff52ef6c189536250eff82b4a90bbf1c03c07012bfd', 1, 3, '../static/img/user_image/82246523_2459293421054355_1831006581907521536_o.jpg', '1996-01-10', '2020-02-08 22:07:24'),
-(2, 'osama', 'yousef', 'fotboy1788@hotmail.com', '0790083761', '123456789', 1, 2, NULL, '1993-04-04', '2020-02-08 22:07:24'),
-(3, 'zeid', 'zein alabdeen', 'zeid.zen23@gmail.com', '0798524657', '6c15e561c79f69541cb12eda5717bcb17475492945ae87b26bede25a0d4c7964188cb02ab0291b7364e15215c2a027abb19c5a75fe45589cb337dbdcab67b77182824662e26be2e3fd365ff52ef6c189536250eff82b4a90bbf1c03c07012bfd', 1, 1, '86278699_844682099326554_5104062684148531200_n.jpg', '2020-02-18', '2020-02-16 01:13:21'),
-(4, 'Ma\'en', ' W. Dhuhirat', 'M.dherat@hotmail.com', '0790000000', 'df33cdde240592817b8472089593bbce13addf5d43b564d6161271ee642aec1e06f23205275e2d61a9921110f1e5f67fe419bef10a5a40d08465e7954d51eeb307824b2be2397c531d6eaec1c96302c4d254675fff05c12fbd9031ba7962f495', 1, 1, NULL, '2020-02-10', '2020-02-27 06:06:01');
+(2, 'osama', 'yousef', 'fotboy1788@hotmail.com', '0790083761', '6c15e561c79f69541cb12eda5717bcb17475492945ae87b26bede25a0d4c7964188cb02ab0291b7364e15215c2a027abb19c5a75fe45589cb337dbdcab67b77182824662e26be2e3fd365ff52ef6c189536250eff82b4a90bbf1c03c07012bfd', 1, 2, '../static/img/user_image/82246523_2459293421054355_1831006581907521536_o.jpg', '1993-04-04', '2020-02-08 22:07:24'),
+(6, 'Ma\'en ', 'W. Dhuhirat', 'M.dherat@hotmail.com', '0790000000', 'a8c169991ccfb3d58b18c6f342807a46bef4af735483e1825f7a81b69311ab98bdb48e0c3a2ef24eaf0b8c07a38cfcedfcbb2bb3d5279b1d6b974dafc272d136975960321b74f5c229a0d3f39c4ab34adaa2a94674623608ae5e5b988ec28774', 1, 1, '../static/img/user_image/maen.jpg', '2020-03-04', '2020-03-01 22:47:11');
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

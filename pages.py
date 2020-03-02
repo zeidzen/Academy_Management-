@@ -179,7 +179,9 @@ class Products(Header):
         if len(self.data['all_products']) <= 9:
             self.data['Number_Products_In_Page'] = len(self.data['all_products'])
 
-        self.data['layer'] = int(math.ceil(self.data['Number_Products_In_Page'] / 3))
+        self.data['layer'] = int(math.ceil(self.data['Number_Products_In_Page']/3))
+        
+        
 
     def Show_Category_Products (self, Id_Category, page=1, sort=0, Number_Products_In_Page=9) : 
         
@@ -193,8 +195,9 @@ class Products(Header):
         self.data['Selected_Sort'] = self.Sort_List[sort]
         self.data['Number_Of_Products'] = self.Number_Of_Products_List
         self.data['Method_Sort'] = sort
-        if len(self.data['all_products']) <= 9:
+        if len(self.data['all_products']) < 9:
             self.data['Number_Products_In_Page'] = len(self.data['all_products'])
+            
         self.data['layer'] = int(math.ceil(self.data['Number_Products_In_Page'] / 3))
 
     def show_details_Product (self, Id_Product: int) : 
